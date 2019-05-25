@@ -1,0 +1,23 @@
+{
+  "name": "Manabu",
+  "description": "Manabu is a gamified e-learning platform",
+  "version": "0.1.0",
+  "author": "Gonzalo Rascon",
+  "repository": "https://github.com/gonzarascon/manabu",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "grommet": "^2.7.0",
+    "grommet-icons": "^4.2.0",
+    "next": "^8.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.0"
+  }
+}
