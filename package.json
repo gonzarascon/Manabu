@@ -5,13 +5,14 @@
   "author": "Gonzalo Rascon",
   "repository": "https://github.com/gonzarascon/manabu",
   "scripts": {
-    "dev": "next",
+    "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "next build && PORT=3014 NODE_ENV=production nodemon server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
+    "nodemon": "^1.18.10",
     "express": "^4.17.0",
     "grommet": "^2.7.0",
     "grommet-icons": "^4.2.0",
@@ -30,6 +31,7 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "lint-staged": "^8.1.0",
     "husky": "^2.3.0",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.8.0"
@@ -38,5 +40,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --stage"
     }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }
