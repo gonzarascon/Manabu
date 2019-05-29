@@ -19,7 +19,8 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           {styleTags}
-          <style rel="stylesheet" href="/static/main.css" />
+          <link rel="stylesheet" href="/static/main.css" />
+          <link rel="stylesheet" href="/static/reset.css" />
 
           {/* Meta tags here */}
         </Head>

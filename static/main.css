@@ -2,6 +2,7 @@ body {
   margin: 0;
 } /* custom! */
 
-.custom_class {
-  background-color: red;
+#__next {
+  height: 100vh;
+  width: 100vw;
 }
