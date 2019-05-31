@@ -7,7 +7,11 @@
   "extends": ["airbnb", "prettier", "prettier/react"],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "fetch": false,
+    "window": false,
+    "workbox": false,
+    "importScripts": false
   },
   "parserOptions": {
     "ecmaFeatures": {

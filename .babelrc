@@ -1,17 +1,24 @@
 {
-  "presets": ["next/babel"],
+  "presets": ["next/babel", "airbnb"],
   "plugins": [
-    "babel-plugin-styled-components",
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ],
     [
       "module-resolver",
       {
         "root": ["./"],
         "alias": {
           "components": "./components",
-          // "constants": "./constants",
+          "constants": "./constants",
           "pages": "./pages",
           "static": "./static",
-          // "utils": "./utils",
+          "utils": "./utils",
           "underscore": "lodash"
         }
       }

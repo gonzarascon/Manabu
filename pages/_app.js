@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { Grommet, Grid } from 'grommet';
 import styled from 'styled-components';
 
+import { Header as CustomHeader } from 'components';
+
 const MainWrapper = styled.main`
   width: 100%;
   max-width: 1640px;
@@ -32,19 +34,11 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Grommet theme={customTheme} full plain>
-        <MainWrapper>
-          <Grid
-            fill
-            columns={{ count: 'fill', size: 'medium' }}
-            gap="medium"
-            color="custom"
-          >
-            <Head>
-              <title>Manabu</title>
-            </Head>
-            <Component {...pageProps} />
-          </Grid>
-        </MainWrapper>
+        <Head>
+          <title>Manabu</title>
+        </Head>
+        <CustomHeader />
+        <Component {...pageProps} />
       </Grommet>
     );
   }

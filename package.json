@@ -20,12 +20,14 @@
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-avatar": "^3.6.0",
     "react-dom": "^16.8.6",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-styled-components": "^1.10.0",
+    "babel-preset-airbnb": "^3.2.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^2.9.0",

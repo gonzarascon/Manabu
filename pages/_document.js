@@ -24,7 +24,7 @@ export default class MyDocument extends Document {
 
           {/* Meta tags here */}
         </Head>
-        <body className="custom_class">
+        <body>
           <Main />
           <NextScript />
         </body>
