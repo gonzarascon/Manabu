@@ -12,9 +12,9 @@ class Header extends PureComponent {
         animation="fadeIn"
         gap="xlarge"
         responsive
-        direction="row-responsive"
+        direction="row"
         as="header"
-        pad={{ top: 'small', horizontal: 'xsmall', bottom: ' small' }}
+        pad={{ top: 'small', horizontal: 'xsmall', bottom: 'small' }}
         fill="horizontal"
         flex
         align="center"
