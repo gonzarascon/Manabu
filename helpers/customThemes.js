@@ -24,23 +24,46 @@ export const customTheme = {
         /* Handle image if it's the primary logo */
         props.logo &&
         `
-      max-width: 70px;
-      height: 100%;
+        height:100%;
       `}
     `,
   },
   box: {
     extend: css`
       ${props =>
+        /* Add the justifySelf prop for boxes */
+        props.justifySelf &&
+        `
+        justify-self: ${props.justifySelf};
+      `}
+
+      ${props =>
         /* Handle box if it contains the primary logo */
 
         props.logoContainer &&
         `
-            max-width:70px;
+            max-width:66px;
+        `}
+
+      ${props =>
+        /* Handle box if it contains main search input */
+        props.searchContainer &&
+        `
+          max-width: 700px;
+
+          & input{
+            font-weight: normal;
+          }
         `}
     `,
   },
   anchor: {
+    hover: {
+      textDecoration: 'none',
+      extend: css`
+        opacity: 0.7;
+      `,
+    },
     extend: css`
       font-weight: normal;
       color: #707070;

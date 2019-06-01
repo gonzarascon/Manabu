@@ -14,11 +14,11 @@ class Header extends PureComponent {
         responsive
         direction="row-responsive"
         as="header"
-        pad="xsmall"
+        pad={{ top: 'small', horizontal: 'xsmall', bottom: ' small' }}
         fill="horizontal"
         flex
         align="center"
-        justify="stretch"
+        justify="between"
         wrap
         height="70px"
       >
@@ -60,8 +60,9 @@ class Header extends PureComponent {
           round="small"
           basis="medium"
           // fill
-          margin={{ vertical: 'small', right: 'xlarge' }}
+          margin={{ right: 'xlarge' }}
           height="xxsmall"
+          searchContainer
         >
           <TextInput
             placeholder="Busca lo que quieras"
@@ -69,24 +70,26 @@ class Header extends PureComponent {
             plain
             focusIndicator={false}
           />
-          <Search />
+          <Search color="primaryBrand" />
         </Box>
 
         {/* Avatar + Navigation */}
 
         <Box
           basis="small"
-          alignSelf="end"
+          alignSelf="center"
           align="center"
           direction="row"
           justify="between"
+          justifySelf="end"
+          margin={{ right: 'xsmall' }}
         >
           <Box as="nav" alignSelf="center" align="center" justify="start">
             <Box as="ul" alignSelf="center" align="center">
               <Anchor href="#" label="Catalogo" />
             </Box>
           </Box>
-          <Button as="a" alignSelf="end">
+          <Button as="a" alignSelf="center">
             <Avatar round size="50" />
           </Button>
         </Box>
