@@ -41,7 +41,7 @@ export default class MyApp extends App {
           </Head>
           <ResponsiveContext.Consumer>
             {responsiveSize => (
-              <Box>
+              <Box margin="small">
                 <CustomHeader globalResponsive={responsiveSize} />
                 <Component {...pageProps} />
               </Box>

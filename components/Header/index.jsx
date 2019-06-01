@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'next/link';
-import { Box, Grid, Button, TextInput, Image, ThemeContext } from 'grommet';
+import { Box, Grid, Button, TextInput, Image, Anchor } from 'grommet';
 import { Search } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
@@ -14,32 +14,40 @@ class Header extends PureComponent {
         responsive
         direction="row-responsive"
         as="header"
-        pad="small"
+        pad="xsmall"
         fill="horizontal"
         flex
         align="center"
-        justify="between"
+        justify="stretch"
         wrap
         height="70px"
       >
-        <ThemeContext.Extend value={{ box: {}, image: {} }}>
-          <Box
-            a11yTitle="Manabu, a gamified e-learning platform"
-            direction="row"
-            gap="small"
-            align="center"
-            as="h1"
-            flex
-            responsive
-            fill
-            basis="xxxsmall"
-            height="small"
-            justify="start"
-          >
-            <Image src="static/images/manabu_logo.png" fit="contain" />
-          </Box>
-        </ThemeContext.Extend>
+        {/* Logo */}
 
+        <Box
+          a11yTitle="Manabu, a gamified e-learning platform"
+          direction="row"
+          gap="small"
+          align="center"
+          as="h1"
+          flex
+          responsive
+          fill
+          basis="xxsmall"
+          height="small"
+          justify="start"
+          alignSelf="start"
+          logoContainer
+        >
+          <Image
+            alignSelf="start"
+            src="static/images/manabu_logo.png"
+            fit="contain"
+            logo
+          />
+        </Box>
+
+        {/* Searchbox */}
         <Box
           a11yTitle="Search box"
           direction="row"
@@ -51,8 +59,9 @@ class Header extends PureComponent {
           pad={{ vertical: 'xsmall', horizontal: 'medium' }}
           round="small"
           basis="medium"
-          fill
-          margin={{ right: 'xlarge' }}
+          // fill
+          margin={{ vertical: 'small', right: 'xlarge' }}
+          height="xxsmall"
         >
           <TextInput
             placeholder="Busca lo que quieras"
@@ -62,9 +71,25 @@ class Header extends PureComponent {
           />
           <Search />
         </Box>
-        <Button alignSelf="end" as="a" basis="medium">
-          <Avatar round size="50" />
-        </Button>
+
+        {/* Avatar + Navigation */}
+
+        <Box
+          basis="small"
+          alignSelf="end"
+          align="center"
+          direction="row"
+          justify="between"
+        >
+          <Box as="nav" alignSelf="center" align="center" justify="start">
+            <Box as="ul" alignSelf="center" align="center">
+              <Anchor href="#" label="Catalogo" />
+            </Box>
+          </Box>
+          <Button as="a" alignSelf="end">
+            <Avatar round size="50" />
+          </Button>
+        </Box>
       </Box>
     );
   }
