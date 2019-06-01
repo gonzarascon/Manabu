@@ -8,8 +8,19 @@ importScripts(
 );
 
 const PRECACHE_FILES = [
-  //STYLES
+  // STYLES
   '/static/main.css',
+  // FONTS
+  '/static/fonts/Kadwa-Bold.woff',
+  '/static/fonts/Kadwa-Bold.woff2',
+  '/static/fonts/Kadwa-Regular.woff',
+  '/static/fonts/Kadwa-Regular.woff2',
+  '/static/fonts/WorkSans-ExtraBold.woff',
+  '/static/fonts/WorkSans-ExtraBold.woff2',
+  '/static/fonts/WorkSans-Regular.woff',
+  '/static/fonts/WorkSans-Regular.woff2',
+  '/static/fonts/WorkSans-SemiBold.woff',
+  '/static/fonts/WorkSans-SemiBold.woff2',
 ];
 
 if (workbox) {

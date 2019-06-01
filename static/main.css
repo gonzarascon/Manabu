@@ -1,6 +1,7 @@
 body {
   margin: 0;
-} /* custom! */
+  font-family: 'WorkSans', sans-serif !important;
+}
 
 #__next {
   height: 100vh;

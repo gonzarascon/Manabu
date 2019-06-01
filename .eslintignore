@@ -5,3 +5,4 @@ build/*
 config/*
 pages/*
 next.config.js
+static/globalStyles.js

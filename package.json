@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "author": "Gonzalo Rascon",
   "repository": "https://github.com/gonzarascon/manabu",
+  "license": "GPL-3.0",
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
@@ -12,16 +13,19 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
     "express": "^4.17.0",
     "grommet": "^2.7.0",
     "grommet-icons": "^4.2.0",
     "next": "^8.1.0",
+    "next-fonts": "^0.17.0",
     "nodemon": "^1.18.10",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-avatar": "^3.6.0",
     "react-dom": "^16.8.6",
+    "react-loading-skeleton": "^1.1.2",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {

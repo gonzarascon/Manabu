@@ -1,6 +1,9 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const next = require('next');
 const path = require('path');
+const cors = require('cors');
 
 const dev = process.env.NODE_ENV === 'development';
 const port = parseInt(process.env.PORT, 10) || 3002;
@@ -11,6 +14,9 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
+  server.use(cookieParser());
+  server.use(bodyParser.json());
+  server.use(cors());
 
   server.get('/sw.js', (req, res) => {
     res.setHeader('content-type', 'text/javascript');
