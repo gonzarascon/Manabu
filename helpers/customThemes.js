@@ -11,13 +11,17 @@ export const customTheme = {
     },
     // Global colors
     colors: {
+      primaryBrand: '#FF9D33',
+
       gray1: '#707070',
       gray2: '#B4B4B4',
       gray3: '#C9C9C9',
       gray4: '#E1E1E1',
-      primaryBrand: '#FF9D33',
+      black: '#000000',
     },
   },
+
+  // Image component settings
   image: {
     extend: css`
       ${props =>
@@ -28,35 +32,40 @@ export const customTheme = {
       `}
     `,
   },
+
+  // Box component settings
   box: {
     extend: css`
-      ${props =>
-        /* Add the justifySelf prop for boxes */
-        props.justifySelf &&
-        `
-        justify-self: ${props.justifySelf};
-      `}
-
-      ${props =>
-        /* Handle box if it contains the primary logo */
-
-        props.logoContainer &&
-        `
-            max-width:66px;
-        `}
+      ${props => props.maxWidth && `max-width: ${props.maxWidth}`}
 
       ${props =>
         /* Handle box if it contains main search input */
+
         props.searchContainer &&
         `
           max-width: 700px;
 
           & input{
             font-weight: normal;
-          }
-        `}
+            }
+      `}
+      
+      ${props =>
+        /* Handle box if it contains the primary logo */
+        props.logoContainer && `max-width:66px;`}
+
+      
+      ${props => props.justifySelf && `justify-self: ${props.justifySelf};`}
+
+      ${props =>
+        props.flexOrder &&
+        `
+            order: ${props.flexOrder};
+          `}
     `,
   },
+
+  // Anchor component settings
   anchor: {
     hover: {
       textDecoration: 'none',
@@ -67,6 +76,13 @@ export const customTheme = {
     extend: css`
       font-weight: normal;
       color: #707070;
+    `,
+  },
+
+  text: {
+    extend: css`
+      ${props => props.semiBold && `font-weight: 600;`}
+      ${props => props.bold && `font-weight: 700;`}
     `,
   },
 };

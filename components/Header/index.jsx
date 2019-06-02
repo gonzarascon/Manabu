@@ -1,26 +1,27 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'next/link';
-import { Box, Grid, Button, TextInput, Image, Anchor } from 'grommet';
+import PropTypes from 'prop-types';
+import { Box, Button, TextInput, Image, Anchor } from 'grommet';
 import { Search } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 class Header extends PureComponent {
+  // TODO: Handle input on searchbox
+
   render() {
+    const { viewportSize } = this.props;
     return (
       <Box
         a11yTitle="Main Navigation"
         animation="fadeIn"
-        gap="xlarge"
         responsive
         direction="row"
         as="header"
         pad={{ top: 'small', horizontal: 'xsmall', bottom: 'small' }}
         fill="horizontal"
-        flex
         align="center"
         justify="between"
         wrap
-        height="70px"
+        // height="70px"
       >
         {/* Logo */}
 
@@ -30,14 +31,13 @@ class Header extends PureComponent {
           gap="small"
           align="center"
           as="h1"
-          flex
           responsive
-          fill
           basis="xxsmall"
-          height="small"
+          height="100%"
           justify="start"
           alignSelf="start"
           logoContainer
+          flexOrder={0}
         >
           <Image
             alignSelf="start"
@@ -53,16 +53,18 @@ class Header extends PureComponent {
           direction="row"
           gap="medium"
           align="center"
-          flex
           responsive
           background="gray4"
           pad={{ vertical: 'xsmall', horizontal: 'medium' }}
           round="small"
-          basis="medium"
-          // fill
-          margin={{ right: 'xlarge' }}
+          basis="large"
+          margin={
+            viewportSize === 'small' ? { top: 'medium' } : { right: 'xlarge' }
+          }
           height="xxsmall"
           searchContainer
+          flexOrder={viewportSize === 'small' ? 3 : 1}
+          elevation={viewportSize === 'small' ? 'xsmall' : 'none'}
         >
           <TextInput
             placeholder="Busca lo que quieras"
@@ -76,13 +78,14 @@ class Header extends PureComponent {
         {/* Avatar + Navigation */}
 
         <Box
-          basis="small"
+          basis={viewportSize === 'small' ? '215px' : 'small'}
           alignSelf="center"
           align="center"
           direction="row"
           justify="between"
           justifySelf="end"
           margin={{ right: 'xsmall' }}
+          flexOrder={viewportSize === 'small' ? 1 : 3}
         >
           <Box as="nav" alignSelf="center" align="center" justify="start">
             <Box as="ul" alignSelf="center" align="center">
@@ -97,5 +100,9 @@ class Header extends PureComponent {
     );
   }
 }
+
+Header.propTypes = {
+  viewportSize: PropTypes.string.isRequired,
+};
 
 export default Header;

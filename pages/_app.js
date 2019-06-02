@@ -10,7 +10,7 @@ import { GlobalStyle } from 'static/globalStyles';
 
 import { customTheme } from 'helpers/customThemes';
 
-import { Header as CustomHeader } from 'components';
+import { Header as CustomHeader, Footer as CustomFooter } from 'components';
 
 const MainWrapper = styled.main`
   width: 100%;
@@ -41,9 +41,10 @@ export default class MyApp extends App {
           </Head>
           <ResponsiveContext.Consumer>
             {responsiveSize => (
-              <Box margin="small">
-                <CustomHeader globalResponsive={responsiveSize} />
+              <Box margin="auto" pad="small" as="section" maxWidth="1640px">
+                <CustomHeader viewportSize={responsiveSize} />
                 <Component {...pageProps} />
+                <CustomFooter viewportSize={responsiveSize} />
               </Box>
             )}
           </ResponsiveContext.Consumer>
