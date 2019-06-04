@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Box } from 'grommet';
-import { SliderRow } from 'components';
+import { SliderRow, HighlightLink } from 'components';
 
 const cardsArray = [
   {
@@ -49,7 +49,7 @@ const cardsArray = [
 ];
 
 const Home = ({ viewportSize }) => (
-  <Box fill maxWidth="95%" margin={{ vertical: 0, horizontal: 'auto' }}>
+  <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
     <SliderRow
       responsiveSize={viewportSize}
       headingLabel="Continua donde lo dejaste"
@@ -59,6 +59,12 @@ const Home = ({ viewportSize }) => (
       responsiveSize={viewportSize}
       headingLabel="Es momento de aprender algo nuevo"
       cards={cardsArray}
+    />
+    <HighlightLink
+      textLabel="¿Quieres enseñar lo que sabes?"
+      anchorLabel="Regístrate como docente."
+      anchorHref="#"
+      responsiveSize={viewportSize}
     />
   </Box>
 );

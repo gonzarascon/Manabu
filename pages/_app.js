@@ -41,7 +41,12 @@ export default class MyApp extends App {
           </Head>
           <ResponsiveContext.Consumer>
             {responsiveSize => (
-              <Box margin="auto" pad="small" as="section" maxWidth="1640px">
+              <Box
+                margin={{ vertical: '0', horizontal: 'auto' }}
+                pad="small"
+                as="section"
+                maxWidth="1640px"
+              >
                 <CustomHeader viewportSize={responsiveSize} />
                 <Component {...pageProps} viewportSize={responsiveSize} />
                 <CustomFooter viewportSize={responsiveSize} />

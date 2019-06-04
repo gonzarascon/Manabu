@@ -19,6 +19,9 @@ export const customTheme = {
       gray4: '#E1E1E1',
       black: '#000000',
     },
+    extend: css`
+      ${props => props.dsp && `display: ${props.dsp};`}
+    `,
   },
 
   // Image component settings
@@ -78,15 +81,23 @@ export const customTheme = {
     extend: css`
       font-weight: normal;
       color: #707070;
+
+      ${props => props.fontWeight && `font-weight: ${props.fontWeight};`}
+      ${props => props.dsp && `display: ${props.dsp};`}
     `,
   },
 
+  // Text component settings
   text: {
     extend: css`
       ${props => props.semiBold && `font-weight: 600;`}
       ${props => props.bold && `font-weight: 700;`}
+      ${props => props.dsp && `display: ${props.dsp};`}
+
     `,
   },
+
+  // Heading component settings
   heading: {
     font: {
       family: 'Kadwa',

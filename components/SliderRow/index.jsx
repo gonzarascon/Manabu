@@ -11,7 +11,6 @@ const settings = {
   dots: true,
   infinite: true,
   autoplay: false,
-  className: 'slideRow',
   variableWidth: true,
   centerPadding: '50px',
 };
