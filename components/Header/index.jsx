@@ -4,6 +4,8 @@ import { Box, Button, TextInput, Image, Anchor } from 'grommet';
 import { Search } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
+import { icons } from '../../constants';
+
 class Header extends PureComponent {
   // TODO: Handle input on searchbox
 
@@ -32,19 +34,14 @@ class Header extends PureComponent {
           align="center"
           as="h1"
           responsive
-          basis="xxsmall"
+          basis="small"
           height="100%"
           justify="start"
           alignSelf="start"
-          logoContainer
           flexOrder={0}
+          maxWidth="90px"
         >
-          <Image
-            alignSelf="start"
-            src="static/images/manabu_logo.png"
-            fit="contain"
-            logo
-          />
+          <Image alignSelf="start" src={icons.manabu_iso} fit="contain" />
         </Box>
 
         {/* Searchbox */}

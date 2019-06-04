@@ -11,7 +11,7 @@ export const customTheme = {
     },
     // Global colors
     colors: {
-      primaryBrand: '#FF9D33',
+      primaryBrand: '#5AAE00',
 
       gray1: '#707070',
       gray2: '#B4B4B4',
@@ -30,13 +30,19 @@ export const customTheme = {
         `
         height:100%;
       `}
+
+      ${props =>
+        props.objectFit &&
+        `
+          object-fit: ${props.objectFit};
+        `}
     `,
   },
 
   // Box component settings
   box: {
     extend: css`
-      ${props => props.maxWidth && `max-width: ${props.maxWidth}`}
+      ${props => props.maxWidth && `max-width: ${props.maxWidth};`}
 
       ${props =>
         /* Handle box if it contains main search input */
@@ -49,10 +55,6 @@ export const customTheme = {
             font-weight: normal;
             }
       `}
-      
-      ${props =>
-        /* Handle box if it contains the primary logo */
-        props.logoContainer && `max-width:66px;`}
 
       
       ${props => props.justifySelf && `justify-self: ${props.justifySelf};`}
@@ -83,6 +85,14 @@ export const customTheme = {
     extend: css`
       ${props => props.semiBold && `font-weight: 600;`}
       ${props => props.bold && `font-weight: 700;`}
+    `,
+  },
+  heading: {
+    font: {
+      family: 'Kadwa',
+    },
+    extend: css`
+      ${props => props.sans && "font-family:'WorkSans'"}
     `,
   },
 };

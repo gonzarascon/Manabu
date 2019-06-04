@@ -7,3 +7,12 @@ body {
   height: 100vh;
   width: 100vw;
 }
+
+.slick-slide {
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.slick-list {
+  height: 310px;
+}

@@ -43,7 +43,7 @@ export default class MyApp extends App {
             {responsiveSize => (
               <Box margin="auto" pad="small" as="section" maxWidth="1640px">
                 <CustomHeader viewportSize={responsiveSize} />
-                <Component {...pageProps} />
+                <Component {...pageProps} viewportSize={responsiveSize} />
                 <CustomFooter viewportSize={responsiveSize} />
               </Box>
             )}

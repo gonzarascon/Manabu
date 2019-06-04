@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, Text, Image, Anchor } from 'grommet';
 import { Github } from 'grommet-icons';
 import Emoji from '../../helpers/emoji';
+import { icons } from '../../constants';
 
 const Footer = ({ viewportSize }) => (
   <Box
@@ -26,13 +27,13 @@ const Footer = ({ viewportSize }) => (
       gap="small"
       align="center"
       as="h2"
-      width={viewportSize === 'small' ? '150px' : '200px'}
+      width={viewportSize === 'small' ? '150px' : '250px'}
       responsive
       justify="start"
       alignSelf="start"
       flexOrder={0}
     >
-      <Image src="static/images/manabu_isologo.png" fit="contain" />
+      <Image src={icons.manabu_logo} fit="contain" />
     </Box>
     <Box
       a11yTitle="We are open-source!"

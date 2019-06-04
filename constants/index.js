@@ -1,3 +1,10 @@
+export const icons = {
+  manabu_iso: 'static/images/manabu_iso_dragon.png',
+  manabu_logo: 'static/images/manabu_logo_dragon.png',
+};
+
+export const calculateRem = size => `${size / 16}rem`;
+
 export const fontFace = (woffFont, woff2Font, fontName, fontWeight) =>
   `
     @font-face {
@@ -8,4 +15,4 @@ export const fontFace = (woffFont, woff2Font, fontName, fontWeight) =>
         font-style: normal;
     }`;
 
-export default { fontFace };
+export default { fontFace, icons, calculateRem };
