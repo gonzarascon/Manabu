@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { Box } from 'grommet';
 import { SliderRow, HighlightLink } from 'components';
@@ -48,25 +48,39 @@ const cardsArray = [
   },
 ];
 
-const Home = ({ viewportSize }) => (
-  <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
-    <SliderRow
-      responsiveSize={viewportSize}
-      headingLabel="Continua donde lo dejaste"
-      cards={cardsArray}
-    />
-    <SliderRow
-      responsiveSize={viewportSize}
-      headingLabel="Es momento de aprender algo nuevo"
-      cards={cardsArray}
-    />
-    <HighlightLink
-      textLabel="¿Quieres enseñar lo que sabes?"
-      anchorLabel="Regístrate como docente."
-      anchorHref="#"
-      responsiveSize={viewportSize}
-    />
-  </Box>
-);
+const Home = ({ viewportSize }) => {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .catch(err =>
+          console.error(`Service worker registration failed ${err}`),
+        );
+    } else {
+      console.log('Service Worker not supported or disabled');
+    }
+  });
+
+  return (
+    <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
+      <SliderRow
+        responsiveSize={viewportSize}
+        headingLabel="Continua donde lo dejaste"
+        cards={cardsArray}
+      />
+      <SliderRow
+        responsiveSize={viewportSize}
+        headingLabel="Es momento de aprender algo nuevo"
+        cards={cardsArray}
+      />
+      <HighlightLink
+        textLabel="¿Quieres enseñar lo que sabes?"
+        anchorLabel="Regístrate como docente."
+        anchorHref="#"
+        responsiveSize={viewportSize}
+      />
+    </Box>
+  );
+};
 
 export default Home;

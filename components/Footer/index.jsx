@@ -45,8 +45,9 @@ const Footer = ({ viewportSize }) => (
       margin={viewportSize === 'small' ? { top: 'medium' } : 'none'}
     >
       <Anchor
-        href="#"
+        href="https://github.com/gonzarascon/manabu"
         label="Somos Open-Source "
+        target="_blank"
         icon={<Github color="black" />}
         reverse
       />

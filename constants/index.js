@@ -1,6 +1,6 @@
 export const icons = {
-  manabu_iso: 'static/images/manabu_iso_dragon.png',
-  manabu_logo: 'static/images/manabu_logo_dragon.png',
+  manabu_iso: '/static/images/manabu_iso_dragon.png',
+  manabu_logo: '/static/images/manabu_logo_dragon.png',
 };
 
 export const calculateRem = size => `${size / 16}rem`;

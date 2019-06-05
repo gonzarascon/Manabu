@@ -90,7 +90,7 @@ class Header extends PureComponent {
             </Box>
           </Box>
           <Button as="a" alignSelf="center">
-            <Avatar round size="50" />
+            <Avatar round size="50" name="Gonzalo Rascon" />
           </Button>
         </Box>
       </Box>
