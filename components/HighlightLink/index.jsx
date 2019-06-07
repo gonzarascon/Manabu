@@ -11,7 +11,7 @@ const HighlightLink = ({
   <Box
     as="section"
     pad="medium"
-    border={{ color: 'primaryBrand', size: 'small' }}
+    border={{ color: 'brand', size: 'small' }}
     round="small"
     responsive
     // justify="center"

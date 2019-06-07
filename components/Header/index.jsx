@@ -69,7 +69,7 @@ class Header extends PureComponent {
             plain
             focusIndicator={false}
           />
-          <Search color="primaryBrand" />
+          <Search color="brand" />
         </Box>
 
         {/* Avatar + Navigation */}

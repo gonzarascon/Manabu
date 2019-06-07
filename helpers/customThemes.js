@@ -11,7 +11,7 @@ export const customTheme = {
     },
     // Global colors
     colors: {
-      primaryBrand: '#5AAE00',
+      brand: '#5AAE00',
 
       gray1: '#707070',
       gray2: '#B4B4B4',
@@ -104,6 +104,18 @@ export const customTheme = {
     },
     extend: css`
       ${props => props.sans && "font-family:'WorkSans'"}
+    `,
+  },
+
+  // Button component settings
+  button: {
+    border: {
+      radius: '8px',
+    },
+    extend: css`
+      ${props =>
+        props.primary &&
+        `padding: 10px; color:white; max-width:400px; height: 78px;`}
     `,
   },
 };

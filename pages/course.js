@@ -8,8 +8,8 @@ class Course extends PureComponent {
   }
 
   render() {
-    const { courseId } = this.props;
-    return <IntroCourse />;
+    const { courseId, viewportSize } = this.props;
+    return <IntroCourse responsiveSize={viewportSize} />;
   }
 }
 
