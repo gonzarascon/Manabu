@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import Link from 'next/link';
-import { Box } from 'grommet';
+import { IntroCourse } from 'components';
 
 class Course extends PureComponent {
   static getInitialProps({ query: { id } }) {
@@ -9,7 +9,7 @@ class Course extends PureComponent {
 
   render() {
     const { courseId } = this.props;
-    return <Box>Course: {courseId}</Box>;
+    return <IntroCourse />;
   }
 }
 
