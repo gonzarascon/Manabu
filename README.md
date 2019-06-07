@@ -11,7 +11,7 @@ Manabu was thought as an open-source project from scratch. In the future you wil
 Manabu uses [Grommet](https://github.com/grommet/grommet) basic UI theme settings such as Breakpoints for quick component creation.
 Each component receives `responsiveSize` as a prop which indicates the actual view-port size.
 This prop is handled by the actual page where the component is being rendered from in pages this value comes as `props.viewportSize`.
-With this configuration you can not only the display behavior in each component, but also which components should render in that page.
+With this configuration you can not only manage the display behavior in each component, but also which components should render in that page.
 
 ### `responsiveSize`
 
