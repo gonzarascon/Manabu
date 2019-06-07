@@ -3,7 +3,10 @@
   "description": "Manabu is a gamified e-learning platform",
   "version": "0.1.0",
   "author": "Gonzalo Rascon",
-  "repository": "https://github.com/gonzarascon/manabu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gonzarascon/manabu"
+  },
   "license": "GPL-3.0",
   "scripts": {
     "dev": "nodemon server.js",
