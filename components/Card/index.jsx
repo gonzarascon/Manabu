@@ -16,15 +16,15 @@ const Card = ({ imageSrc, cardTitle, cardSubtitle, anchorHref = null }) => (
     height="290px"
     as="article"
   >
-    <Anchor href={anchorHref}>
-      <Box height="150px" fill="horizontal">
-        <Image src={imageSrc} objectFit="none" height="100%" />
-      </Box>
-      <Box
-        fill="horizontal"
-        height="140px"
-        pad={{ horizontal: 'small', vertical: 'medium' }}
-      >
+    <Box fill="horizontal">
+      <Image src={imageSrc} objectFit="none" height="100%" />
+    </Box>
+    <Box
+      fill="horizontal"
+      height="140px"
+      pad={{ horizontal: 'small', vertical: 'medium' }}
+    >
+      <Anchor href={anchorHref}>
         <Heading
           a11yTitle={cardTitle}
           size={calculateRem(20)}
@@ -34,8 +34,8 @@ const Card = ({ imageSrc, cardTitle, cardSubtitle, anchorHref = null }) => (
           {cardTitle}
         </Heading>
         <Text size={calculateRem(18)}>{cardSubtitle}</Text>
-      </Box>
-    </Anchor>
+      </Anchor>
+    </Box>
   </Box>
 );
 

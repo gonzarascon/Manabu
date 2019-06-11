@@ -11,13 +11,28 @@ const settings = {
   dots: true,
   infinite: true,
   autoplay: false,
+  arrows: false,
   variableWidth: true,
   centerPadding: '50px',
 };
 
-const checkSlidesToShow = size => (size === 'small' ? 1 : 5);
+const checkSlidesToShow = size => {
+  if (size === 'small') {
+    return 1;
+  }
+
+  if (size === 'medium') {
+    return 3;
+  }
+
+  if (size !== 'medium' && size !== 'small') {
+    return 4;
+  }
+
+  return 3;
+};
 const SliderRow = ({ headingLabel, cards, responsiveSize }) => (
-  <Box fill="horizontal" margin={{ vertical: '50px' }}>
+  <Box fill="horizontal">
     <Box fill="horizontal">
       <Heading color="gray1">{headingLabel}</Heading>
     </Box>

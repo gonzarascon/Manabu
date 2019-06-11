@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Grid, Image, Text, Button, Heading, Paragraph } from 'grommet';
 
-import { calculateRem } from 'constants';
-
 const gridColumns = ['1fr', '.75fr'];
 const gridRows = ['xsmall', '1fr', '.7fr'];
 const gridAreasMedium = [
@@ -79,5 +77,9 @@ class IntroCourse extends PureComponent {
     );
   }
 }
+
+IntroCourse.propTypes = {
+  responsiveSize: PropTypes.string.isRequired,
+};
 
 export default IntroCourse;

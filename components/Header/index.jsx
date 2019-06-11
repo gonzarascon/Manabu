@@ -1,13 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, TextInput, Image, Anchor } from 'grommet';
-import { Search } from 'grommet-icons';
+import { Box, DropButton, TextInput, Image, Anchor } from 'grommet';
+import { Search, User } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
 
+/* TODO: Change 'username' for dynamic username */
+
 class Header extends PureComponent {
   // TODO: Handle input on searchbox
+
+  renderMenuItems() {
+    const { viewportSize } = this.props;
+    return (
+      <Box pad={viewportSize === 'small' ? 'medium' : 'small'}>
+        <Anchor icon={<User />} label="Ver Perfil" href="/users/username" />
+      </Box>
+    );
+  }
 
   render() {
     const { viewportSize } = this.props;
@@ -89,9 +100,14 @@ class Header extends PureComponent {
               <Anchor href="#" label="Catalogo" />
             </Box>
           </Box>
-          <Button as="a" alignSelf="center">
+          <DropButton
+            as="a"
+            alignSelf="center"
+            dropAlign={{ top: 'bottom', right: 'right' }}
+            dropContent={this.renderMenuItems()}
+          >
             <Avatar round size="50" name="Gonzalo Rascon" />
-          </Button>
+          </DropButton>
         </Box>
       </Box>
     );
