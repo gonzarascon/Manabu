@@ -63,16 +63,20 @@ const Home = ({ viewportSize }) => {
 
   return (
     <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
-      <SliderRow
-        responsiveSize={viewportSize}
-        headingLabel="Continua donde lo dejaste"
-        cards={cardsArray}
-      />
-      <SliderRow
-        responsiveSize={viewportSize}
-        headingLabel="Es momento de aprender algo nuevo"
-        cards={cardsArray}
-      />
+      <Box margin={{ vertical: '50px' }}>
+        <SliderRow
+          responsiveSize={viewportSize}
+          headingLabel="Continua donde lo dejaste"
+          cards={cardsArray}
+        />
+      </Box>
+      <Box margin={{ vertical: '50px' }}>
+        <SliderRow
+          responsiveSize={viewportSize}
+          headingLabel="Es momento de aprender algo nuevo"
+          cards={cardsArray}
+        />
+      </Box>
       <HighlightLink
         textLabel="¿Quieres enseñar lo que sabes?"
         anchorLabel="Regístrate como docente."

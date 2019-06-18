@@ -34,7 +34,9 @@ const checkSlidesToShow = size => {
 const SliderRow = ({ headingLabel, cards, responsiveSize }) => (
   <Box fill="horizontal">
     <Box fill="horizontal">
-      <Heading color="gray1">{headingLabel}</Heading>
+      <Heading color="gray1" level={2}>
+        {headingLabel}
+      </Heading>
     </Box>
     <Box fill="horizontal" height="300px" margin={{ vertical: '50px' }}>
       <Slider slidesToShow={checkSlidesToShow(responsiveSize)} {...settings}>

@@ -35,6 +35,10 @@ app.prepare().then(() => {
     return app.render(req, res, '/users', { username: req.params.username });
   });
 
+  server.get('/catalog', (req, res) => {
+    return app.render(req, res, '/catalog');
+  });
+
   server.get('*', (req, res) => {
     return handle(req, res);
   });

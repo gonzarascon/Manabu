@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Box, DropButton, TextInput, Image, Anchor } from 'grommet';
-import { Search, User } from 'grommet-icons';
+import { Search, User, Logout } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
@@ -15,7 +15,20 @@ class Header extends PureComponent {
     const { viewportSize } = this.props;
     return (
       <Box pad={viewportSize === 'small' ? 'medium' : 'small'}>
-        <Anchor icon={<User />} label="Ver Perfil" href="/users/username" />
+        <Anchor
+          icon={<User color="gray2" />}
+          label="Ver Perfil"
+          href="/users/username"
+          margin={{ vertical: '5px' }}
+          size="small"
+        />
+        <Anchor
+          icon={<Logout color="gray2" />}
+          label="Cerrar Sesion"
+          href="#"
+          margin={{ vertical: '5px' }}
+          size="small"
+        />
       </Box>
     );
   }
@@ -97,7 +110,7 @@ class Header extends PureComponent {
         >
           <Box as="nav" alignSelf="center" align="center" justify="start">
             <Box as="ul" alignSelf="center" align="center">
-              <Anchor href="#" label="Catalogo" />
+              <Anchor href="/catalog" label="Catalogo" />
             </Box>
           </Box>
           <DropButton

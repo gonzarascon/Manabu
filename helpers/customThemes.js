@@ -12,6 +12,7 @@ export const customTheme = {
     // Global colors
     colors: {
       brand: '#5AAE00',
+      danger: '#C93200',
 
       gray1: '#707070',
       gray2: '#B4B4B4',
@@ -67,6 +68,8 @@ export const customTheme = {
         `
             order: ${props.flexOrder};
           `}
+      
+      ${props => props.fontSize && `font-size:${props.fontSize};`}
     `,
   },
 

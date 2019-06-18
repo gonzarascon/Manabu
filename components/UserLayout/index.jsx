@@ -172,7 +172,7 @@ class UserLayout extends PureComponent {
           <Box gridArea="slider" as="section">
             <SliderRow
               responsiveSize={responsiveSize}
-              headingLabel="Continua donde lo dejaste"
+              headingLabel="Tus cursos"
               cards={cardsArray}
             />
           </Box>

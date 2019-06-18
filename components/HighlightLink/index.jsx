@@ -17,7 +17,7 @@ const HighlightLink = ({
     // justify="center"
     direction={responsiveSize === 'small' ? 'column' : 'row'}
     align="center"
-    maxWidth="800px"
+    maxWidth="700px"
     margin={{ vertical: '0', horizontal: 'auto' }}
   >
     <Text>{textLabel}</Text>
