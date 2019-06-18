@@ -70,6 +70,8 @@ export const customTheme = {
           `}
       
       ${props => props.fontSize && `font-size:${props.fontSize};`}
+
+      ${props => props.gridColumn && `grid-column:${props.gridColumn};`}
     `,
   },
 
