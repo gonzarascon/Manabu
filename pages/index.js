@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import Link from 'next/link';
 import { Box } from 'grommet';
-import { SliderRow, HighlightLink } from 'components';
+import { SliderRow, HighlightLink, WelcomeWrapper } from 'components';
 
 const cardsArray = [
   {
@@ -62,28 +62,31 @@ const Home = ({ viewportSize }) => {
   });
 
   return (
-    <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
-      <Box margin={{ vertical: '50px' }}>
-        <SliderRow
+    <Fragment>
+      <WelcomeWrapper></WelcomeWrapper>
+      <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
+        <Box margin={{ vertical: '50px' }}>
+          <SliderRow
+            responsiveSize={viewportSize}
+            headingLabel="Continua donde lo dejaste"
+            cards={cardsArray}
+          />
+        </Box>
+        <Box margin={{ vertical: '50px' }}>
+          <SliderRow
+            responsiveSize={viewportSize}
+            headingLabel="Es momento de aprender algo nuevo"
+            cards={cardsArray}
+          />
+        </Box>
+        <HighlightLink
+          textLabel="¿Quieres enseñar lo que sabes?"
+          anchorLabel="Regístrate como docente."
+          anchorHref="#"
           responsiveSize={viewportSize}
-          headingLabel="Continua donde lo dejaste"
-          cards={cardsArray}
         />
       </Box>
-      <Box margin={{ vertical: '50px' }}>
-        <SliderRow
-          responsiveSize={viewportSize}
-          headingLabel="Es momento de aprender algo nuevo"
-          cards={cardsArray}
-        />
-      </Box>
-      <HighlightLink
-        textLabel="¿Quieres enseñar lo que sabes?"
-        anchorLabel="Regístrate como docente."
-        anchorHref="#"
-        responsiveSize={viewportSize}
-      />
-    </Box>
+    </Fragment>
   );
 };
 

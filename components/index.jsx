@@ -7,3 +7,4 @@ export { default as IntroCourse } from './IntroCourse';
 export { default as UserLayout } from './UserLayout';
 export { default as Catalog } from './Catalog';
 export { default as CourseRow } from './CourseRow';
+export { default as WelcomeWrapper } from './WelcomeWrapper';
