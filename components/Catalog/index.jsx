@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Grid, Box, RadioButtonGroup, Heading } from 'grommet';
-import { CourseRow } from '..';
+import CourseRow from '../CourseRow';
 
 export default class Catalog extends PureComponent {
   constructor() {

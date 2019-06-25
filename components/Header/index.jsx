@@ -1,20 +1,49 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Box, DropButton, TextInput, Image, Anchor } from 'grommet';
-import { Search, User, Logout } from 'grommet-icons';
+import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
+import { Search, User, Logout, Code, Login } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
 
+import LoginLayer from '../LoginLayer';
+
 /* TODO: Change 'username' for dynamic username */
 
 class Header extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      userLogged: false,
+      loginOpen: false,
+    };
+
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.loginFormHandler = this.loginFormHandler.bind(this);
+  }
+
+  toggleLogin() {
+    const {
+      state: { loginOpen },
+    } = this;
+    this.setState({ loginOpen: !loginOpen });
+  }
+
+  loginFormHandler() {
+    // TODO: Handle { value } comming from form @ LoginLayer
+    // TODO: Add api actions for login
+    this.setState({ loginOpen: false, userLogged: true });
+  }
+
   // TODO: Handle input on searchbox
 
   renderMenuItems() {
     const { viewportSize } = this.props;
     return (
-      <Box pad={viewportSize === 'small' ? 'medium' : 'small'}>
+      <Box
+        pad={viewportSize === 'small' ? 'medium' : 'small'}
+        width={viewportSize === 'small' ? '100%' : '200px'}
+      >
         <Anchor
           icon={<User color="gray2" />}
           label="Ver Perfil"
@@ -23,7 +52,7 @@ class Header extends PureComponent {
           size="small"
         />
         <Anchor
-          icon={<Logout color="gray2" />}
+          icon={<Logout color="danger" />}
           label="Cerrar Sesion"
           href="#"
           margin={{ vertical: '5px' }}
@@ -34,7 +63,11 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { viewportSize } = this.props;
+    const {
+      state: { userLogged, loginOpen },
+      props: { viewportSize },
+    } = this;
+
     return (
       <Box
         a11yTitle="Main Navigation"
@@ -45,7 +78,7 @@ class Header extends PureComponent {
         pad={{ top: 'small', horizontal: 'xsmall', bottom: 'small' }}
         fill="horizontal"
         align="center"
-        justify="between"
+        // justify="between"
         wrap
         // height="70px"
       >
@@ -79,9 +112,7 @@ class Header extends PureComponent {
           pad={{ vertical: 'xsmall', horizontal: 'medium' }}
           round="small"
           basis="large"
-          margin={
-            viewportSize === 'small' ? { top: 'medium' } : { right: 'xlarge' }
-          }
+          margin={viewportSize === 'small' ? { top: 'medium' } : 'auto'}
           height="xxsmall"
           searchContainer
           flexOrder={viewportSize === 'small' ? 3 : 1}
@@ -99,28 +130,52 @@ class Header extends PureComponent {
         {/* Avatar + Navigation */}
 
         <Box
-          basis={viewportSize === 'small' ? '215px' : 'small'}
+          // basis={viewportSize === 'small' ? '215px' : 'small'}
           alignSelf="center"
           align="center"
           direction="row"
           justify="between"
           justifySelf="end"
+          gap="small"
           margin={{ right: 'xsmall' }}
           flexOrder={viewportSize === 'small' ? 1 : 3}
         >
           <Box as="nav" alignSelf="center" align="center" justify="start">
             <Box as="ul" alignSelf="center" align="center">
-              <Anchor href="/catalog" label="Catalogo" />
+              <Anchor
+                icon={<Code color="gray2" />}
+                href="/catalog"
+                label="Catalogo"
+              />
             </Box>
           </Box>
-          <DropButton
-            as="a"
-            alignSelf="center"
-            dropAlign={{ top: 'bottom', right: 'right' }}
-            dropContent={this.renderMenuItems()}
-          >
-            <Avatar round size="50" name="Gonzalo Rascon" />
-          </DropButton>
+          {!userLogged && (
+            <Button
+              label="Iniciar sesion"
+              onClick={this.toggleLogin}
+              alignSelf="center"
+              backgroundColor="#FFD44D"
+              bWidth="0"
+              bRadius="0"
+              fontWeight="600"
+            />
+          )}
+          {userLogged && (
+            <DropButton
+              as="a"
+              alignSelf="center"
+              dropAlign={{ top: 'bottom', right: 'right' }}
+              dropContent={this.renderMenuItems()}
+            >
+              <Avatar round size="50" name="Gonzalo Rascon" />
+            </DropButton>
+          )}
+          {loginOpen && (
+            <LoginLayer
+              closeHandler={this.toggleLogin}
+              submitFormHandler={this.loginFormHandler}
+            />
+          )}
         </Box>
       </Box>
     );

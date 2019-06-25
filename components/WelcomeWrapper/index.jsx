@@ -15,7 +15,7 @@ const WelcomeWrapper = () => (
     fill="horizontal"
     height="350px"
     background={backgroundResult}
-    pad="medium"
+    pad="large"
     justify="center"
     a11yTitle="Welcome section"
     as="section"

@@ -108,7 +108,7 @@ export const customTheme = {
       family: 'Kadwa',
     },
     extend: css`
-      ${props => props.sans && "font-family:'WorkSans'"}
+      ${props => props.sans && "font-family:'WorkSans';"}
     `,
   },
 
@@ -121,6 +121,14 @@ export const customTheme = {
       ${props =>
         props.primary &&
         `padding: 10px; color:white; max-width:400px; height: 78px;`}
+        
+      ${props =>
+        props.backgroundColor && `background-color: ${props.backgroundColor};`}
+      
+      ${props => props.bWidth && `border: ${props.bWidth};`}
+      ${props => props.bRadius && `border-radius: ${props.bRadius};`}
+      ${props => props.fontWeight && `font-weight: ${props.fontWeight};`}
+
     `,
   },
 };

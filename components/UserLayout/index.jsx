@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Box, Stack, Meter, Grid, Text, Heading } from 'grommet';
 import Avatar from 'react-avatar';
 
-import { SliderRow, HighlightLink } from '..';
+import SliderRow from '../SliderRow';
+import HighlightLink from '../HighlightLink';
 
 const cardsArray = [
   {
