@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import Link from 'next/link';
-import { Box } from 'grommet';
+import { Box, Image } from 'grommet';
 import { SliderRow, HighlightLink, WelcomeWrapper } from 'components';
 
 const cardsArray = [
@@ -72,6 +72,13 @@ const Home = ({ viewportSize }) => {
             cards={cardsArray}
           />
         </Box>
+      </Box>
+
+      <Box fill="horizontal">
+        <Image src="/static/images/courses_banner.png" fit="contain"></Image>
+      </Box>
+
+      <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
         <Box margin={{ vertical: '50px' }}>
           <SliderRow
             responsiveSize={viewportSize}

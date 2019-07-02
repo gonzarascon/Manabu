@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
-import { Search, User, Logout, Code, Login } from 'grommet-icons';
+import { Search, User, Logout, Code } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
@@ -30,7 +30,7 @@ class Header extends PureComponent {
   }
 
   loginFormHandler() {
-    // TODO: Handle { value } comming from form @ LoginLayer
+    // TODO: Handle { value } comming from form LoginLayer
     // TODO: Add api actions for login
     this.setState({ loginOpen: false, userLogged: true });
   }
@@ -123,6 +123,7 @@ class Header extends PureComponent {
             size="medium"
             plain
             focusIndicator={false}
+            type="search"
           />
           <Search color="brand" />
         </Box>

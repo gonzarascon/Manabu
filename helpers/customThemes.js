@@ -13,7 +13,7 @@ export const customTheme = {
     colors: {
       brand: '#5AAE00',
       danger: '#C93200',
-
+      focus: '#266C00',
       gray1: '#707070',
       gray2: '#B4B4B4',
       gray3: '#C9C9C9',
@@ -129,6 +129,16 @@ export const customTheme = {
       ${props => props.bRadius && `border-radius: ${props.bRadius};`}
       ${props => props.fontWeight && `font-weight: ${props.fontWeight};`}
 
+      ${props =>
+        props.filled &&
+        `
+        &:hover{
+          background-color: #5AAE00;
+          color: white;
+        }
+      `}
+
+      ${props => props.dsp && `display: ${props.dsp};`}
     `,
   },
 };
