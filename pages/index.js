@@ -48,8 +48,9 @@ const cardsArray = [
   },
 ];
 
-const Home = ({ viewportSize }) => {
+const Home = (props, { viewportSize, data }) => {
   useEffect(() => {
+    console.log(props);
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/sw.js')

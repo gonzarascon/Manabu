@@ -10,6 +10,8 @@ const port = parseInt(process.env.PORT, 10) || 3002;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const api = require('./api');
+
 app.prepare().then(() => {
   const server = express();
 
@@ -17,6 +19,19 @@ app.prepare().then(() => {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(cors());
+
+  server.get('/', (req, res) => {
+    api
+      .getBasicData({ id: 1 })
+      .then(data => {
+        console.log(data);
+        app.render(req, res, '/', data);
+      })
+      .catch(error => {
+        console.error('server-error', error);
+        console.log(res);
+      });
+  });
 
   server.get('/sw.js', (req, res) => {
     res.setHeader('content-type', 'text/javascript');
