@@ -22,10 +22,9 @@ app.prepare().then(() => {
 
   server.get('/', (req, res) => {
     api
-      .getBasicData({ id: 1 })
+      .getBasicData()
       .then(data => {
-        console.log(data);
-        app.render(req, res, '/', data);
+        app.render(req, res, '/', { basicData: data });
       })
       .catch(error => {
         console.error('server-error', error);

@@ -14,6 +14,7 @@ const settings = {
   arrows: false,
   variableWidth: true,
   centerPadding: '50px',
+  slidesToShow: 1,
 };
 
 const checkSlidesToShow = size => {

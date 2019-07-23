@@ -2,9 +2,10 @@
 
 > A gamified e-learning platform
 
-## Coming soon
+## Run this project
 
-Manabu was thought as an open-source project from scratch. In the future you will be able to contribute to the platform.
+- Clone the repository & install it's dependencies using `yarn`
+- Run it using `yarn run dev`
 
 ## Components & Breakpoints Sizes
 
@@ -37,4 +38,7 @@ viewportSize: PropTypes.string.isRequired,
 };
 ```
 
-### Stay tuned!
+## Want to contribute?
+
+You can [open an issue](https://github.com/gonzarascon/Manabu/issues) with your questions or features proposals!
+Contribution guides are on their way!
