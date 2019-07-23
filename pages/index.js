@@ -2,7 +2,6 @@ import React, { useEffect, Fragment } from 'react';
 import Link from 'next/link';
 import { Box, Image } from 'grommet';
 import { SliderRow, HighlightLink, WelcomeWrapper } from 'components';
-import _ from 'lodash';
 
 const Home = ({ viewportSize, data }) => {
   useEffect(() => {
