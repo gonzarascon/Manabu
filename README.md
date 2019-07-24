@@ -1,4 +1,4 @@
-# :books: :video_game: Manabu
+# :books: :video_game: :rocket: Manabu
 
 > A gamified e-learning platform
 
