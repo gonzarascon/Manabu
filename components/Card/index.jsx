@@ -1,10 +1,11 @@
 import React from 'react';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, Image, Heading, Text, Anchor } from 'grommet';
 
 import { calculateRem } from '../../constants';
 
-const Card = ({ imageSrc, cardTitle, cardSubtitle, anchorHref = null }) => (
+const Card = ({ imageSrc, cardTitle, cardSubtitle, linkHref, linkAs }) => (
   <Box
     direction="column"
     a11yTitle={`Curso ${cardTitle}`}
@@ -24,7 +25,7 @@ const Card = ({ imageSrc, cardTitle, cardSubtitle, anchorHref = null }) => (
       height="140px"
       pad={{ horizontal: 'small', vertical: 'medium' }}
     >
-      <Anchor href={anchorHref}>
+      <Anchor href={linkHref}>
         <Heading
           a11yTitle={cardTitle}
           size={calculateRem(20)}
@@ -43,7 +44,8 @@ Card.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   cardTitle: PropTypes.string.isRequired,
   cardSubtitle: PropTypes.string.isRequired,
-  anchorHref: PropTypes.string.isRequired,
+  linkHref: PropTypes.string.isRequired,
+  linkAs: PropTypes.string.isRequired,
 };
 
 export default Card;

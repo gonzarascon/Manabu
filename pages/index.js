@@ -69,6 +69,7 @@ const Home = ({ viewportSize, data }) => {
 
 Home.getInitialProps = async ({ query: { basicData } }) => {
   const res = await basicData;
+  console.log(res);
   return { data: res };
 };
 

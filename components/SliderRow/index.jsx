@@ -47,7 +47,8 @@ const SliderRow = ({ headingLabel, cards, responsiveSize }) => (
             cardTitle={card.cardTitle}
             cardSubtitle={card.cardSubtitle}
             key={card.id}
-            anchorHref={`/course/${card.id}`}
+            linkHref={`course/${card.id}`}
+            linkAs={`course/${card.id}`}
           />
         ))}
       </Slider>

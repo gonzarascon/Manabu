@@ -1,15 +1,17 @@
 import React, { PureComponent } from 'react';
-import Link from 'next/link';
 import { IntroCourse } from 'components';
 
 class Course extends PureComponent {
-  static getInitialProps({ query: { id } }) {
-    return { courseId: id };
+  static async getInitialProps({ query: { courseData } }) {
+    const res = await courseData;
+    return { courseData: res };
   }
 
   render() {
-    const { courseId, viewportSize } = this.props;
-    return <IntroCourse responsiveSize={viewportSize} />;
+    const { courseData, viewportSize } = this.props;
+    return (
+      <IntroCourse responsiveSize={viewportSize} courseData={courseData} />
+    );
   }
 }
 

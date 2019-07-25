@@ -21,7 +21,7 @@ app.prepare().then(() => {
   server.use(cors());
 
   server.get('/', (req, res) => {
-    api
+    api.main
       .getBasicData()
       .then(data => {
         app.render(req, res, '/', { basicData: data });
@@ -38,7 +38,16 @@ app.prepare().then(() => {
   });
 
   server.get('/course/:id', (req, res) => {
-    return app.render(req, res, '/course', { id: req.params.id });
+    const courseId = req.params.id;
+    api.course
+      .getBasicData(courseId)
+      .then(data => {
+        app.render(req, res, '/course', { courseData: data });
+      })
+      .catch(error => {
+        console.error('server-error', error);
+        console.log(res);
+      });
   });
 
   server.get('/posts/:id', (req, res) => {

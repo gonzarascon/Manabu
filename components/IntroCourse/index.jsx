@@ -17,8 +17,31 @@ const gridAreasSmall = [
 ];
 
 class IntroCourse extends PureComponent {
+  constructor(props) {
+    super(props);
+    const {
+      courseData: {
+        name,
+        level,
+        description,
+        // eslint-disable-next-line camelcase
+        course_photo,
+        user: { username },
+      },
+    } = this.props;
+    this.state = {
+      title: name,
+      description,
+      course_photo,
+      owner: username,
+      level,
+    };
+  }
+
   render() {
     const { responsiveSize } = this.props;
+    // TODO: Implementation for course_photo, owner & level
+    const { title, description, course_photo, owner, level } = this.state;
     return (
       <Box
         maxWidth="1226px"
@@ -33,7 +56,7 @@ class IntroCourse extends PureComponent {
           fill
         >
           <Heading as="h3" gridArea="courseTitle" color="gray1">
-            JavaScript desde cero - Curso Inicial
+            {title}
           </Heading>
 
           <Box
@@ -63,12 +86,10 @@ class IntroCourse extends PureComponent {
               margin={
                 responsiveSize === 'small'
                   ? { vertical: 'small', horizontal: 'auto' }
-                  : { vertical: 'large', horizontal: 'auto' }
+                  : { vertical: 'large', horizontal: '0' }
               }
             >
-              Aprende las bases de JavaScript, el lenguaje de programación de la
-              web. En este curso verás variables, arreglos, funciones y otros
-              métodos básicos del lenguaje.
+              {description}
             </Paragraph>
             <Button label="Comenzar" primary />
           </Box>
@@ -80,6 +101,7 @@ class IntroCourse extends PureComponent {
 
 IntroCourse.propTypes = {
   responsiveSize: PropTypes.string.isRequired,
+  courseData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default IntroCourse;
