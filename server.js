@@ -58,17 +58,19 @@ app.prepare().then(() => {
   });
 
   server.get('/actual-user', (req, res) => {
-    const { token } = req.body;
-    api.user
-      .getAcualUser(token)
-      .then(data => {
-        const actualUser = data;
-        return actualUser;
-      })
-      .catch(error => {
-        console.error('server-error', error);
-        console.log(res);
-      });
+    // const { user_token } = req.body;
+
+    console.log('token actual user', req.body);
+    // api.user
+    //   .getAcualUser(token)
+    //   .then(data => {
+    //     const actualUser = data;
+    //     return actualUser;
+    //   })
+    //   .catch(error => {
+    //     console.error('server-error', error);
+    //     console.log(res);
+    //   });
   });
 
   // Courses

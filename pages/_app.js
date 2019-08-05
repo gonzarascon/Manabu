@@ -6,6 +6,7 @@ import { base } from 'grommet/themes';
 import { Grommet, ResponsiveContext, Box } from 'grommet';
 import styled from 'styled-components';
 import nextCookie from 'next-cookies';
+import fetch from 'isomorphic-unfetch';
 
 import { GlobalStyle } from 'static/globalStyles';
 
@@ -21,13 +22,9 @@ const MainWrapper = styled.main`
 const mergedTheme = deepMerge(base, customTheme);
 
 export default class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
+  static async getInitialProps({ Component, ctx, req }) {
     let pageProps = {};
     const { token } = nextCookie(ctx);
-
-    if (token) {
-      // TODO: Handle request for actual user
-    }
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
