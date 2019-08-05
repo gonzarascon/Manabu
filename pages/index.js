@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Box, Image } from 'grommet';
 import { SliderRow, HighlightLink, WelcomeWrapper } from 'components';
 
-const Home = ({ viewportSize, data }) => {
+const Home = ({ viewportSize, data, token }) => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
@@ -69,7 +69,6 @@ const Home = ({ viewportSize, data }) => {
 
 Home.getInitialProps = async ({ query: { basicData } }) => {
   const res = await basicData;
-  console.log(res);
   return { data: res };
 };
 

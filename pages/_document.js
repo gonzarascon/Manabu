@@ -4,7 +4,6 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     const page = renderPage(App => props => {
-      console.log(props);
       return <App {...props} />;
     });
 

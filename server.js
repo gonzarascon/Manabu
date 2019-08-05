@@ -37,6 +37,41 @@ app.prepare().then(() => {
     return res.sendFile(path.join(`${__dirname}/static/serviceWorker.js`));
   });
 
+  // User
+
+  server.post('/form-login', (req, res) => {
+    const { username, password } = req.body;
+    api.user
+      .login(username, password)
+      .then(data => {
+        if (data !== null) {
+          const { token } = data;
+          res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+          console.log('cookie created successfully', token);
+        }
+        res.end();
+      })
+      .catch(error => {
+        console.error('server-error', error);
+        console.log(res);
+      });
+  });
+
+  server.get('/actual-user', (req, res) => {
+    const { token } = req.body;
+    api.user
+      .getAcualUser(token)
+      .then(data => {
+        const actualUser = data;
+        return actualUser;
+      })
+      .catch(error => {
+        console.error('server-error', error);
+        console.log(res);
+      });
+  });
+
+  // Courses
   server.get('/course/:id', (req, res) => {
     const courseId = req.params.id;
     api.course

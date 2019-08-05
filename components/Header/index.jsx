@@ -10,6 +10,14 @@ import LoginLayer from '../LoginLayer';
 
 /* TODO: Change 'username' for dynamic username */
 
+function loginFormHandler(value) {
+  const http = new XMLHttpRequest();
+  const url = '/form-login';
+  http.open('POST', url, true);
+  http.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  http.send(JSON.stringify(value));
+}
+
 class Header extends PureComponent {
   constructor() {
     super();
@@ -19,7 +27,6 @@ class Header extends PureComponent {
     };
 
     this.toggleLogin = this.toggleLogin.bind(this);
-    this.loginFormHandler = this.loginFormHandler.bind(this);
   }
 
   toggleLogin() {
@@ -27,12 +34,6 @@ class Header extends PureComponent {
       state: { loginOpen },
     } = this;
     this.setState({ loginOpen: !loginOpen });
-  }
-
-  loginFormHandler() {
-    // TODO: Handle { value } comming from form LoginLayer
-    // TODO: Add api actions for login
-    this.setState({ loginOpen: false, userLogged: true });
   }
 
   // TODO: Handle input on searchbox
@@ -78,9 +79,7 @@ class Header extends PureComponent {
         pad={{ top: 'small', horizontal: 'xsmall', bottom: 'small' }}
         fill="horizontal"
         align="center"
-        // justify="between"
         wrap
-        // height="70px"
       >
         {/* Logo */}
 
@@ -174,7 +173,7 @@ class Header extends PureComponent {
           {loginOpen && (
             <LoginLayer
               closeHandler={this.toggleLogin}
-              submitFormHandler={this.loginFormHandler}
+              submitFormHandler={loginFormHandler}
             />
           )}
         </Box>

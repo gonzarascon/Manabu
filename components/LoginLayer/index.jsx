@@ -1,15 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Layer,
-  Box,
-  Heading,
-  Text,
-  Form,
-  FormField,
-  TextInput,
-  Button,
-} from 'grommet';
+import { Layer, Box, Heading, Text, Form, FormField, Button } from 'grommet';
 import { calculateRem } from 'constants';
 import Emoji from '../../helpers/emoji';
 
@@ -31,22 +22,17 @@ const LoginLayer = ({ closeHandler, submitFormHandler }) => (
         </Heading>
       </Box>
 
-      <Form onSubmit={submitFormHandler}>
+      <Form onSubmit={({ value }) => submitFormHandler(value)}>
         <Box maxWidth="300px" margin="auto">
           <FormField
-            pad
             label={
               <Text textAlign="center" as="span" dsp="block">
-                Nombre de usuario
+                Email
               </Text>
             }
             name="username"
-          >
-            <TextInput
-              placeholder="Ingresa tu nombre de usuario"
-              size="medium"
-            />
-          </FormField>
+            placeholder="Ingresa tu email"
+          />
         </Box>
 
         <Box
@@ -54,20 +40,15 @@ const LoginLayer = ({ closeHandler, submitFormHandler }) => (
           margin={{ horizontal: 'auto', vertical: 'small' }}
         >
           <FormField
-            pad
             label={
               <Text textAlign="center" as="span" dsp="block">
                 Contraseña
               </Text>
             }
             name="password"
-          >
-            <TextInput
-              placeholder="Ingresa tu contraseña"
-              type="password"
-              size="medium"
-            />
-          </FormField>
+            type="password"
+            placeholder="Ingresa tu contraseña"
+          />
         </Box>
 
         <Button
