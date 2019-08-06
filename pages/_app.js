@@ -26,13 +26,19 @@ export default class MyApp extends App {
     let pageProps = {};
     const { token } = nextCookie(ctx);
 
+    if (token) {
+      const reqActualUser = await fetch(
+        `http://localhost:3002/actual-user?token=${token}`,
+      ).then(r => {
+        console.log(r);
+      });
+    }
+
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
     pageProps = { ...pageProps, token };
-
-    console.log(pageProps);
 
     return { pageProps };
   }

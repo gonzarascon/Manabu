@@ -46,7 +46,10 @@ app.prepare().then(() => {
       .then(data => {
         if (data !== null) {
           const { token } = data;
-          res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+          res.cookie('token', token, {
+            maxAge: new Date(Date.now() + 900000),
+            httpOnly: true,
+          });
           console.log('cookie created successfully', token);
         }
         res.end();
@@ -58,19 +61,19 @@ app.prepare().then(() => {
   });
 
   server.get('/actual-user', (req, res) => {
-    // const { user_token } = req.body;
+    const { token } = req.query;
 
-    console.log('token actual user', req.body);
-    // api.user
-    //   .getAcualUser(token)
-    //   .then(data => {
-    //     const actualUser = data;
-    //     return actualUser;
-    //   })
-    //   .catch(error => {
-    //     console.error('server-error', error);
-    //     console.log(res);
-    //   });
+    api.user
+      .getActualUser(token)
+      .then(data => {
+        const actualUser = data;
+        res.json({ user: actualUser });
+      })
+      .catch(error => {
+        console.error('server-error', error);
+        console.log(res);
+        res.status(401).send('AUTH_ERROR');
+      });
   });
 
   // Courses
