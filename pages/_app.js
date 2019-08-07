@@ -6,7 +6,7 @@ import { base } from 'grommet/themes';
 import { Grommet, ResponsiveContext, Box } from 'grommet';
 import styled from 'styled-components';
 import nextCookie from 'next-cookies';
-import fetch from 'isomorphic-unfetch';
+import axios from 'axios';
 
 import { GlobalStyle } from 'static/globalStyles';
 
@@ -24,21 +24,30 @@ const mergedTheme = deepMerge(base, customTheme);
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx, req }) {
     let pageProps = {};
-    const { token } = nextCookie(ctx);
+    let userData;
+    const { token } = await nextCookie(ctx);
 
     if (token) {
-      const reqActualUser = await fetch(
-        `http://localhost:3002/actual-user?token=${token}`,
-      ).then(r => {
-        console.log(r);
-      });
+      await axios
+        .get(`http://localhost:3002/actual-user?token=${token}`)
+        .then(r => {
+          const {
+            data: { user },
+          } = r;
+          userData = user;
+          return;
+        })
+        .catch(e => {
+          userData = 'NO_USER';
+          return;
+        });
     }
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    pageProps = { ...pageProps, token };
+    pageProps = { ...pageProps, token, userData };
 
     return { pageProps };
   }
@@ -64,7 +73,7 @@ export default class MyApp extends App {
                 as="section"
                 maxWidth="1640px"
               >
-                <CustomHeader viewportSize={responsiveSize} />
+                <CustomHeader viewportSize={responsiveSize} {...pageProps} />
                 <Component {...pageProps} viewportSize={responsiveSize} />
                 <CustomFooter viewportSize={responsiveSize} />
               </Box>

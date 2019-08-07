@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
 import { Search, User, Logout, Code } from 'grommet-icons';
 import Avatar from 'react-avatar';
@@ -29,6 +30,21 @@ class Header extends PureComponent {
     this.toggleLogin = this.toggleLogin.bind(this);
   }
 
+  componentDidMount() {
+    const { userData } = this.props;
+
+    if (!_.isEqual(userData, {})) this.setState({ userLogged: true });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { userData } = this.props;
+
+    if (!_.isEqual(userData, nextProps.userData)) {
+      if (!_.isEqual(nextProps.userData, {}))
+        this.setState({ userLogged: true });
+    }
+  }
+
   toggleLogin() {
     const {
       state: { loginOpen },
@@ -39,7 +55,10 @@ class Header extends PureComponent {
   // TODO: Handle input on searchbox
 
   renderMenuItems() {
-    const { viewportSize } = this.props;
+    const {
+      viewportSize,
+      userData: { username },
+    } = this.props;
     return (
       <Box
         pad={viewportSize === 'small' ? 'medium' : 'small'}
@@ -48,14 +67,14 @@ class Header extends PureComponent {
         <Anchor
           icon={<User color="gray2" />}
           label="Ver Perfil"
-          href="/users/username"
+          href={`/users/${username}`}
           margin={{ vertical: '5px' }}
           size="small"
         />
         <Anchor
           icon={<Logout color="danger" />}
           label="Cerrar Sesion"
-          href="#"
+          href={`/users/logout/${username}`}
           margin={{ vertical: '5px' }}
           size="small"
         />
@@ -66,7 +85,10 @@ class Header extends PureComponent {
   render() {
     const {
       state: { userLogged, loginOpen },
-      props: { viewportSize },
+      props: {
+        viewportSize,
+        userData: { username },
+      },
     } = this;
 
     return (
@@ -167,7 +189,7 @@ class Header extends PureComponent {
               dropAlign={{ top: 'bottom', right: 'right' }}
               dropContent={this.renderMenuItems()}
             >
-              <Avatar round size="50" name="Gonzalo Rascon" />
+              <Avatar round size="50" name={username} />
             </DropButton>
           )}
           {loginOpen && (
@@ -184,6 +206,11 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   viewportSize: PropTypes.string.isRequired,
+  userData: PropTypes.objectOf(PropTypes.any),
+};
+
+Header.defaultProps = {
+  userData: {},
 };
 
 export default Header;
