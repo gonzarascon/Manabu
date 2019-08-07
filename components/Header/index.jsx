@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import _ from 'lodash';
 import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
 import { Search, User, Logout, Code } from 'grommet-icons';
@@ -11,14 +12,6 @@ import LoginLayer from '../LoginLayer';
 
 /* TODO: Change 'username' for dynamic username */
 
-function loginFormHandler(value) {
-  const http = new XMLHttpRequest();
-  const url = '/form-login';
-  http.open('POST', url, true);
-  http.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-  http.send(JSON.stringify(value));
-}
-
 class Header extends PureComponent {
   constructor() {
     super();
@@ -28,21 +21,26 @@ class Header extends PureComponent {
     };
 
     this.toggleLogin = this.toggleLogin.bind(this);
+    this.loginFormHandler = this.loginFormHandler.bind(this);
   }
 
   componentDidMount() {
     const { userData } = this.props;
 
-    if (!_.isEqual(userData, {})) this.setState({ userLogged: true });
+    if (userData !== 'NO_USER') this.setState({ userLogged: true });
   }
 
   componentWillReceiveProps(nextProps) {
     const { userData } = this.props;
 
     if (!_.isEqual(userData, nextProps.userData)) {
-      if (!_.isEqual(nextProps.userData, {}))
-        this.setState({ userLogged: true });
+      if (nextProps.userData !== 'NO_USER') this.setState({ userLogged: true });
     }
+  }
+
+  loginFormHandler(value) {
+    axios.post('/form-login', value);
+    this.toggleLogin();
   }
 
   toggleLogin() {
@@ -152,7 +150,6 @@ class Header extends PureComponent {
         {/* Avatar + Navigation */}
 
         <Box
-          // basis={viewportSize === 'small' ? '215px' : 'small'}
           alignSelf="center"
           align="center"
           direction="row"
@@ -195,7 +192,7 @@ class Header extends PureComponent {
           {loginOpen && (
             <LoginLayer
               closeHandler={this.toggleLogin}
-              submitFormHandler={loginFormHandler}
+              submitFormHandler={this.loginFormHandler}
             />
           )}
         </Box>
@@ -210,7 +207,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  userData: {},
+  userData: 'NO_USER',
 };
 
 export default Header;

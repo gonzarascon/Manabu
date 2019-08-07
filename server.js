@@ -52,7 +52,7 @@ app.prepare().then(() => {
           });
           console.log('cookie created successfully', token);
         }
-        res.end();
+        res.redirect('back');
       })
       .catch(error => {
         console.error('server-error', error);
