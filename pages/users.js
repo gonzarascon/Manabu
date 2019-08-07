@@ -7,8 +7,13 @@ class Users extends PureComponent {
   }
 
   render() {
-    const { viewportSize } = this.props;
-    return <UserLayout responsiveSize={viewportSize}></UserLayout>;
+    const { viewportSize, userData } = this.props;
+    return (
+      <UserLayout
+        responsiveSize={viewportSize}
+        userData={userData}
+      ></UserLayout>
+    );
   }
 }
 

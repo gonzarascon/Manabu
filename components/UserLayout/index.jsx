@@ -89,7 +89,10 @@ const placeholders = [
 
 class UserLayout extends PureComponent {
   render() {
-    const { responsiveSize } = this.props;
+    const {
+      responsiveSize,
+      userData: { username, xp },
+    } = this.props;
     // TODO: receive user data
 
     return (
@@ -112,7 +115,7 @@ class UserLayout extends PureComponent {
               <Stack anchor="center">
                 <Meter
                   type="circle"
-                  values={values}
+                  values={xp}
                   round
                   max={100}
                   size="110"
@@ -120,13 +123,13 @@ class UserLayout extends PureComponent {
                   alignSelf="center"
                 />
                 <Box align="center">
-                  <Avatar round size="90" name="Gonzalo Rascon" />
+                  <Avatar round size="90" name={username} />
                 </Box>
               </Stack>
             </Box>
             <Box>
               <Heading sans level={3} responsive size="large">
-                Gonzalo Rascon
+                {username}
               </Heading>
               <Text color="brand" size="large" margin={{ top: 'small' }}>
                 Suricata del codigo
