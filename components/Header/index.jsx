@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import _ from 'lodash';
 import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
-import { Search, User, Logout, Code } from 'grommet-icons';
+import { Search, User, Logout, Code, Add } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
@@ -39,7 +40,15 @@ class Header extends PureComponent {
   }
 
   loginFormHandler(value) {
-    axios.post('/form-login', value);
+    axios
+      .post('/form-login', value)
+      .then(data => {
+        if (!_.isEqual(data, 'AUTH_FAILED')) {
+          Router.push({ pathname: '/' });
+        }
+      })
+      // eslint-disable-next-line no-console
+      .catch(error => console.error('Login Error', error));
     this.toggleLogin();
   }
 
@@ -55,7 +64,8 @@ class Header extends PureComponent {
   renderMenuItems() {
     const {
       viewportSize,
-      userData: { username },
+      // eslint-disable-next-line camelcase
+      userData: { id, username, user_type },
     } = this.props;
     return (
       <Box
@@ -65,10 +75,19 @@ class Header extends PureComponent {
         <Anchor
           icon={<User color="gray2" />}
           label="Ver Perfil"
-          href={`/users/${username}`}
+          href={`/users/profile/${username}`}
           margin={{ vertical: '5px' }}
           size="small"
         />
+        {_.isEqual(user_type, 'teacher') && (
+          <Anchor
+            icon={<Add color="gray2" />}
+            label="Nuevo curso"
+            href={`/courses/create?user_id=${id}`}
+            margin={{ vertical: '5px' }}
+            size="small"
+          />
+        )}
         <Anchor
           icon={<Logout color="danger" />}
           label="Cerrar Sesion"

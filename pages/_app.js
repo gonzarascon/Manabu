@@ -24,8 +24,8 @@ const mergedTheme = deepMerge(base, customTheme);
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx, req }) {
     let pageProps = {};
-    let userData;
     const { token } = await nextCookie(ctx);
+    let userData = 'NO_USER';
 
     if (token) {
       await axios
@@ -47,6 +47,12 @@ export default class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
+    if (
+      !pageProps.actualUser === 'NO_USER' ||
+      !pageProps.actualUser === 'AUTH_ERROR'
+    )
+      userData = pageProps.actualUser;
+
     pageProps = { ...pageProps, token, userData };
 
     return { pageProps };
@@ -56,7 +62,7 @@ export default class MyApp extends App {
     const {
       Component,
       pageProps,
-      pageProps: { token },
+      pageProps: { userData },
     } = this.props;
     return (
       <Fragment>
@@ -73,7 +79,10 @@ export default class MyApp extends App {
                 as="section"
                 maxWidth="1640px"
               >
-                <CustomHeader viewportSize={responsiveSize} {...pageProps} />
+                <CustomHeader
+                  viewportSize={responsiveSize}
+                  userData={userData}
+                />
                 <Component {...pageProps} viewportSize={responsiveSize} />
                 <CustomFooter viewportSize={responsiveSize} />
               </Box>

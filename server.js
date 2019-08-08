@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -23,8 +25,20 @@ app.prepare().then(() => {
   server.get('/', (req, res) => {
     api.main
       .getBasicData()
-      .then(data => {
-        app.render(req, res, '/', { basicData: data });
+      .then(async data => {
+        let actualUser = 'NO_USER';
+        if (req.cookies.token) {
+          await api.user
+            .getActualUser(req.cookies.token)
+            .then(user => {
+              actualUser = user;
+            })
+            // eslint-disable-next-line
+            .catch(error => {
+              actualUser = 'AUTH_ERROR';
+            });
+        }
+        app.render(req, res, '/', { basicData: data, user: actualUser });
       })
       .catch(error => {
         console.error('server-error', error);
@@ -49,14 +63,21 @@ app.prepare().then(() => {
           res.cookie('token', token, {
             maxAge: new Date(Date.now() + 900000),
             httpOnly: true,
+            overwrite: true,
           });
           console.log('cookie created successfully', token);
+          api.user
+            .getActualUser(token)
+            .then(user => {
+              const actualUser = user;
+              res.json({ user: actualUser });
+            })
+            .catch(error => console.error('could not get actual user', error));
         }
-        res.redirect('back');
       })
       .catch(error => {
         console.error('server-error', error);
-        console.log(res);
+        res.send('AUTH_FAILED');
       });
   });
 
@@ -90,21 +111,17 @@ app.prepare().then(() => {
       });
   });
 
-  server.get('/posts/:id', (req, res) => {
-    return app.render(req, res, '/posts', { id: req.params.id });
-  });
+  server.get('/posts/:id', (req, res) =>
+    app.render(req, res, '/posts', { id: req.params.id }),
+  );
 
-  server.get('/users/:username', (req, res) => {
-    return app.render(req, res, '/users', { username: req.params.username });
-  });
+  server.get('/users/profile/:username', (req, res) =>
+    app.render(req, res, '/users', { username: req.params.username }),
+  );
 
-  server.get('/catalog', (req, res) => {
-    return app.render(req, res, '/catalog');
-  });
+  server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
 
-  server.get('*', (req, res) => {
-    return handle(req, res);
-  });
+  server.get('*', (req, res) => handle(req, res));
 
   server.listen(port, err => {
     if (err) throw err;

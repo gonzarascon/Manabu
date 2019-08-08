@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { Box, Image } from 'grommet';
 import { SliderRow, HighlightLink, WelcomeWrapper } from 'components';
 
-const Home = ({ viewportSize, data, token }) => {
+const Home = ({
+  viewportSize,
+  data,
+  token,
+  actualUser,
+  actualUser: { id, username },
+}) => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
@@ -59,7 +65,7 @@ const Home = ({ viewportSize, data, token }) => {
         <HighlightLink
           textLabel="¿Quieres enseñar lo que sabes?"
           anchorLabel="Regístrate como docente."
-          anchorHref="#"
+          anchorHref={`/users/${username}/${id}/teacher_registry`}
           responsiveSize={viewportSize}
         />
       </Box>
@@ -67,9 +73,10 @@ const Home = ({ viewportSize, data, token }) => {
   );
 };
 
-Home.getInitialProps = async ({ query: { basicData } }) => {
-  const res = await basicData;
-  return { data: res };
+Home.getInitialProps = async ({ query: { basicData, user } }) => {
+  const resBasicData = await basicData;
+  const resUser = await user;
+  return { data: resBasicData, actualUser: resUser };
 };
 
 export default Home;

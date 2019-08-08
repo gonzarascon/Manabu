@@ -16,7 +16,6 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="/static/main.css" />
           <link rel="stylesheet" href="/static/reset.css" />
-
           {/* Meta tags here */}
         </Head>
         <body>
