@@ -16,7 +16,6 @@ For a more clean code experience, each page should import both the Layout compon
 import {Layout, PageLayout} from 'components';
 
 const page = (props) => (
-
     <Layout>
         <PageLayout />
     </Layout>
