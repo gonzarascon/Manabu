@@ -1,9 +1,9 @@
-import React, { PureComponent, Fragment } from 'react';
+import { Fragment } from 'react';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import { deepMerge } from 'grommet/utils';
 import { base } from 'grommet/themes';
-import { Grommet, ResponsiveContext, Box } from 'grommet';
+import { Grommet, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 import nextCookie from 'next-cookies';
 import axios from 'axios';
@@ -11,8 +11,6 @@ import axios from 'axios';
 import { GlobalStyle } from 'static/globalStyles';
 
 import { customTheme } from 'helpers/customThemes';
-
-import { Header as CustomHeader, Footer as CustomFooter } from 'components';
 
 const MainWrapper = styled.main`
   width: 100%;
@@ -68,24 +66,14 @@ export default class MyApp extends App {
       <Fragment>
         <GlobalStyle />
         <Grommet theme={mergedTheme} full plain>
-          <Head>
-            <title>Manabu</title>
-          </Head>
           <ResponsiveContext.Consumer>
             {responsiveSize => (
-              <Box
-                margin={{ vertical: '0', horizontal: 'auto' }}
-                pad="small"
-                as="section"
-                maxWidth="1640px"
-              >
-                <CustomHeader
-                  viewportSize={responsiveSize}
-                  userData={userData}
-                />
+              <Container>
+                <Head>
+                  <title>Manabu</title>
+                </Head>
                 <Component {...pageProps} viewportSize={responsiveSize} />
-                <CustomFooter viewportSize={responsiveSize} />
-              </Box>
+              </Container>
             )}
           </ResponsiveContext.Consumer>
         </Grommet>

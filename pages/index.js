@@ -1,77 +1,18 @@
 import React, { useEffect, Fragment } from 'react';
 import Link from 'next/link';
 import { Box, Image } from 'grommet';
-import { SliderRow, HighlightLink, WelcomeWrapper } from 'components';
+import { Layout, HomeLayout } from 'components';
 
-const Home = ({
-  viewportSize,
-  data,
-  token,
-  actualUser,
-  actualUser: { id, username },
-}) => {
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .catch(err =>
-          console.error(`Service worker registration failed ${err}`),
-        );
-    } else {
-      console.log('Service Worker not supported or disabled');
-    }
-  });
-
-  const renderSlider = heading => {
-    let cardsArray = [];
-    if (data)
-      data.forEach(course => {
-        const cardData = {
-          id: course.id,
-          imageSrc: 'static/images/card_default.png',
-          cardTitle: course.name,
-          cardSubtitle: course.user.username,
-        };
-
-        cardsArray.push(cardData);
-      });
-
-    return (
-      <SliderRow
-        responsiveSize={viewportSize}
-        headingLabel={heading}
-        cards={cardsArray}
-      />
-    );
-  };
-
-  return (
-    <Fragment>
-      <WelcomeWrapper></WelcomeWrapper>
-      <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
-        <Box margin={{ vertical: '50px' }}>
-          {renderSlider('Continua donde lo dejaste')}
-        </Box>
-      </Box>
-
-      <Box fill="horizontal">
-        <Image src="/static/images/courses_banner.png" fit="contain"></Image>
-      </Box>
-
-      <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
-        <Box margin={{ vertical: '50px' }}>
-          {renderSlider('Es momento de aprender algo nuevo')}
-        </Box>
-        <HighlightLink
-          textLabel="¿Quieres enseñar lo que sabes?"
-          anchorLabel="Regístrate como docente."
-          anchorHref={`/users/${username}/${id}/teacher_registry`}
-          responsiveSize={viewportSize}
-        />
-      </Box>
-    </Fragment>
-  );
-};
+const Home = ({ viewportSize, data, token, actualUser }) => (
+  <Layout responsiveSize={viewportSize} userData={actualUser}>
+    <HomeLayout
+      viewportSize={viewportSize}
+      data={data}
+      token={token}
+      actualUser={actualUser}
+    />
+  </Layout>
+);
 
 Home.getInitialProps = async ({ query: { basicData, user } }) => {
   const resBasicData = await basicData;

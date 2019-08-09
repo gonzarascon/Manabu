@@ -1,22 +1,32 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
-    const page = renderPage(App => props => {
-      return <App {...props} />;
-    });
+    const sheet = new ServerStyleSheet();
 
-    return { ...page };
+    const page = renderPage(App => props =>
+      sheet.collectStyles(<App {...props} />),
+    );
+    const styleTags = sheet.getStyleElement();
+    return { ...page, styleTags };
   }
 
   render() {
+    const { styleTags } = this.props;
     return (
       <Html>
         <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+          />
+
           <link rel="stylesheet" href="/static/main.css" />
           <link rel="stylesheet" href="/static/reset.css" />
-          {/* Meta tags here */}
+
+          {styleTags}
         </Head>
         <body>
           <Main />
