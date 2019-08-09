@@ -7,7 +7,7 @@ import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
 import { Search, User, Logout, Code, Add } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
-import { icons } from '../../constants';
+import { icons, checkUserData } from '../../constants';
 
 import LoginLayer from '../LoginLayer';
 
@@ -27,15 +27,16 @@ class Header extends PureComponent {
 
   componentDidMount() {
     const { userData } = this.props;
-
-    if (userData !== 'NO_USER') this.setState({ userLogged: true });
+    if (checkUserData(userData)) {
+      this.setState({ userLogged: true });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const { userData } = this.props;
 
     if (!_.isEqual(userData, nextProps.userData)) {
-      if (nextProps.userData !== 'NO_USER') this.setState({ userLogged: true });
+      if (checkUserData(userData)) this.setState({ userLogged: true });
     }
   }
 
@@ -44,7 +45,7 @@ class Header extends PureComponent {
       .post('/form-login', value)
       .then(data => {
         if (!_.isEqual(data, 'AUTH_FAILED')) {
-          Router.push({ pathname: '/' });
+          location.reload();
         }
       })
       // eslint-disable-next-line no-console

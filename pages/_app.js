@@ -9,13 +9,8 @@ import nextCookie from 'next-cookies';
 import axios from 'axios';
 
 import { GlobalStyle } from 'static/globalStyles';
-
 import { customTheme } from 'helpers/customThemes';
-
-const MainWrapper = styled.main`
-  width: 100%;
-  max-width: 1640px;
-`;
+import { checkUserData } from '../constants/';
 
 const mergedTheme = deepMerge(base, customTheme);
 
@@ -45,11 +40,7 @@ export default class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    if (
-      !pageProps.actualUser === 'NO_USER' ||
-      !pageProps.actualUser === 'AUTH_ERROR'
-    )
-      userData = pageProps.actualUser;
+    if (checkUserData(pageProps.actualUser)) userData = pageProps.actualUser;
 
     pageProps = { ...pageProps, token, userData };
 
@@ -57,11 +48,7 @@ export default class MyApp extends App {
   }
 
   render() {
-    const {
-      Component,
-      pageProps,
-      pageProps: { userData },
-    } = this.props;
+    const { Component, pageProps } = this.props;
     return (
       <Fragment>
         <GlobalStyle />

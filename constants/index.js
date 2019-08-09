@@ -15,4 +15,23 @@ export const fontFace = (woffFont, woff2Font, fontName, fontWeight) =>
         font-style: normal;
     }`;
 
-export default { fontFace, icons, calculateRem };
+export const checkUserData = userData => {
+  switch (userData) {
+    case 'NO_USER':
+      return false;
+
+    case 'NO_TOKEN':
+      return false;
+
+    case 'AUTH_ERROR':
+      return false;
+
+    case undefined:
+      return false;
+
+    default:
+      return true;
+  }
+};
+
+export default { fontFace, icons, calculateRem, checkUserData };

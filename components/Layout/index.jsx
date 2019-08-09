@@ -13,7 +13,6 @@ const Layout = ({ children, responsiveSize, userData }) => (
     maxWidth="1640px"
   >
     <Header viewportSize={responsiveSize} userData={userData} />
-
     {children}
     <Footer viewportSize={responsiveSize} />
   </Box>
