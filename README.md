@@ -7,6 +7,23 @@
 - Clone the repository & install it's dependencies using `yarn`
 - Run it using `yarn run dev`
 
+## Layout Logic
+
+Manabu has an unique Layout that is shared throughout all its pages.
+For a more clean code experience, each page should import both the Layout component and the corresponding Page Layout component.
+
+```
+import {Layout, PageLayout} from 'components';
+
+const page = (props) => (
+
+    <Layout>
+        <PageLayout />
+    </Layout>
+);
+
+```
+
 ## Components & Breakpoints Sizes
 
 Manabu uses [Grommet](https://github.com/grommet/grommet) basic UI theme settings such as Breakpoints for quick component creation.
