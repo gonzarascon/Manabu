@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { deepMerge } from 'grommet/utils';
 import { base } from 'grommet/themes';
 import { Grommet, ResponsiveContext } from 'grommet';
-import styled from 'styled-components';
 import nextCookie from 'next-cookies';
 import axios from 'axios';
 
@@ -42,7 +41,9 @@ export default class MyApp extends App {
 
     if (checkUserData(pageProps.actualUser)) userData = pageProps.actualUser;
 
-    pageProps = { ...pageProps, token, userData };
+    pageProps = { ...pageProps, token, actualUser: userData };
+
+    console.log('pageProps', pageProps);
 
     return { pageProps };
   }

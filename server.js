@@ -26,23 +26,12 @@ app.prepare().then(() => {
     api.main
       .getBasicData()
       .then(async data => {
-        let actualUser = 'NO_USER';
-        if (req.cookies.token) {
-          await api.user
-            .getActualUser(req.cookies.token)
-            .then(user => {
-              actualUser = user;
-            })
-            // eslint-disable-next-line
-            .catch(error => {
-              actualUser = 'AUTH_ERROR';
-            });
-        }
-        app.render(req, res, '/', { basicData: data, user: actualUser });
+        app.render(req, res, '/', { basicData: data });
       })
       .catch(error => {
-        console.error('server-error', error);
-        console.log(res);
+        // console.error('server-error', error);
+        // console.log(res);
+        res.send({ data_error: error });
       });
   });
 
@@ -54,7 +43,10 @@ app.prepare().then(() => {
   // User
 
   server.post('/form-login', (req, res) => {
-    const { username, password } = req.body;
+    const {
+      value: { username, password },
+      route,
+    } = req.body;
     api.user
       .login(username, password)
       .then(data => {
@@ -91,8 +83,7 @@ app.prepare().then(() => {
         res.json({ user: actualUser });
       })
       .catch(error => {
-        console.error('server-error', error);
-        console.log(res);
+        console.log('AUTH_ERROR');
         res.status(401).send('AUTH_ERROR');
       });
   });

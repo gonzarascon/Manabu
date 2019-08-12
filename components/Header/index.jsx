@@ -42,14 +42,15 @@ class Header extends PureComponent {
 
   loginFormHandler(value) {
     axios
-      .post('/form-login', value)
+      .post('/form-login', { value, route: Router.route })
       .then(data => {
         if (!_.isEqual(data, 'AUTH_FAILED')) {
-          location.reload();
+          window.location.reload();
         }
       })
       // eslint-disable-next-line no-console
       .catch(error => console.error('Login Error', error));
+
     this.toggleLogin();
   }
 
