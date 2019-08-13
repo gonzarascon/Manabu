@@ -60,7 +60,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --stage"
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{js,css,jsx,html,json}": [
+        "prettier --write",
+        "git add"
+      ]
     }
   },
   "eslintConfig": {
