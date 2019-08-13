@@ -1,6 +1,16 @@
 import React from 'react';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { Layer, Box, Heading, Text, Form, FormField, Button } from 'grommet';
+import {
+  Layer,
+  Box,
+  Heading,
+  Text,
+  Form,
+  FormField,
+  Button,
+  Anchor,
+} from 'grommet';
 import { calculateRem } from 'constants';
 import Emoji from '../../helpers/emoji';
 
@@ -59,6 +69,9 @@ const LoginLayer = ({ closeHandler, submitFormHandler }) => (
           dsp="block"
         />
       </Form>
+      <Link href="/sign_up">
+        <Anchor label="¿Eres nuevo? ¡Crea una cuenta!" alignSelf="center" />
+      </Link>
     </Box>
   </Layer>
 );

@@ -1,6 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
-import Link from 'next/link';
-import { Box, Image } from 'grommet';
+import React from 'react';
 import { Layout, HomeLayout } from 'components';
 
 const Home = ({ viewportSize, data, token, actualUser, basicData }) => (
