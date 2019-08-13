@@ -81,7 +81,11 @@ app.prepare().then(() => {
   });
 
   server.post('/users/logout/:username', (req, res) => {
-    res.cookie('token', 'NO_TOKEN', { maxAge: Date.now(), overwrite: true, httpOnly: true });
+    res.cookie('token', 'NO_TOKEN', {
+      maxAge: Date.now(),
+      overwrite: true,
+      httpOnly: true,
+    });
     const { route } = req.body;
     app.render(req, res, route, req.query);
   });

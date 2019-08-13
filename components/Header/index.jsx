@@ -14,9 +14,10 @@ import LoginLayer from '../LoginLayer';
 /* TODO: Change 'username' for dynamic username */
 
 function handleLogout(username) {
-  axios.post(`/users/logout/${username}`, { route: Router.route }).then(() => window.location.reload());
+  axios
+    .post(`/users/logout/${username}`, { route: Router.route })
+    .then(() => window.location.reload());
 }
-
 
 class Header extends PureComponent {
   constructor() {
@@ -46,12 +47,12 @@ class Header extends PureComponent {
   }
 
   loginFormHandler(value) {
-    axios.post('/form-login', { value, route: Router.route }).then(() => window.location.reload());
+    axios
+      .post('/form-login', { value, route: Router.route })
+      .then(() => window.location.reload());
 
     this.toggleLogin();
   }
-
-
 
   toggleLogin() {
     const {
