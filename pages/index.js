@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { Box, Image } from 'grommet';
 import { Layout, HomeLayout } from 'components';
 
-const Home = ({ viewportSize, data, token, actualUser }) => (
+const Home = ({ viewportSize, data, token, actualUser, basicData }) => (
   <Layout responsiveSize={viewportSize} userData={actualUser}>
     <HomeLayout
       viewportSize={viewportSize}
-      data={data}
+      data={basicData}
       token={token}
       actualUser={actualUser}
     />

@@ -23,16 +23,7 @@ app.prepare().then(() => {
   server.use(cors());
 
   server.get('/', (req, res) => {
-    api.main
-      .getBasicData()
-      .then(async data => {
-        app.render(req, res, '/', { basicData: data });
-      })
-      .catch(error => {
-        // console.error('server-error', error);
-        // console.log(res);
-        res.send({ data_error: error });
-      });
+    app.render(req, res, '/', req.query);
   });
 
   server.get('/sw.js', (req, res) => {
@@ -47,6 +38,7 @@ app.prepare().then(() => {
       value: { username, password },
       route,
     } = req.body;
+    console.log(req.query);
     api.user
       .login(username, password)
       .then(data => {
@@ -62,7 +54,7 @@ app.prepare().then(() => {
             .getActualUser(token)
             .then(user => {
               const actualUser = user;
-              res.json({ user: actualUser });
+              app.render(req, res, route, actualUser);
             })
             .catch(error => console.error('could not get actual user', error));
         }
@@ -86,6 +78,12 @@ app.prepare().then(() => {
         console.log('AUTH_ERROR');
         res.status(401).send('AUTH_ERROR');
       });
+  });
+
+  server.post('/users/logout/:username', (req, res) => {
+    res.cookie('token', 'NO_TOKEN', { maxAge: Date.now(), overwrite: true, httpOnly: true });
+    const { route } = req.body;
+    app.render(req, res, route, req.query);
   });
 
   // Courses

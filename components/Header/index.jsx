@@ -13,6 +13,11 @@ import LoginLayer from '../LoginLayer';
 
 /* TODO: Change 'username' for dynamic username */
 
+function handleLogout(username) {
+  axios.post(`/users/logout/${username}`, { route: Router.route }).then(() => window.location.reload());
+}
+
+
 class Header extends PureComponent {
   constructor() {
     super();
@@ -41,18 +46,12 @@ class Header extends PureComponent {
   }
 
   loginFormHandler(value) {
-    axios
-      .post('/form-login', { value, route: Router.route })
-      .then(data => {
-        if (!_.isEqual(data, 'AUTH_FAILED')) {
-          window.location.reload();
-        }
-      })
-      // eslint-disable-next-line no-console
-      .catch(error => console.error('Login Error', error));
+    axios.post('/form-login', { value, route: Router.route }).then(() => window.location.reload());
 
     this.toggleLogin();
   }
+
+
 
   toggleLogin() {
     const {
@@ -93,9 +92,9 @@ class Header extends PureComponent {
         <Anchor
           icon={<Logout color="danger" />}
           label="Cerrar Sesion"
-          href={`/users/logout/${username}`}
           margin={{ vertical: '5px' }}
           size="small"
+          onClick={() => handleLogout(username)}
         />
       </Box>
     );

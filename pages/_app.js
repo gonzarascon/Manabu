@@ -10,12 +10,14 @@ import axios from 'axios';
 import { GlobalStyle } from 'static/globalStyles';
 import { customTheme } from 'helpers/customThemes';
 import { checkUserData } from '../constants/';
+import { BasicData } from '../utils/fetchers';
 
 const mergedTheme = deepMerge(base, customTheme);
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx, req }) {
     let pageProps = {};
+    const basicData = await BasicData.getBasicData();
     const { token } = await nextCookie(ctx);
     let userData = 'NO_USER';
 
@@ -41,7 +43,7 @@ export default class MyApp extends App {
 
     if (checkUserData(pageProps.actualUser)) userData = pageProps.actualUser;
 
-    pageProps = { ...pageProps, token, actualUser: userData };
+    pageProps = { ...pageProps, token, actualUser: userData, basicData };
 
     console.log('pageProps', pageProps);
 
