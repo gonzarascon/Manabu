@@ -45,8 +45,6 @@ export default class MyApp extends App {
 
     pageProps = { ...pageProps, token, actualUser: userData, basicData };
 
-    // console.log('pageProps', pageProps);
-
     return { pageProps };
   }
 
