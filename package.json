@@ -55,7 +55,7 @@
     "husky": "^3.0.4",
     "lint-staged": "^9.2.4",
     "prettier": "^1.17.1",
-    "pretty-quick": "^1.8.0",
+    "pretty-quick": "^1.11.1",
     "url-loader": "^1.1.2"
   },
   "husky": {
