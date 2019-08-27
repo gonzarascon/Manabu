@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import Router from 'next/router';
 import _ from 'lodash';
+import axios from 'axios';
 import { Box, Heading, Form, FormField, Text, Select, Button } from 'grommet';
 
 function handleSignUpForm(formValue) {
-  if (!_.some(formValue, _.isEmpty)) console.log('handleSignup', formValue);
+  if (!_.some(formValue, _.isEmpty))
+    axios
+      .post('/user/create', { formValue })
+      .then(() => Router.replace('/'))
+      .catch(error => console.error(error));
 }
 
 const SignUpLayout = () => {

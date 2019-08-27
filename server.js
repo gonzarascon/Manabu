@@ -38,7 +38,6 @@ app.prepare().then(() => {
       value: { username, password },
       route,
     } = req.body;
-    console.log(req.query);
     api.user
       .login(username, password)
       .then(data => {
@@ -63,6 +62,15 @@ app.prepare().then(() => {
         console.error('server-error', error);
         res.send('AUTH_FAILED');
       });
+  });
+
+  server.post('/user/create', (req, res) => {
+    const { formValue } = req.body;
+
+    api.user
+      .create(formValue)
+      .then(data => app.render(req, res, '/', data))
+      .catch(error => 'CREATE_USER_ERROR');
   });
 
   server.get('/actual-user', (req, res) => {
