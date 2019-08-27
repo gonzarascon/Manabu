@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.2.0",
-    "babel-plugin-styled-components": "^1.10.0",
+    "babel-plugin-styled-components": "^1.10.6",
     "babel-preset-airbnb": "^3.2.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
