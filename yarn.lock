@@ -6159,10 +6159,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-avatar@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/react-avatar/-/react-avatar-3.6.0.tgz#0eca450cf6b6124f2ab012a5b2f2165880b6c5bf"
-  integrity sha512-4iuXEAHGlwthN+T2vrHdVikQoiX9zbCZCsNMy3Vg0TF5yC+RSAnV2aWe0aGka15ZxGSLlzcZ6MWt4Gt/XXQlVg==
+react-avatar@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-avatar/-/react-avatar-3.7.0.tgz#cd73cf1b862be196d95650dd8fc2afda956957d8"
+  integrity sha512-MBngP/05ALJ4/fM5ISRm/UDjdMc99dsNZJcWwFenurWPZiUIuVkkxL/7UOqzezU1WprP/CM4/M7ZxFCoeoMkDg==
   dependencies:
     core-js "^2.5.7"
     is-retina "^1.0.3"
