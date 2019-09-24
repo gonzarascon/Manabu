@@ -27,7 +27,7 @@
     "next": "^8.1.0",
     "next-compose-plugins": "^2.2.0",
     "next-cookies": "^1.1.2",
-    "next-fonts": "^0.17.0",
+    "next-fonts": "^0.18.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.18.10",
     "path": "^0.12.7",
