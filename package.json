@@ -29,7 +29,7 @@
     "next-cookies": "^1.1.2",
     "next-fonts": "^0.18.0",
     "node-fetch": "^2.6.0",
-    "nodemon": "^1.18.10",
+    "nodemon": "^1.19.2",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
