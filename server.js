@@ -22,8 +22,16 @@ app.prepare().then(() => {
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(cors());
 
-  server.get('/', (req, res) => {
-    app.render(req, res, '/', req.query);
+  server.get('/', async (req, res) => {
+    const basicData = await api.main
+      .getBasicData()
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error fetching basic data', error);
+        return [];
+      });
+
+    app.render(req, res, '/', { basicData });
   });
 
   server.get('/sw.js', (req, res) => {
@@ -36,7 +44,7 @@ app.prepare().then(() => {
   server.post('/form-login', (req, res) => {
     const {
       value: { username, password },
-      route,
+      route
     } = req.body;
     api.user
       .login(username, password)
@@ -46,7 +54,7 @@ app.prepare().then(() => {
           res.cookie('token', token, {
             maxAge: new Date(Date.now() + 900000),
             httpOnly: true,
-            overwrite: true,
+            overwrite: true
           });
           console.log('cookie created successfully', token);
           api.user
@@ -92,7 +100,7 @@ app.prepare().then(() => {
     res.cookie('token', 'NO_TOKEN', {
       maxAge: Date.now(),
       overwrite: true,
-      httpOnly: true,
+      httpOnly: true
     });
     const { route } = req.body;
     app.render(req, res, route, req.query);
@@ -113,11 +121,11 @@ app.prepare().then(() => {
   });
 
   server.get('/posts/:id', (req, res) =>
-    app.render(req, res, '/posts', { id: req.params.id }),
+    app.render(req, res, '/posts', { id: req.params.id })
   );
 
   server.get('/users/profile/:username', (req, res) =>
-    app.render(req, res, '/users', { username: req.params.username }),
+    app.render(req, res, '/users', { username: req.params.username })
   );
 
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
