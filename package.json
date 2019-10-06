@@ -32,7 +32,7 @@
     "nodemon": "^1.18.10",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
+    "react": "^16.10.2",
     "react-avatar": "^3.7.0",
     "react-dom": "^16.9.0",
     "react-loading-skeleton": "^1.1.2",
