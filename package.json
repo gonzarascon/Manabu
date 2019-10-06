@@ -38,7 +38,7 @@
     "react-loading-skeleton": "^1.1.2",
     "react-slick": "^0.25.2",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^4.3.2",
+    "styled-components": "^4.4.0",
     "unfetch": "^4.1.0"
   },
   "devDependencies": {
