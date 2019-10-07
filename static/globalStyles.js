@@ -11,7 +11,7 @@ import {
   WorkSansRegular,
   WorkSansRegularwf2,
   WorkSansSemiBold,
-  WorkSansSemiBoldwf2,
+  WorkSansSemiBoldwf2
 } from './fonts';
 
 const fontFace = constants.fontFace;

@@ -17,8 +17,8 @@ const mergedTheme = deepMerge(base, customTheme);
 export default class ManabuApp extends App {
   static async getInitialProps({ Component, ctx, req }) {
     let pageProps = {};
-
-    pageProps = { ...pageProps, basicData: req.basicData };
+    console.log('req', req);
+    pageProps = { ...pageProps };
 
     return { pageProps };
   }
@@ -27,7 +27,6 @@ export default class ManabuApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Fragment>
-        <GlobalStyle />
         <Grommet theme={mergedTheme} full plain>
           <ResponsiveContext.Consumer>
             {responsiveSize => (
