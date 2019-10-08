@@ -1,26 +1,36 @@
 import { Fragment } from 'react';
 import App from 'next/app';
 import Head from 'next/head';
+
+import { Grommet, ResponsiveContext } from 'grommet';
 import { deepMerge } from 'grommet/utils';
 import { base } from 'grommet/themes';
-import { Grommet, ResponsiveContext } from 'grommet';
-import nextCookie from 'next-cookies';
-import axios from 'axios';
 
-import { GlobalStyle } from 'static/globalStyles';
+import * as Fonts from '../static/fonts';
+
+import { fontFace } from 'constants';
+
 import { customTheme } from 'helpers/customThemes';
-import { checkUserData } from '../constants/';
-import { BasicData } from '../utils/fetchers';
+const isServer = typeof window === 'undefined';
+const WebFont = !isServer ? require('webfontloader') : null;
 
 const mergedTheme = deepMerge(base, customTheme);
 
 export default class ManabuApp extends App {
-  static async getInitialProps({ Component, ctx, req }) {
-    let pageProps = {};
-    console.log('req', req);
-    pageProps = { ...pageProps };
+  // static async getInitialProps({ Component, ctx, req }) {
+  //   let pageProps = {};
+  //   pageProps = { ...pageProps };
 
-    return { pageProps };
+  //   return { pageProps };
+  // }
+
+  componentDidMount() {
+    WebFont.load({
+      custom: {
+        families: ['Work Sans', 'Kadwa'],
+        urls: ['/static/fonts/workSans.css', '/static/fonts/kadwa.css']
+      }
+    });
   }
 
   render() {
@@ -39,6 +49,40 @@ export default class ManabuApp extends App {
             )}
           </ResponsiveContext.Consumer>
         </Grommet>
+        <style jsx global>
+          {`          ${fontFace(
+            Fonts.KadwaBold,
+            Fonts.KadwaBoldwf2,
+            'Kadwa',
+            'bold'
+          )}
+          ${fontFace(
+            Fonts.KadwaRegular,
+            Fonts.KadwaRegularwf2,
+            'Kadwa',
+            'normal'
+          )}
+          ${fontFace(
+            Fonts.WorkSansExtraBold,
+            Fonts.WorkSansExtraBoldwf2,
+            'WorkSans',
+            700
+          )}
+
+          ${fontFace(
+            Fonts.WorkSansSemiBold,
+            Fonts.WorkSansSemiBoldwf2,
+            'WorkSans',
+            600
+          )}
+
+          ${fontFace(
+            Fonts.WorkSansRegular,
+            Fonts.WorkSansRegularwf2,
+            'WorkSans',
+            'normal'
+          )}`}
+        </style>
       </Fragment>
     );
   }

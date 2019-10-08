@@ -15,22 +15,6 @@
 }
 
 @font-face {
-  font-family: 'Kadwa';
-  src: url('Kadwa-Regular.woff2') format('woff2'),
-    url('Kadwa-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Kadwa';
-  src: url('Kadwa-Bold.woff2') format('woff2'),
-    url('Kadwa-Bold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Work Sans';
   src: url('WorkSans-SemiBold.woff2') format('woff2'),
     url('WorkSans-SemiBold.woff') format('woff');

@@ -22,9 +22,9 @@ app.prepare().then(() => {
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(cors());
 
-  // server.get('/', async (req, res) => {
-  //   return app.render(req, res, '/', req.data);
-  // });
+  server.get('/', async (req, res) => {
+    return app.render(req, res, '/', req.params);
+  });
 
   // server.get('/sw.js', (req, res) => {
   //   res.setHeader('content-type', 'text/javascript');

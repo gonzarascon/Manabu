@@ -6,8 +6,8 @@ export const customTheme = {
   global: {
     // Global fonts
     font: {
-      family: 'WorkSans',
-      weight: 'normal',
+      family: 'Work Sans',
+      weight: 'normal'
     },
     // Global colors
     colors: {
@@ -18,11 +18,11 @@ export const customTheme = {
       gray2: '#B4B4B4',
       gray3: '#C9C9C9',
       gray4: '#E1E1E1',
-      black: '#000000',
+      black: '#000000'
     },
     extend: css`
       ${props => props.dsp && `display: ${props.dsp};`}
-    `,
+    `
   },
 
   // Image component settings
@@ -40,7 +40,7 @@ export const customTheme = {
         `
           object-fit: ${props.objectFit};
         `}
-    `,
+    `
   },
 
   // Box component settings
@@ -72,7 +72,7 @@ export const customTheme = {
       ${props => props.fontSize && `font-size:${props.fontSize};`}
 
       ${props => props.gridColumn && `grid-column:${props.gridColumn};`}
-    `,
+    `
   },
 
   // Anchor component settings
@@ -81,7 +81,7 @@ export const customTheme = {
       textDecoration: 'none',
       extend: css`
         opacity: 0.7;
-      `,
+      `
     },
     extend: css`
       font-weight: normal;
@@ -89,7 +89,7 @@ export const customTheme = {
 
       ${props => props.fontWeight && `font-weight: ${props.fontWeight};`}
       ${props => props.dsp && `display: ${props.dsp};`}
-    `,
+    `
   },
 
   // Text component settings
@@ -99,23 +99,23 @@ export const customTheme = {
       ${props => props.bold && `font-weight: 700;`}
       ${props => props.dsp && `display: ${props.dsp};`}
 
-    `,
+    `
   },
 
   // Heading component settings
   heading: {
     font: {
-      family: 'Kadwa',
+      family: 'Kadwa'
     },
     extend: css`
-      ${props => props.sans && "font-family:'WorkSans';"}
-    `,
+      ${props => props.sans && "font-family:'Work Sans';"}
+    `
   },
 
   // Button component settings
   button: {
     border: {
-      radius: '8px',
+      radius: '8px'
     },
     extend: css`
       ${props =>
@@ -139,8 +139,8 @@ export const customTheme = {
       `}
 
       ${props => props.dsp && `display: ${props.dsp};`}
-    `,
-  },
+    `
+  }
 };
 
 export default { customTheme };
