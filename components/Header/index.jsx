@@ -11,12 +11,14 @@ import { icons, checkUserData } from '../../constants';
 
 import LoginLayer from '../LoginLayer';
 
-/* TODO: Change 'username' for dynamic username */
-
-function handleLogout(username) {
+function handleLogout() {
   axios
-    .post(`/users/logout/${username}`, { route: Router.route })
-    .then(() => window.location.reload());
+    .post(`/persons/logout`, { route: Router.route })
+    .then(() => window.location.reload())
+    .catch(error => {
+      console.error('logout error', error);
+      return `Can't Logout`;
+    });
 }
 
 class Header extends PureComponent {
@@ -24,7 +26,7 @@ class Header extends PureComponent {
     super();
     this.state = {
       userLogged: false,
-      loginOpen: false,
+      loginOpen: false
     };
 
     this.toggleLogin = this.toggleLogin.bind(this);
@@ -56,7 +58,7 @@ class Header extends PureComponent {
 
   toggleLogin() {
     const {
-      state: { loginOpen },
+      state: { loginOpen }
     } = this;
     this.setState({ loginOpen: !loginOpen });
   }
@@ -67,7 +69,7 @@ class Header extends PureComponent {
     const {
       viewportSize,
       // eslint-disable-next-line camelcase
-      userData: { id, username, user_type },
+      userData: { id, username, user_type }
     } = this.props;
     return (
       <Box
@@ -106,8 +108,8 @@ class Header extends PureComponent {
       state: { userLogged, loginOpen },
       props: {
         viewportSize,
-        userData: { username },
-      },
+        userData: { username }
+      }
     } = this;
 
     return (
@@ -224,11 +226,11 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   viewportSize: PropTypes.string.isRequired,
-  userData: PropTypes.objectOf(PropTypes.any),
+  userData: PropTypes.objectOf(PropTypes.any)
 };
 
 Header.defaultProps = {
-  userData: 'NO_USER',
+  userData: 'NO_USER'
 };
 
 export default Header;

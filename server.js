@@ -90,14 +90,15 @@ app.prepare().then(() => {
       });
   });
 
-  server.post('/users/logout/:username', (req, res) => {
-    res.cookie('token', 'NO_TOKEN', {
-      maxAge: Date.now(),
-      overwrite: true,
-      httpOnly: true
-    });
-    const { route } = req.body;
-    app.render(req, res, route, req.query);
+  server.post('/users/logout', (req, res) => {
+    const { route, access_token } = req.body;
+    api.user
+      .logout(access_token)
+      .then(response => {
+        console.log(response.data);
+        res.redirect('/');
+      })
+      .catch(error => `Can't Logout`);
   });
 
   // Courses
