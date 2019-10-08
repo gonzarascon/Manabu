@@ -10,14 +10,14 @@ const HomeLayout = ({
   data,
   token,
   actualUser,
-  actualUser: { id, username, user_type },
+  actualUser: { id, username, user_type }
 }) => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/sw.js')
         .catch(err =>
-          console.error(`Service worker registration failed ${err}`),
+          console.error(`Service worker registration failed ${err}`)
         );
     } else {
       console.log('Service Worker not supported or disabled');
@@ -32,7 +32,7 @@ const HomeLayout = ({
           id: course.id,
           imageSrc: 'static/images/card_default.png',
           cardTitle: course.name,
-          cardSubtitle: course.user.username,
+          cardSubtitle: course.person.username
         };
 
         cardsArray.push(cardData);
@@ -80,12 +80,12 @@ HomeLayout.propTypes = {
   viewportSize: PropTypes.string.isRequired,
   data: PropTypes.objectOf(PropTypes.any).isRequired,
   token: PropTypes.string,
-  actualUser: PropTypes.objectOf(PropTypes.any),
+  actualUser: PropTypes.objectOf(PropTypes.any)
 };
 
 HomeLayout.defaultProps = {
   token: 'NO_TOKEN',
-  actualUser: {},
+  actualUser: {}
 };
 
 export default HomeLayout;

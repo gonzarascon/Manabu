@@ -23,13 +23,15 @@ app.prepare().then(() => {
   server.use(cors());
 
   server.get('/', async (req, res) => {
-    return app.render(req, res, '/', req.params);
+    const basicData = await api.main.getBasicData();
+    console.log('server Basic data', basicData);
+    return app.render(req, res, '/', { basicData });
   });
 
-  // server.get('/sw.js', (req, res) => {
-  //   res.setHeader('content-type', 'text/javascript');
-  //   return res.sendFile(path.join(`${__dirname}/static/serviceWorker.js`));
-  // });
+  server.get('/sw.js', (req, res) => {
+    res.setHeader('content-type', 'text/javascript');
+    return res.sendFile(path.join(`${__dirname}/static/serviceWorker.js`));
+  });
 
   // User
 

@@ -1,5 +1,4 @@
 const withCSS = require('@zeit/next-css');
-const withFonts = require('next-fonts');
 const withPlugins = require('next-compose-plugins');
 
 const nextConfig = {
@@ -14,7 +13,7 @@ const nextConfig = {
       use: {
         loader: 'url-loader',
         options: {
-          limit: 100000,
+          limit: 10000,
           name: '[name].[ext]'
         }
       }

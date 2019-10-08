@@ -17,12 +17,14 @@ const WebFont = !isServer ? require('webfontloader') : null;
 const mergedTheme = deepMerge(base, customTheme);
 
 export default class ManabuApp extends App {
-  // static async getInitialProps({ Component, ctx, req }) {
-  //   let pageProps = {};
-  //   pageProps = { ...pageProps };
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
 
-  //   return { pageProps };
-  // }
+    return { pageProps };
+  }
 
   componentDidMount() {
     WebFont.load({
@@ -49,40 +51,6 @@ export default class ManabuApp extends App {
             )}
           </ResponsiveContext.Consumer>
         </Grommet>
-        <style jsx global>
-          {`          ${fontFace(
-            Fonts.KadwaBold,
-            Fonts.KadwaBoldwf2,
-            'Kadwa',
-            'bold'
-          )}
-          ${fontFace(
-            Fonts.KadwaRegular,
-            Fonts.KadwaRegularwf2,
-            'Kadwa',
-            'normal'
-          )}
-          ${fontFace(
-            Fonts.WorkSansExtraBold,
-            Fonts.WorkSansExtraBoldwf2,
-            'WorkSans',
-            700
-          )}
-
-          ${fontFace(
-            Fonts.WorkSansSemiBold,
-            Fonts.WorkSansSemiBoldwf2,
-            'WorkSans',
-            600
-          )}
-
-          ${fontFace(
-            Fonts.WorkSansRegular,
-            Fonts.WorkSansRegularwf2,
-            'WorkSans',
-            'normal'
-          )}`}
-        </style>
       </Fragment>
     );
   }
