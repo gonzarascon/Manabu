@@ -24,7 +24,6 @@ app.prepare().then(() => {
 
   server.get('/', async (req, res) => {
     const basicData = await api.main.getBasicData();
-    console.log('server Basic data', basicData);
     return app.render(req, res, '/', { basicData });
   });
 
@@ -42,23 +41,17 @@ app.prepare().then(() => {
     } = req.body;
     api.user
       .login(username, password)
-      .then(data => {
-        if (data !== null) {
-          const { token } = data;
-          res.cookie('token', token, {
-            maxAge: new Date(Date.now() + 900000),
-            httpOnly: true,
-            overwrite: true
-          });
-          console.log('cookie created successfully', token);
-          api.user
-            .getActualUser(token)
-            .then(user => {
-              const actualUser = user;
-              app.render(req, res, route, actualUser);
-            })
-            .catch(error => console.error('could not get actual user', error));
-        }
+      .then(async data => {
+        const { id } = data;
+        res.cookie('token', id, {
+          maxAge: new Date(Date.now() + 900000),
+          // httpOnly: true,
+          overwrite: true
+        });
+        console.log('cookie created successfully', id);
+        const actualUser = await api.user.getActualUser(id);
+
+        return res.send({ token: id, actualUser });
       })
       .catch(error => {
         console.error('server-error', error);

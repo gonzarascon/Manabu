@@ -9,7 +9,7 @@ import {
   Form,
   FormField,
   Button,
-  Anchor,
+  Anchor
 } from 'grommet';
 import { calculateRem } from 'constants';
 import Emoji from '../../helpers/emoji';
@@ -37,11 +37,11 @@ const LoginLayer = ({ closeHandler, submitFormHandler }) => (
           <FormField
             label={
               <Text textAlign="center" as="span" dsp="block">
-                Email
+                Nombre de usuario
               </Text>
             }
             name="username"
-            placeholder="Ingresa tu email"
+            placeholder="Ingresa tu usuario"
           />
         </Box>
 
@@ -78,7 +78,7 @@ const LoginLayer = ({ closeHandler, submitFormHandler }) => (
 
 LoginLayer.propTypes = {
   closeHandler: PropTypes.func.isRequired,
-  submitFormHandler: PropTypes.func.isRequired,
+  submitFormHandler: PropTypes.func.isRequired
 };
 
 export default LoginLayer;

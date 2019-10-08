@@ -22,8 +22,8 @@ function handleLogout() {
 }
 
 class Header extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       userLogged: false,
       loginOpen: false
@@ -49,9 +49,12 @@ class Header extends PureComponent {
   }
 
   loginFormHandler(value) {
-    axios
-      .post('/form-login', { value, route: Router.route })
-      .then(() => window.location.reload());
+    const { login } = this.props;
+    // login(value);
+    login(value);
+    // axios
+    //   .post('/form-login', { value, route: Router.route })
+    //   .then(() => window.location.reload());
 
     this.toggleLogin();
   }
