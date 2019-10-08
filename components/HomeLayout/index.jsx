@@ -8,8 +8,6 @@ import WelcomeWrapper from '../WelcomeWrapper';
 const HomeLayout = ({
   viewportSize,
   data,
-  token,
-  actualUser,
   actualUser: { id, username, user_type }
 }) => {
   useEffect(() => {
