@@ -32,7 +32,7 @@ export default class ManabuApp extends App {
     token: null
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     WebFont.load({
       custom: {
         families: ['Work Sans', 'Kadwa'],
@@ -43,7 +43,15 @@ export default class ManabuApp extends App {
     const token = Cookies.get('token');
     console.log('token', token);
     if (token) {
-      this.setState({ token });
+      const user = await axios
+        .get('/users/me', { params: { access_token: token } })
+        .then(reponse => response.data)
+        .catch(error => {
+          console.error('Error fetching user');
+          return {};
+        });
+
+      this.setState({ token, user });
     }
   }
 

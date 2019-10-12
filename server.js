@@ -94,6 +94,14 @@ app.prepare().then(() => {
       .catch(error => `Can't Logout`);
   });
 
+  server.get('/users/me', async (req, res) => {
+    const { access_token } = req.body;
+
+    const actualUser = await api.user.getActualUser(access_token);
+
+    return res.send(actualUser);
+  });
+
   // Courses
   server.get('/course/:id', (req, res) => {
     const courseId = req.params.id;
