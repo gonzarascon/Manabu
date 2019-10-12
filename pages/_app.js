@@ -28,7 +28,7 @@ export default class ManabuApp extends App {
   }
 
   state = {
-    user: null,
+    user: {},
     token: null
   };
 
@@ -41,22 +41,19 @@ export default class ManabuApp extends App {
     });
 
     const token = Cookies.get('token');
-    console.log('token', token);
     if (token) {
-      const user = await axios
-        .get('/users/me', { params: { access_token: token } })
-        .then(reponse => response.data)
-        .catch(error => {
-          console.error('Error fetching user');
-          return {};
-        });
-
+      const fetchUser = await axios
+        .get('/users/me', {
+          params: { access_token: token }
+        })
+        .then(response => response.data)
+        .catch(error => console.log(error));
+      const { user } = fetchUser;
       this.setState({ token, user });
     }
   }
 
   loginUser = async value => {
-    console.log('login');
     await axios
       .post('/form-login', { value })
       .then(response => {

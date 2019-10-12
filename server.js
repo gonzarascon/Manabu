@@ -36,8 +36,7 @@ app.prepare().then(() => {
 
   server.post('/form-login', (req, res) => {
     const {
-      value: { username, password },
-      route
+      value: { username, password }
     } = req.body;
     api.user
       .login(username, password)
@@ -95,11 +94,11 @@ app.prepare().then(() => {
   });
 
   server.get('/users/me', async (req, res) => {
-    const { access_token } = req.body;
+    const { access_token } = req.query;
 
     const actualUser = await api.user.getActualUser(access_token);
-
-    return res.send(actualUser);
+    console.log('actualUser', actualUser);
+    return res.json(actualUser);
   });
 
   // Courses
