@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import { Layout, UserLayout } from 'components';
 
 class Users extends PureComponent {
-  static getInitialProps({ query: { username } }) {
-    return { username };
+  static getInitialProps({ query: { userData } }) {
+    console.log('userData InitialProps', userData);
+    return { userData };
   }
 
   render() {

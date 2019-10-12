@@ -29,7 +29,8 @@ export default class ManabuApp extends App {
 
   state = {
     user: {},
-    token: null
+    token: null,
+    userLogged: false
   };
 
   async componentDidMount() {
@@ -49,7 +50,11 @@ export default class ManabuApp extends App {
         .then(response => response.data)
         .catch(error => console.log(error));
       const { user } = fetchUser;
-      this.setState({ token, user });
+      let isLogged = false;
+      if (user !== undefined) {
+        isLogged = true;
+      }
+      this.setState({ token, user, userLogged: isLogged });
     }
   }
 
@@ -72,7 +77,7 @@ export default class ManabuApp extends App {
   render() {
     const {
       props: { Component, pageProps },
-      state: { token, user }
+      state: { token, user, userLogged }
     } = this;
     return (
       <Fragment>
@@ -84,7 +89,7 @@ export default class ManabuApp extends App {
                   <title>Manabu</title>
                 </Head>
                 <UserContext.Provider
-                  value={{ token, user, login: this.loginUser }}
+                  value={{ token, user, userLogged, login: this.loginUser }}
                 >
                   <Component {...pageProps} viewportSize={responsiveSize} />
                 </UserContext.Provider>

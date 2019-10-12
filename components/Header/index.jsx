@@ -50,12 +50,7 @@ class Header extends PureComponent {
 
   loginFormHandler(value) {
     const { login } = this.props;
-    // login(value);
     login(value);
-    // axios
-    //   .post('/form-login', { value, route: Router.route })
-    //   .then(() => window.location.reload());
-
     this.toggleLogin();
   }
 
@@ -71,7 +66,6 @@ class Header extends PureComponent {
   renderMenuItems() {
     const {
       viewportSize,
-      // eslint-disable-next-line camelcase
       userData: { id, username, user_type }
     } = this.props;
     return (
@@ -82,7 +76,7 @@ class Header extends PureComponent {
         <Anchor
           icon={<User color="gray2" />}
           label="Ver Perfil"
-          href={`/users/profile/${username}`}
+          href={`/users/profile/${id}`}
           margin={{ vertical: '5px' }}
           size="small"
         />

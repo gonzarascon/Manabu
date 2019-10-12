@@ -119,9 +119,11 @@ app.prepare().then(() => {
     app.render(req, res, '/posts', { id: req.params.id })
   );
 
-  server.get('/users/profile/:username', (req, res) =>
-    app.render(req, res, '/users', { username: req.params.username })
-  );
+  server.get('/users/profile/:user_id', async (req, res) => {
+    const userData = await api.user.getUserProfile(req.params.user_id);
+
+    return app.render(req, res, '/users', { userData: userData[0] });
+  });
 
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
 

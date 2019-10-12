@@ -1,6 +1,8 @@
+import _ from 'lodash';
+
 export const icons = {
   manabu_iso: '/static/images/manabu_iso_dragon.png',
-  manabu_logo: '/static/images/manabu_logo_dragon.png',
+  manabu_logo: '/static/images/manabu_logo_dragon.png'
 };
 
 export const calculateRem = size => `${size / 16}rem`;
@@ -16,22 +18,28 @@ export const fontFace = (woffFont, woff2Font, fontName, fontWeight) =>
     }`;
 
 export const checkUserData = userData => {
-  switch (userData) {
-    case 'NO_USER':
-      return false;
+  // switch (userData) {
+  //   case 'NO_USER':
+  //     return false;
 
-    case 'NO_TOKEN':
-      return false;
+  //   case 'NO_TOKEN':
+  //     return false;
 
-    case 'AUTH_ERROR':
-      return false;
+  //   case 'AUTH_ERROR':
+  //     return false;
 
-    case undefined:
-      return false;
+  //   case undefined:
+  //     return false;
 
-    default:
-      return true;
-  }
+  //   case {}:
+  //     return false;
+
+  //   default:
+  //     return true;
+  // }
+  if (_.isEqual(userData, {})) return false;
+
+  return true;
 };
 
 export default { fontFace, icons, calculateRem, checkUserData };

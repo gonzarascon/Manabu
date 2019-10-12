@@ -6,7 +6,7 @@ import UserContext from '../UserContext';
 import Header from '../Header';
 import Footer from '../Footer';
 
-const Layout = ({ children, responsiveSize, userData }) => {
+const Layout = ({ children, responsiveSize }) => {
   const { login, user } = useContext(UserContext);
   return (
     <Box
@@ -23,9 +23,7 @@ const Layout = ({ children, responsiveSize, userData }) => {
 };
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  responsiveSize: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  userData: PropTypes.any.isRequired
+  responsiveSize: PropTypes.string.isRequired
 };
 
 export default Layout;
