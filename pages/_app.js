@@ -68,7 +68,8 @@ export default class ManabuApp extends App {
 
         return this.setState({
           token,
-          user: actualUser.user
+          user: actualUser.user,
+          userLogged: true
         });
       })
       .catch(error => `Can't login`);

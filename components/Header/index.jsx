@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import Link from 'next/link';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -25,27 +26,11 @@ class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      userLogged: false,
       loginOpen: false
     };
 
     this.toggleLogin = this.toggleLogin.bind(this);
     this.loginFormHandler = this.loginFormHandler.bind(this);
-  }
-
-  componentDidMount() {
-    const { userData } = this.props;
-    if (checkUserData(userData)) {
-      this.setState({ userLogged: true });
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { userData } = this.props;
-
-    if (!_.isEqual(userData, nextProps.userData)) {
-      if (checkUserData(userData)) this.setState({ userLogged: true });
-    }
   }
 
   loginFormHandler(value) {
@@ -66,20 +51,25 @@ class Header extends PureComponent {
   renderMenuItems() {
     const {
       viewportSize,
-      userData: { id, username, user_type }
+      userData: { id, username, user_type },
+      token
     } = this.props;
     return (
       <Box
         pad={viewportSize === 'small' ? 'medium' : 'small'}
         width={viewportSize === 'small' ? '100%' : '200px'}
       >
-        <Anchor
-          icon={<User color="gray2" />}
-          label="Ver Perfil"
+        <Link
           href={`/users/profile/${id}`}
-          margin={{ vertical: '5px' }}
-          size="small"
-        />
+          as={`/users/profile/${id}?at=${token}`}
+        >
+          <Anchor
+            icon={<User color="gray2" />}
+            label="Ver Perfil"
+            margin={{ vertical: '5px' }}
+            size="small"
+          />
+        </Link>
         {_.isEqual(user_type, 'teacher') && (
           <Anchor
             icon={<Add color="gray2" />}
@@ -102,10 +92,11 @@ class Header extends PureComponent {
 
   render() {
     const {
-      state: { userLogged, loginOpen },
+      state: { loginOpen },
       props: {
         viewportSize,
-        userData: { username }
+        userData: { username },
+        userLogged
       }
     } = this;
 
@@ -137,7 +128,9 @@ class Header extends PureComponent {
           flexOrder={0}
           maxWidth="90px"
         >
-          <Image alignSelf="start" src={icons.manabu_iso} fit="contain" />
+          <Link href="/">
+            <Image alignSelf="start" src={icons.manabu_iso} fit="contain" />
+          </Link>
         </Box>
 
         {/* Searchbox */}

@@ -1,69 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Stack, Meter, Grid, Text, Heading } from 'grommet';
+import _ from 'lodash';
+import { Box, Stack, Meter, Grid, Text, Heading, Button } from 'grommet';
+import { Achievement } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import SliderRow from '../SliderRow';
 import HighlightLink from '../HighlightLink';
 
-const cardsArray = [
-  {
-    id: 1,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'JavaScript desde cero - Curso Inicial',
-    cardSubtitle: 'Darth Vader',
-  },
-  {
-    id: 2,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'Callbacks vs. Requests en JavaScript',
-    cardSubtitle: 'De la Rua',
-  },
-  {
-    id: 3,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'ES6 de cero a experto',
-    cardSubtitle: 'Rico Mc. Pato',
-  },
-  {
-    id: 3,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'ES6 de cero a experto',
-    cardSubtitle: 'Rico Mc. Pato',
-  },
-  {
-    id: 3,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'ES6 de cero a experto',
-    cardSubtitle: 'Rico Mc. Pato',
-  },
-  {
-    id: 3,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'ES6 de cero a experto',
-    cardSubtitle: 'Rico Mc. Pato',
-  },
-  {
-    id: 3,
-    imageSrc: '/static/images/card_default.png',
-    cardTitle: 'ES6 de cero a experto',
-    cardSubtitle: 'Rico Mc. Pato',
-  },
-];
-
 const desktopColumns = ['.8fr', '1fr'];
 const desktopRows = ['small', '1fr'];
 const desktopAreas = [
   { name: 'userData', start: [0, 0], end: [0, 0] },
-  { name: 'badges', start: [0, 1], end: [0, 1] },
-  { name: 'slider', start: [1, 1], end: [1, 1] },
+  // { name: 'badges', start: [0, 1], end: [0, 1] },
+  { name: 'slider', start: [0, 1], end: [1, 1] }
 ];
 
 const mobileColumns = ['1fr'];
 const mobileRows = ['small', '1fr'];
 const mobileAreas = [
-  { name: 'userData', start: [0, 0], end: [0, 0] },
-  { name: 'slider', start: [0, 1], end: [0, 1] },
+  { name: 'courses', start: [0, 0], end: [0, 1] },
+  { name: 'slider', start: [0, 1], end: [0, 1] }
 ];
 
 const values = [
@@ -71,29 +28,30 @@ const values = [
     value: 65,
     color: 'brand',
     label: 'Experiencia acumulada',
-    highlight: true,
-  },
+    highlight: true
+  }
 ];
 
-// TODO: Implement server logic here
-const placeholders = [
-  'badge1',
-  'badge2',
-  'badge3',
-  'badge4',
-  'badge5',
-  'badge6',
-  'badge7',
-  'badge8',
-];
+function defineTitles(titles) {
+  const selectedTitle = _.find(titles, o => o.selected === true);
+
+  return selectedTitle === undefined ? '' : selectedTitle;
+}
 
 class UserLayout extends PureComponent {
   render() {
     const {
       responsiveSize,
-      userData: { username, xp },
+      userData: { username, xp, courses, titles }
     } = this.props;
     // TODO: receive user data
+
+    const xpMeter = [
+      {
+        value: xp,
+        label: 'Experiencia de usuario'
+      }
+    ];
 
     return (
       <Box pad={{ horizontal: 'xsmall' }} as="div">
@@ -115,7 +73,7 @@ class UserLayout extends PureComponent {
               <Stack anchor="center">
                 <Meter
                   type="circle"
-                  values={xp}
+                  values={xpMeter}
                   round
                   max={100}
                   size="110"
@@ -132,54 +90,19 @@ class UserLayout extends PureComponent {
                 {username}
               </Heading>
               <Text color="brand" size="large" margin={{ top: 'small' }}>
-                Suricata del codigo
+                {defineTitles(titles)}
               </Text>
             </Box>
           </Box>
-
-          {responsiveSize !== 'small' && (
-            <Box
-              gridArea="badges"
-              as="aside"
-              border={{ color: 'brand', size: 'small', side: 'all' }}
-              round="small"
-            >
-              <Box margin="medium">
-                <Heading level={3} responsive color="gray1">
-                  Logros
-                </Heading>
-              </Box>
-              <Box
-                direction="row"
-                margin="medium"
-                wrap
-                justify="evenly"
-                overflow={{ vertical: 'auto' }}
-                height="300px"
-              >
-                {placeholders.map(placeholder => (
-                  <Box
-                    background="gray1"
-                    round="full"
-                    width="100px"
-                    height="100px"
-                    a11yTitle={placeholder}
-                    key={placeholder}
-                    animation="fadeIn"
-                    margin="medium"
-                  />
-                ))}
-              </Box>
+          {courses && (
+            <Box gridArea="slider" as="section" pad="medium">
+              <SliderRow
+                responsiveSize={responsiveSize}
+                headingLabel="Tus cursos"
+                cards={courses}
+              />
             </Box>
           )}
-
-          <Box gridArea="slider" as="section">
-            <SliderRow
-              responsiveSize={responsiveSize}
-              headingLabel="Tus cursos"
-              cards={cardsArray}
-            />
-          </Box>
         </Grid>
         <Box margin={{ vertical: 'large' }}>
           <HighlightLink
@@ -196,6 +119,11 @@ class UserLayout extends PureComponent {
 
 UserLayout.propTypes = {
   responsiveSize: PropTypes.string.isRequired,
+  userData: PropTypes.objectOf(PropTypes.any)
+};
+
+UserLayout.defaultProps = {
+  userData: {}
 };
 
 export default UserLayout;

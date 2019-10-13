@@ -7,7 +7,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 const Layout = ({ children, responsiveSize }) => {
-  const { login, user } = useContext(UserContext);
+  const { login, user, userLogged, token } = useContext(UserContext);
   return (
     <Box
       margin={{ vertical: '0', horizontal: 'auto' }}
@@ -15,7 +15,13 @@ const Layout = ({ children, responsiveSize }) => {
       as="section"
       maxWidth="1640px"
     >
-      <Header viewportSize={responsiveSize} userData={user} login={login} />
+      <Header
+        viewportSize={responsiveSize}
+        userData={user}
+        login={login}
+        userLogged={userLogged}
+        token={token}
+      />
       {children}
       <Footer viewportSize={responsiveSize} />
     </Box>

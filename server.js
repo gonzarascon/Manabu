@@ -120,7 +120,10 @@ app.prepare().then(() => {
   );
 
   server.get('/users/profile/:user_id', async (req, res) => {
-    const userData = await api.user.getUserProfile(req.params.user_id);
+    const { at } = req.query;
+    const userData = await api.user.getUserProfile(req.params.user_id, at);
+
+    console.log('userData', userData[0]);
 
     return app.render(req, res, '/users', { userData: userData[0] });
   });
