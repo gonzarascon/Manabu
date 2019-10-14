@@ -97,13 +97,26 @@ app.prepare().then(() => {
     return res.json(actualUser);
   });
 
+  server.get('/users/profile/:user_id', async (req, res) => {
+    const { at } = req.query;
+    const userData = await api.user.getUserProfile(req.params.user_id, at);
+
+    console.log('userData', userData[0]);
+
+    return app.render(req, res, '/users', {
+      userData: userData[0]
+    });
+  });
+
   // Courses
   server.get('/course/:id', (req, res) => {
     const courseId = req.params.id;
     api.course
       .getBasicData(courseId)
       .then(data => {
-        app.render(req, res, '/course', { courseData: data });
+        app.render(req, res, '/course', {
+          courseData: data
+        });
       })
       .catch(error => {
         console.error('server-error', error);
@@ -111,20 +124,21 @@ app.prepare().then(() => {
       });
   });
 
-  server.get('/posts/:id', (req, res) =>
-    app.render(req, res, '/posts', { id: req.params.id })
-  );
-
-  server.get('/users/profile/:user_id', async (req, res) => {
-    const { at } = req.query;
-    const userData = await api.user.getUserProfile(req.params.user_id, at);
-
-    console.log('userData', userData[0]);
-
-    return app.render(req, res, '/users', { userData: userData[0] });
+  server.get('/courses/create/:user_id', (req, res) => {
+    const { user_id } = req.params;
+    console.log('user_id', user_id);
+    return app.render(req, res, '/courses/create', { user_id });
   });
 
+  // Catalog
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
+
+  // Posts
+  server.get('/posts/:id', (req, res) =>
+    app.render(req, res, '/posts', {
+      id: req.params.id
+    })
+  );
 
   server.get('*', (req, res) => handle(req, res));
 

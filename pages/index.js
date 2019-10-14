@@ -16,7 +16,6 @@ const Home = ({ viewportSize, data, token, actualUser, basicData }) => (
 Home.getInitialProps = async ({ query: { user }, query }) => {
   const basicData = await api.main.getBasicData();
   const resUser = await user;
-  console.log('basicData', basicData);
   return { data: basicData, actualUser: resUser };
 };
 

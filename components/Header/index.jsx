@@ -1,26 +1,14 @@
 import React, { PureComponent } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import _ from 'lodash';
 import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
 import { Search, User, Logout, Code, Add } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
-import { icons, checkUserData } from '../../constants';
+import { icons } from '../../constants';
 
 import LoginLayer from '../LoginLayer';
-
-function handleLogout() {
-  axios
-    .post(`/users/logout`, { route: Router.route })
-    .then(() => Router.push('/'))
-    .catch(error => {
-      console.error('logout error', error);
-      return `Can't Logout`;
-    });
-}
 
 class Header extends PureComponent {
   constructor(props) {
@@ -51,7 +39,7 @@ class Header extends PureComponent {
   renderMenuItems() {
     const {
       viewportSize,
-      userData: { id, username, user_type },
+      userData: { id, user_type },
       token,
       logout
     } = this.props;
@@ -72,13 +60,14 @@ class Header extends PureComponent {
           />
         </Link>
         {_.isEqual(user_type, 'teacher') && (
-          <Anchor
-            icon={<Add color="gray2" />}
-            label="Nuevo curso"
-            href={`/courses/create?user_id=${id}`}
-            margin={{ vertical: '5px' }}
-            size="small"
-          />
+          <Link href={`/courses/create/${id}`} as={`/courses/create/${id}`}>
+            <Anchor
+              icon={<Add color="gray2" />}
+              label="Nuevo curso"
+              margin={{ vertical: '5px' }}
+              size="small"
+            />
+          </Link>
         )}
         <Anchor
           icon={<Logout color="danger" />}
@@ -217,7 +206,11 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   viewportSize: PropTypes.string.isRequired,
-  userData: PropTypes.objectOf(PropTypes.any)
+  userData: PropTypes.objectOf(PropTypes.any),
+  userLogged: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {
