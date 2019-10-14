@@ -20,6 +20,10 @@ export const customTheme = {
       gray4: '#E1E1E1',
       black: '#000000'
     },
+    // Inputs styles
+    input: {
+      weight: 'normal'
+    },
     extend: css`
       ${props => props.dsp && `display: ${props.dsp};`}
     `
@@ -140,6 +144,10 @@ export const customTheme = {
 
       ${props => props.dsp && `display: ${props.dsp};`}
     `
+  },
+  // Textarea component settings
+  textArea: {
+    extend: `font-weight: normal;`
   }
 };
 

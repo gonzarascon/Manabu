@@ -16,7 +16,7 @@ export { default as HomeLayout } from './HomeLayout';
 export { default as UserLayout } from './UserLayout';
 export { default as IntroCourse } from './IntroCourse';
 export { default as SignUpLayout } from './SignUpLayout';
-
+export { default as CreateCourseLayout } from './CreateCourseLayout';
 // Contexts
 
 export { default as UserContext } from './UserContext';

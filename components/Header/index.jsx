@@ -208,7 +208,7 @@ Header.propTypes = {
   viewportSize: PropTypes.string.isRequired,
   userData: PropTypes.objectOf(PropTypes.any),
   userLogged: PropTypes.bool.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.any.isRequired,
   logout: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired
 };

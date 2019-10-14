@@ -124,10 +124,10 @@ app.prepare().then(() => {
       });
   });
 
-  server.get('/courses/create/:user_id', (req, res) => {
+  server.get('/courses/create/:user_id', async (req, res) => {
     const { user_id } = req.params;
-    console.log('user_id', user_id);
-    return app.render(req, res, '/courses/create', { user_id });
+    const languages = await api.languages.getAllLanguages();
+    return app.render(req, res, '/courses/create', { user_id, languages });
   });
 
   // Catalog
