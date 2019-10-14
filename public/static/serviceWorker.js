@@ -4,7 +4,7 @@
  * https://www.npmjs.com/package/next-offline
  */
 importScripts(
-  'https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js',
+  'https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js'
 );
 
 const PRECACHE_FILES = [
@@ -20,7 +20,7 @@ const PRECACHE_FILES = [
   '/static/fonts/WorkSans-Regular.woff',
   '/static/fonts/WorkSans-Regular.woff2',
   '/static/fonts/WorkSans-SemiBold.woff',
-  '/static/fonts/WorkSans-SemiBold.woff2',
+  '/static/fonts/WorkSans-SemiBold.woff2'
 ];
 
 if (workbox) {
@@ -35,7 +35,7 @@ if (workbox) {
   // Cache CSS & JS
   workbox.routing.registerRoute(
     /\.(?:js|css)$/,
-    workbox.strategies.staleWhileRevalidate(),
+    workbox.strategies.staleWhileRevalidate()
   );
 
   // Cache Images
@@ -49,9 +49,9 @@ if (workbox) {
       plugins: [
         new workbox.expiration.Plugin({
           maxEntries: 60,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-        }),
-      ],
-    }),
+          maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
+        })
+      ]
+    })
   );
 }

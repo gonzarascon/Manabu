@@ -24,7 +24,8 @@ const HomeLayout = ({
 
   const renderSlider = heading => {
     const cardsArray = [];
-    if (data)
+    console.log('data', data);
+    if (data && data.length)
       data.forEach(course => {
         const cardData = {
           id: course.id,

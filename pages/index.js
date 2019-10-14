@@ -1,4 +1,5 @@
 import React from 'react';
+import api from '../api';
 import { Layout, HomeLayout } from 'components';
 
 const Home = ({ viewportSize, data, token, actualUser, basicData }) => (
@@ -12,10 +13,11 @@ const Home = ({ viewportSize, data, token, actualUser, basicData }) => (
   </Layout>
 );
 
-Home.getInitialProps = async ({ query: { basicData, user }, query }) => {
-  const resBasicData = await basicData;
+Home.getInitialProps = async ({ query: { user }, query }) => {
+  const basicData = await api.main.getBasicData();
   const resUser = await user;
-  return { data: resBasicData, actualUser: resUser };
+  console.log('basicData', basicData);
+  return { data: basicData, actualUser: resUser };
 };
 
 export default Home;

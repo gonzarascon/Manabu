@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { Layout, UserLayout } from 'components';
 
 class Users extends PureComponent {
-  static getInitialProps({ query: { userData } }) {
-    console.log('userData InitialProps', userData);
-    return { userData };
+  static async getInitialProps({ query: { userData } }) {
+    const data = await userData;
+    return { userData: data };
   }
 
   render() {

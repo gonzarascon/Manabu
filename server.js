@@ -23,13 +23,14 @@ app.prepare().then(() => {
   server.use(cors());
 
   server.get('/', async (req, res) => {
-    const basicData = await api.main.getBasicData();
-    return app.render(req, res, '/', { basicData });
+    return app.render(req, res, '/', req.params);
   });
 
   server.get('/sw.js', (req, res) => {
     res.setHeader('content-type', 'text/javascript');
-    return res.sendFile(path.join(`${__dirname}/static/serviceWorker.js`));
+    return res.sendFile(
+      path.join(`${__dirname}/public/static/serviceWorker.js`)
+    );
   });
 
   // User
@@ -97,7 +98,6 @@ app.prepare().then(() => {
     const { access_token } = req.query;
 
     const actualUser = await api.user.getActualUser(access_token);
-    console.log('actualUser', actualUser);
     return res.json(actualUser);
   });
 
