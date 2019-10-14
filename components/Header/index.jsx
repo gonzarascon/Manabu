@@ -14,8 +14,8 @@ import LoginLayer from '../LoginLayer';
 
 function handleLogout() {
   axios
-    .post(`/persons/logout`, { route: Router.route })
-    .then(() => window.location.reload())
+    .post(`/users/logout`, { route: Router.route })
+    .then(() => Router.push('/'))
     .catch(error => {
       console.error('logout error', error);
       return `Can't Logout`;
@@ -52,7 +52,8 @@ class Header extends PureComponent {
     const {
       viewportSize,
       userData: { id, username, user_type },
-      token
+      token,
+      logout
     } = this.props;
     return (
       <Box
@@ -84,7 +85,7 @@ class Header extends PureComponent {
           label="Cerrar Sesion"
           margin={{ vertical: '5px' }}
           size="small"
-          onClick={() => handleLogout(username)}
+          onClick={() => logout()}
         />
       </Box>
     );

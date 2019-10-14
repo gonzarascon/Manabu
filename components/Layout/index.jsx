@@ -7,7 +7,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 const Layout = ({ children, responsiveSize }) => {
-  const { login, user, userLogged, token } = useContext(UserContext);
+  const { login, user, userLogged, token, logout } = useContext(UserContext);
   return (
     <Box
       margin={{ vertical: '0', horizontal: 'auto' }}
@@ -21,6 +21,7 @@ const Layout = ({ children, responsiveSize }) => {
         login={login}
         userLogged={userLogged}
         token={token}
+        logout={logout}
       />
       {children}
       <Footer viewportSize={responsiveSize} />

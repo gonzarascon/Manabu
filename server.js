@@ -83,15 +83,11 @@ app.prepare().then(() => {
       });
   });
 
-  server.post('/users/logout', (req, res) => {
-    const { route, access_token } = req.body;
-    api.user
-      .logout(access_token)
-      .then(response => {
-        console.log(response.data);
-        res.redirect('/');
-      })
-      .catch(error => `Can't Logout`);
+  server.post('/users/logout', async (req, res) => {
+    const { access_token } = req.body.params;
+
+    await api.user.logout(access_token);
+    res.end();
   });
 
   server.get('/users/me', async (req, res) => {

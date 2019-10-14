@@ -74,6 +74,16 @@ export default class ManabuApp extends App {
       .catch(error => `Can't login`);
   };
 
+  logoutUser = async () => {
+    axios
+      .post(`/users/logout`, { params: { access_token: this.state.token } })
+      .then(() => this.setState({ token: null, user: {}, userLogged: false }))
+      .catch(error => {
+        console.error('logout error', error);
+        return `Can't Logout`;
+      });
+  };
+
   render() {
     const {
       props: { Component, pageProps },
@@ -89,7 +99,13 @@ export default class ManabuApp extends App {
                   <title>Manabu</title>
                 </Head>
                 <UserContext.Provider
-                  value={{ token, user, userLogged, login: this.loginUser }}
+                  value={{
+                    token,
+                    user,
+                    userLogged,
+                    login: this.loginUser,
+                    logout: this.logoutUser
+                  }}
                 >
                   <Component {...pageProps} viewportSize={responsiveSize} />
                 </UserContext.Provider>
