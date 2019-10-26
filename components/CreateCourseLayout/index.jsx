@@ -32,7 +32,12 @@ const CreateButton = styled(Button)`
   max-width: 200px;
 `;
 
-function CreateCourseLayout({ handleInput, values, languages }) {
+function CreateCourseLayout({
+  handleInput,
+  values,
+  languages,
+  creationHandler
+}) {
   return (
     <Box pad="medium" as="section">
       <Box direction="row" alignContent="center">
@@ -43,41 +48,48 @@ function CreateCourseLayout({ handleInput, values, languages }) {
       </Box>
       <Box>
         <FormWrapper>
-          <CustomForm>
+          <CustomForm onSubmit={({ value }) => creationHandler(value)}>
             <FormField
               name="name"
               label="Nombre del curso"
               value={values.courseName}
               onChange={e => handleInput('courseName', e.target.value)}
             />
-            <Box>
-              <Text>Descripción</Text>
-              <TextArea
-                value={values.courseDescription}
-                onChange={e => handleInput('courseDescription', e.target.value)}
-              />
-            </Box>
-            <Box>
-              <Text>¿Cual es la dificultad de este curso?</Text>
-              <Select
-                options={['rookie', 'champion', 'mega']}
-                value={values.courseLevel}
-                onChange={({ option }) => handleInput('courseLevel', option)}
-              />
-            </Box>
-            <Box>
-              <Text>¿Que aprenderán tus estudiantes?</Text>
-              <Select
-                options={languages}
-                // eslint-disable-next-line react/no-children-prop
-                children={option => option.name}
-                multiple
-                onSearch={e => console.log('search', e)}
-                onChange={({ option }) => console.log('option', option)}
-              />
-            </Box>
+            <FormField
+              name="description"
+              label="Descripción"
+              value={values.courseDescription}
+              onChange={e => handleInput('courseDescription', e.target.value)}
+              component={TextArea}
+            />
+
+            <FormField
+              label="¿Cual es la dificultad de este curso?"
+              name="level"
+              value={values.courseLevel}
+              onChange={({ option }) => handleInput('courseLevel', option)}
+              component={props => (
+                <Select options={['rookie', 'champion', 'mega']} {...props} />
+              )}
+            />
+            <FormField
+              label="¿Que aprenderán tus estudiantes?"
+              name="languages"
+              onChange={({ option }) => console.log('option', option)}
+              value={values.courseLanguages}
+              component={props => (
+                <Select
+                  options={languages}
+                  // eslint-disable-next-line react/no-children-prop
+                  children={option => option.name}
+                  multiple
+                  onSearch={e => console.log('search', e)}
+                  {...props}
+                />
+              )}
+            />
+            <CreateButton type="submit" label="Crear curso" />
           </CustomForm>
-          <CreateButton type="submit" label="Crear curso" />
         </FormWrapper>
       </Box>
     </Box>

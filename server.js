@@ -130,6 +130,23 @@ app.prepare().then(() => {
     return app.render(req, res, '/courses/create', { user_id, languages });
   });
 
+  server.post('/course/create', async (req, res) => {
+    const { access_token } = req.query;
+    const { value } = req.body;
+
+    await api.course
+      .createCourse(value, access_token)
+      .then(data => res.send(data.data))
+      .catch(error => console.error('could not create course', error));
+  });
+
+  server.get('/course/:course_id/edit/class', async (req, res) => {
+    const { course_id } = req.params;
+    return app.render(req, res, `/course/${course_id}/edit/stage`, {
+      course_id
+    });
+  });
+
   // Catalog
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
 
