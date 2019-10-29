@@ -20,7 +20,7 @@
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.17.0",
-    "grommet": "^2.7.8",
+    "grommet": "^2.7.11",
     "grommet-icons": "^4.3.0",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.6",
