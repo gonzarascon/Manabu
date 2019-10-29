@@ -7,13 +7,13 @@ const gridRows = ['xsmall', '1fr', '.7fr'];
 const gridAreasMedium = [
   { name: 'courseTitle', start: [0, 0], end: [1, 0] },
   { name: 'courseImage', start: [0, 1], end: [0, 2] },
-  { name: 'courseDescription', start: [1, 1], end: [1, 1] },
+  { name: 'courseDescription', start: [1, 1], end: [1, 1] }
 ];
 
 const gridAreasSmall = [
   { name: 'courseTitle', start: [0, 0], end: [1, 0] },
   { name: 'courseImage', start: [0, 1], end: [1, 1] },
-  { name: 'courseDescription', start: [0, 2], end: [1, 2] },
+  { name: 'courseDescription', start: [0, 2], end: [1, 2] }
 ];
 
 class IntroCourse extends PureComponent {
@@ -26,16 +26,28 @@ class IntroCourse extends PureComponent {
         description,
         // eslint-disable-next-line camelcase
         course_photo,
-        user: { username },
-      },
+        person: { username },
+        languages
+      }
     } = this.props;
     this.state = {
       title: name,
       description,
       course_photo,
       owner: username,
-      level,
+      level
     };
+  }
+
+  checkLevel(level) {
+    switch (level) {
+      case 'champion':
+        return '250XP';
+      case 'mega':
+        return '500XP';
+      default:
+        return '100XP';
+    }
   }
 
   render() {
@@ -70,7 +82,7 @@ class IntroCourse extends PureComponent {
               size="xlarge"
               margin={{ vertical: 'medium', horizontal: 'auto' }}
             >
-              Con este curso sumas 500XP en JavaScript
+              Con este curso sumas {this.checkLevel(level)}.
             </Text>
           </Box>
 
@@ -101,7 +113,7 @@ class IntroCourse extends PureComponent {
 
 IntroCourse.propTypes = {
   responsiveSize: PropTypes.string.isRequired,
-  courseData: PropTypes.objectOf(PropTypes.any).isRequired,
+  courseData: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default IntroCourse;

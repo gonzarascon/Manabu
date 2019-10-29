@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import App from 'next/app';
 import Head from 'next/head';
+import Router from 'next/router';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
@@ -77,7 +78,10 @@ export default class ManabuApp extends App {
   logoutUser = async () => {
     axios
       .post(`/users/logout`, { params: { access_token: this.state.token } })
-      .then(() => this.setState({ token: null, user: {}, userLogged: false }))
+      .then(() => {
+        this.setState({ token: null, user: {}, userLogged: false });
+        Router.push('/');
+      })
       .catch(error => {
         console.error('logout error', error);
         return `Can't Logout`;

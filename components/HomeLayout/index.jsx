@@ -56,9 +56,9 @@ const HomeLayout = ({
       )}
       {username === undefined && (
         <HighlightLink
-          textLabel="Inicia sesión y"
-          anchorLabel="comienza a aprender."
-          anchorHref={`/sign_up`}
+          textLabel="¿Nuevo por aquí?"
+          anchorLabel="Registrate y comienza a aprender."
+          anchorHref="/sign_up"
           responsiveSize={viewportSize}
         />
       )}
