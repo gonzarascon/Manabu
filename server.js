@@ -87,7 +87,7 @@ app.prepare().then(() => {
     const { access_token } = req.body.params;
 
     await api.user.logout(access_token);
-    res.end();
+    return app.render(req, res, '/', {});
   });
 
   server.get('/users/me', async (req, res) => {

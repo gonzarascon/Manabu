@@ -2,8 +2,21 @@ import React, { useState } from 'react';
 import { Heading, Box, Grid } from 'grommet';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
+import { isKeyHotkey } from 'is-hotkey';
 
-import { Wrapper } from './styles';
+import {
+  Wrapper,
+  EditorWrapper,
+  CustomPre,
+  Bold,
+  Italic,
+  Underline
+} from './styles';
+
+const isBoldHotkey = isKeyHotkey('mod+b');
+const isItalicHotkey = isKeyHotkey('mod+i');
+const isUnderlinedHotkey = isKeyHotkey('mod+u');
+const isCodeHotkey = isKeyHotkey('mod+`');
 
 const initialValue = Value.fromJSON({
   document: {
@@ -14,7 +27,7 @@ const initialValue = Value.fromJSON({
         nodes: [
           {
             object: 'text',
-            text: 'Escribe aqui las instrucciones de tu curso...'
+            text: ''
           }
         ]
       }
@@ -26,9 +39,9 @@ const initialValue = Value.fromJSON({
 function CodeNode(props) {
   const { attributes, children } = props;
   return (
-    <pre {...attributes}>
+    <CustomPre {...attributes}>
       <code>{children}</code>
-    </pre>
+    </CustomPre>
   );
 }
 
@@ -43,13 +56,25 @@ function RenderBlock(props, editor, next) {
 
 function BoldMark(props) {
   const { children } = props;
-  return <strong>{children}</strong>;
+  return <Bold>{children}</Bold>;
 }
 
-function RenderMark(props, editor, next) {
-  switch (props.mark.type) {
+function renderMark(props, editor, next) {
+  const { children, mark, attributes } = props;
+
+  switch (mark.type) {
     case 'bold':
-      return <BoldMark {...props} />;
+      return <BoldMark {...attributes}>{children}</BoldMark>;
+    case 'code':
+      return (
+        <CustomPre>
+          <code {...attributes}>{children}</code>
+        </CustomPre>
+      );
+    case 'italic':
+      return <Italic {...attributes}>{children}</Italic>;
+    case 'underlined':
+      return <Underline {...attributes}>{children}</Underline>;
     default:
       return next();
   }
@@ -58,48 +83,47 @@ function RenderMark(props, editor, next) {
 function EditStageLayout() {
   const [editorValue, setEditorValue] = useState(initialValue);
 
-  function editorOnChange({ value }) {
+  function OnChange({ value }) {
     setEditorValue(value);
   }
 
-  function editorOnKeyDown(event, editor, next) {
-    // Return with no changes if it's not the "`" key with ctrl pressed.
-    if (event.key !== '`' || !event.ctrlKey) return next();
+  function OnKeyDown(event, editor, next) {
+    let mark;
 
-    // Decide what to do based on the key code...
-    switch (event.key) {
-      // When "B" is pressed, add a "bold" mark to the text.
-      case 'b': {
-        event.preventDefault();
-        editor.toggleMark('bold');
-        break;
-      }
-      // When "`" is pressed, keep our existing code block logic.
-      case '`': {
-        const isCode = editor.value.blocks.some(block => block.type == 'code');
-        event.preventDefault();
-        editor.setBlocks(isCode ? 'paragraph' : 'code');
-        break;
-      }
-      // Otherwise, let other plugins handle it.
-      default: {
-        return next();
-      }
+    if (isBoldHotkey(event)) {
+      mark = 'bold';
+    } else if (isItalicHotkey(event)) {
+      mark = 'italic';
+    } else if (isUnderlinedHotkey(event)) {
+      mark = 'underlined';
+    } else if (isCodeHotkey(event)) {
+      mark = 'code';
+    } else {
+      return next();
     }
+
+    event.preventDefault();
+    editor.toggleMark(mark);
   }
 
   return (
     <Wrapper>
-      <Heading>Editar clase: 1</Heading>
-      <Box as="section">
-        <Grid gap="small" columns={['medium', 'medium', 'medium']}>
-          <Editor
-            value={editorValue}
-            onChange={editorOnChange}
-            renderBlock={RenderBlock}
-            onKeyDown={editorOnKeyDown}
-            renderMark={RenderMark}
-          />
+      <Heading level={3} color="gray1" margin="medium">
+        Editar clase: 1
+      </Heading>
+      <Box as="section" height="75vh">
+        <Grid gap="small" columns={['medium', 'medium', 'medium']} fill>
+          <EditorWrapper>
+            <Editor
+              className="classEditor"
+              value={editorValue}
+              onChange={OnChange}
+              renderBlock={RenderBlock}
+              onKeyDown={OnKeyDown}
+              renderMark={renderMark}
+              placeholder="Escribe aqui las instrucciones de tu curso..."
+            />
+          </EditorWrapper>
         </Grid>
       </Box>
     </Wrapper>

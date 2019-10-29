@@ -47,12 +47,21 @@ const HomeLayout = ({
   return (
     <Fragment>
       <WelcomeWrapper />
-      <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
-        <Box margin={{ vertical: '50px' }}>
-          {renderSlider('Continua donde lo dejaste')}
+      {username !== undefined && (
+        <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
+          <Box margin={{ vertical: '50px' }}>
+            {renderSlider('Continua donde lo dejaste')}
+          </Box>
         </Box>
-      </Box>
-
+      )}
+      {username === undefined && (
+        <HighlightLink
+          textLabel="Inicia sesión y"
+          anchorLabel="comienza a aprender."
+          anchorHref={`/sign_up`}
+          responsiveSize={viewportSize}
+        />
+      )}
       <Box fill="horizontal">
         <Image src="/static/images/courses_banner.png" fit="contain" />
       </Box>

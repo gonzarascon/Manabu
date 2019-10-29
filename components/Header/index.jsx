@@ -162,7 +162,7 @@ class Header extends PureComponent {
           margin={{ right: 'xsmall' }}
           flexOrder={viewportSize === 'small' ? 1 : 3}
         >
-          <Box as="nav" alignSelf="center" align="center" justify="start">
+          {/* <Box as="nav" alignSelf="center" align="center" justify="start">
             <Box as="ul" alignSelf="center" align="center">
               <Anchor
                 icon={<Code color="gray2" />}
@@ -170,7 +170,7 @@ class Header extends PureComponent {
                 label="Catalogo"
               />
             </Box>
-          </Box>
+          </Box> */}
           {!userLogged && (
             <Button
               label="Iniciar sesion"
