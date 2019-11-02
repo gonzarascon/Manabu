@@ -1,15 +1,19 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Box, Image } from 'grommet';
 import SliderRow from '../SliderRow';
 import HighlightLink from '../HighlightLink';
 import WelcomeWrapper from '../WelcomeWrapper';
+import UserContext from '../UserContext';
 
 const HomeLayout = ({
   viewportSize,
   data,
   actualUser: { id, username, user_type }
 }) => {
+  const { login, user, userLogged, token, logout } = useContext(UserContext);
+
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
@@ -47,14 +51,14 @@ const HomeLayout = ({
   return (
     <Fragment>
       <WelcomeWrapper />
-      {username !== undefined && (
+      {!_.isEqual(user, {}) && (
         <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
           <Box margin={{ vertical: '50px' }}>
             {renderSlider('Continua donde lo dejaste')}
           </Box>
         </Box>
       )}
-      {username === undefined && (
+      {_.isEqual(user, {}) && (
         <HighlightLink
           textLabel="¿Nuevo por aquí?"
           anchorLabel="Registrate y comienza a aprender."

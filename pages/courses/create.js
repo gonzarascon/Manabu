@@ -47,7 +47,7 @@ class create extends PureComponent {
       )
       .then(response => {
         const { data } = response;
-        return Router.replace(`/course/${data.id}/edit/class`);
+        return Router.replace(`/course/${data.id}/edit/dashboard`);
       })
       .catch(error => console.error('error creating course', error));
   }

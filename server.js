@@ -140,7 +140,15 @@ app.prepare().then(() => {
       .catch(error => console.error('could not create course', error));
   });
 
-  server.get('/course/:course_id/edit/class', async (req, res) => {
+  server.get('/course/:course_id/edit/dashboard', async (req, res) => {
+    const { course_id } = req.params;
+    const course_data = await api.course.getById(course_id);
+    return app.render(req, res, `/course/${course_id}/edit/dashboard`, {
+      course_data
+    });
+  });
+
+  server.get('/course/:course_id/edit/stage', async (req, res) => {
     const { course_id } = req.params;
     return app.render(req, res, `/course/${course_id}/edit/stage`, {
       course_id

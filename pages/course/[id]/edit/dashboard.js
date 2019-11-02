@@ -1,19 +1,20 @@
 import React, { PureComponent, useContext } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
-import { Layout, EditStageLayout } from 'components';
+import { Layout, CourseDashboardLayout } from 'components';
 
 class stage extends PureComponent {
   static async getInitialProps({ query }) {
-    const { course_id } = await query;
+    const { course_data } = await query;
 
-    return { course_id };
+    return { course_data };
   }
+
   render() {
-    const { viewportSize, actualUser, course_id } = this.props;
+    const { viewportSize, actualUser, course_data } = this.props;
     return (
       <Layout responsiveSize={viewportSize} userData={actualUser}>
-        <EditStageLayout course_id={course_id} />
+        <CourseDashboardLayout course_data={course_data} />
       </Layout>
     );
   }
