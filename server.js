@@ -9,7 +9,7 @@ const cors = require('cors');
 const sitemap = require('nextjs-sitemap-generator');
 
 const dev = process.env.NODE_ENV !== 'production';
-const port = parseInt(process.env.PORT, 10) || 3002;
+const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
