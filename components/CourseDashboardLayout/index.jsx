@@ -1,20 +1,73 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
-import { Heading, Box, Grid, Text } from 'grommet';
-import { AddCircle } from 'grommet-icons';
+import { Heading, Box, Grid, Text, Anchor, Layer, Button } from 'grommet';
+import { AddCircle, Trash } from 'grommet-icons';
 
-import { Wrapper, AddButton, StageBox, AdviceBox } from './styles';
+import {
+  Wrapper,
+  AddButton,
+  StageBox,
+  AdviceBox,
+  DeleteButton
+} from './styles';
+import Link from 'next/link';
 
-function renderStages(stages) {
+function renderStages(stages, course_id, handleDelete) {
   return stages.map((stage, index) => (
     <StageBox>
-      <Text>Clase {index + 1}</Text>
+      <DeleteButton
+        icon={<Trash color="status-critical" />}
+        hoverIndicator
+        onClick={() => handleDelete(stage)}
+      />
+      <Link href={`/course/${course_id}/edit/stage/${stage.id}`}>
+        <Anchor label={`Clase ${stage.number}`} size="large" />
+      </Link>
     </StageBox>
   ));
 }
 
-function CourseDashboardLayout({ course_data }) {
-  console.log('course data', course_data);
+function CourseDashboardLayout({ course_data, deleteStage }) {
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [stageToDelete, setStageToDelete] = useState({});
+
+  function handleDelete(stage) {
+    setStageToDelete(stage);
+    setDeleteMode(true);
+  }
+
+  function deleteAlert() {
+    const { number, id } = stageToDelete;
+    return (
+      <Layer
+        animation
+        onEsc={() => setDeleteMode(false)}
+        onClickOutside={() => setDeleteMode(false)}
+      >
+        <Box pad="medium">
+          <Heading level={3} textAlign="center">
+            Estas a punto de eliminar la clase {number} <br />
+            ¿Estas seguro?
+          </Heading>
+          <Box
+            direction="row"
+            justify="around"
+            margin={{ vertical: 'medium' }}
+            width="medium"
+            alignSelf="center"
+          >
+            <Button
+              label="Eliminar"
+              color="status-critical"
+              onClick={() => deleteStage(id)}
+            />
+            <Button label="Cancelar" onClick={() => setDeleteMode(false)} />
+          </Box>
+        </Box>
+      </Layer>
+    );
+  }
+
   const { name, stages, id } = course_data;
   return (
     <Wrapper>
@@ -44,9 +97,10 @@ function CourseDashboardLayout({ course_data }) {
             hoverIndicator
             onClick={() => Router.push(`/course/${id}/edit/stage`)}
           />
-          {renderStages(stages)}
+          {renderStages(stages, id, handleDelete)}
         </Grid>
       </Box>
+      {deleteMode && deleteAlert()}
     </Wrapper>
   );
 }

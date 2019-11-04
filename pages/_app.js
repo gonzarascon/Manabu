@@ -95,7 +95,7 @@ export default class ManabuApp extends App {
     } = this;
     return (
       <Fragment>
-        <Grommet theme={mergedTheme} full plain>
+        <Grommet theme={mergedTheme} full plain cssVars>
           <ResponsiveContext.Consumer>
             {responsiveSize => (
               <>
@@ -111,7 +111,11 @@ export default class ManabuApp extends App {
                     logout: this.logoutUser
                   }}
                 >
-                  <Component {...pageProps} viewportSize={responsiveSize} />
+                  <Component
+                    {...pageProps}
+                    viewportSize={responsiveSize}
+                    access_token={token}
+                  />
                 </UserContext.Provider>
               </>
             )}

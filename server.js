@@ -155,6 +155,48 @@ app.prepare().then(() => {
     });
   });
 
+  server.get('/course/:course_id/edit/stage/:stage_id', async (req, res) => {
+    const { access_token } = req.query;
+    const { course_id, stage_id } = req.params;
+    const stageData = await api.course.getStageById(course_id, stage_id);
+    return app.render(req, res, `/course/${course_id}/edit/stage`, {
+      course_id,
+      stageData
+    });
+  });
+
+  server.post('/course/:course_id/create/stage', async (req, res) => {
+    const { course_id } = req.params;
+    const { access_token } = req.query;
+    const { value } = req.body;
+    await api.course
+      .createStage(course_id, value, access_token)
+      .then(response => res.send(response.data))
+      .catch(error => console.log('cannot create stage', error.error));
+  });
+
+  server.put('/course/:course_id/update/stage/:stage_id', async (req, res) => {
+    const { course_id, stage_id } = req.params;
+    const { access_token } = req.query;
+    const { value } = req.body;
+    await api.course
+      .updateStage(course_id, stage_id, value, access_token)
+      .then(response => res.send(response.data))
+      .catch(error => console.log('cannot create stage', error.error));
+  });
+
+  server.delete(
+    '/courses/:course_id/delete/stage/:stage_id',
+    async (req, res) => {
+      const { course_id, stage_id } = req.params;
+      const { access_token } = req.query;
+      await api.course
+        .deleteStage(course_id, stage_id, access_token)
+        .then(response => res.send(response.data))
+        .catch(error => console.log('cannot create stage', error.error));
+    }
+  );
+
   // Catalog
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
 
