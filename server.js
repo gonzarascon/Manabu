@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const next = require('next');
 const path = require('path');
 const cors = require('cors');
+const sitemap = require('nextjs-sitemap-generator');
 
 const dev = process.env.NODE_ENV !== 'production';
 const port = parseInt(process.env.PORT, 10) || 3002;
@@ -14,6 +15,15 @@ const handle = app.getRequestHandler();
 
 const api = require('./api');
 
+sitemap({
+  baseUrl: 'https://learnmanabu.com',
+  ignoredPaths: ['api'],
+  pagesDirectory: path.join(__dirname, 'pages'),
+  targetDirectory: 'public/',
+  nextConfigPath: path.join(__dirname, 'next.config.js'),
+  ignoredExtensions: ['png', 'jpg']
+});
+
 app.prepare().then(() => {
   const server = express();
 
@@ -21,6 +31,7 @@ app.prepare().then(() => {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(cors());
+  server.use('/', express.static('public'));
 
   server.get('/', async (req, res) => {
     return app.render(req, res, '/', req.params);

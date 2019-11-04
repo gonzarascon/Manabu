@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /course/*/edit/*
+Allow: /courses/*
+Allow: /catalog
+Allow: /course
+Allow: /sign_up
+Allow: /user
+Disallow: /
+
+Sitemap: https://learnmanabu.com/sitemap.xml
