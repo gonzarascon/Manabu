@@ -115,6 +115,7 @@ export default class ManabuApp extends App {
                     {...pageProps}
                     viewportSize={responsiveSize}
                     access_token={token}
+                    loggedUserData={user}
                   />
                 </UserContext.Provider>
               </>

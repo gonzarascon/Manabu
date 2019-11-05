@@ -10,7 +10,8 @@ import UserContext from '../UserContext';
 const HomeLayout = ({
   viewportSize,
   data,
-  actualUser: { id, username, user_type }
+  actualUser: { id, username, user_type },
+  userCourses
 }) => {
   const { login, user, userLogged, token, logout } = useContext(UserContext);
 
@@ -26,13 +27,12 @@ const HomeLayout = ({
     }
   });
 
-  const renderSlider = heading => {
+  const renderSlider = (heading, dataForCards) => {
     return (
       <SliderRow
         responsiveSize={viewportSize}
         headingLabel={heading}
-        cards={data}
-        toDashboard
+        cards={dataForCards}
       />
     );
   };
@@ -42,7 +42,7 @@ const HomeLayout = ({
       {!_.isEqual(userLogged, false) && (
         <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
           <Box margin={{ vertical: '50px' }}>
-            {renderSlider('Continua donde lo dejaste')}
+            {renderSlider('Continua donde lo dejaste', userCourses)}
           </Box>
         </Box>
       )}
@@ -60,7 +60,7 @@ const HomeLayout = ({
 
       <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
         <Box margin={{ vertical: '50px' }}>
-          {renderSlider('Es momento de aprender algo nuevo')}
+          {renderSlider('Es momento de aprender algo nuevo', data)}
         </Box>
         {user_type !== 'teacher' && (
           <HighlightLink

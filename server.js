@@ -208,6 +208,31 @@ app.prepare().then(() => {
     }
   );
 
+  server.get('/course/:course_id/take/:user_id', async (req, res) => {
+    const { course_id, user_id } = req.params;
+    await api.user
+      .takeCourse(user_id, course_id)
+      .then(({ data }) => res.send({ current_class: data, course_id, user_id }))
+      .catch(error => res.send(new Error('Cannot take course')));
+  });
+
+  server.get(
+    '/course/:course_id/take/stage/:current_class',
+    async (req, res) => {
+      const { course_id, current_class } = req.params;
+
+      await api.stages
+        .getCurrentStageByCourseId(current_class, course_id)
+        .then(({ data }) =>
+          app.render(req, res, `/course/${course_id}/take/stage`, {
+            stageData: data,
+            course_id
+          })
+        )
+        .catch(error => app.render(req, res, `/`, {}));
+    }
+  );
+
   // Catalog
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
 
