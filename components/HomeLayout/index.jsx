@@ -27,38 +27,26 @@ const HomeLayout = ({
   });
 
   const renderSlider = heading => {
-    const cardsArray = [];
-    if (data && data.length)
-      data.forEach(course => {
-        const cardData = {
-          id: course.id,
-          imageSrc: 'static/images/card_default.png',
-          cardTitle: course.name,
-          cardSubtitle: course.person.username
-        };
-
-        cardsArray.push(cardData);
-      });
-
     return (
       <SliderRow
         responsiveSize={viewportSize}
         headingLabel={heading}
-        cards={cardsArray}
+        cards={data}
+        toDashboard
       />
     );
   };
   return (
     <Fragment>
       <WelcomeWrapper />
-      {!_.isEqual(user, {}) && (
+      {!_.isEqual(userLogged, false) && (
         <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>
           <Box margin={{ vertical: '50px' }}>
             {renderSlider('Continua donde lo dejaste')}
           </Box>
         </Box>
       )}
-      {_.isEqual(user, {}) && (
+      {_.isEqual(userLogged, false) && (
         <HighlightLink
           textLabel="¿Nuevo por aquí?"
           anchorLabel="Registrate y comienza a aprender."
