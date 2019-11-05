@@ -34,7 +34,7 @@
     "next-fonts": "^0.19.0",
     "nextjs-sitemap-generator": "^0.3.2",
     "node-fetch": "^2.6.0",
-    "nodemon": "^1.19.3",
+    "nodemon": "^1.19.4",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
