@@ -19,6 +19,7 @@ export { default as SignUpLayout } from './SignUpLayout';
 export { default as CreateCourseLayout } from './CreateCourseLayout';
 export { default as CourseDashboardLayout } from './CourseDashboardLayout';
 export { default as EditStageLayout } from './EditStageLayout';
+export { default as TakeStageLayout } from './TakeStageLayout';
 
 // Contexts
 export { default as UserContext } from './UserContext';

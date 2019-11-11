@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
 import { Layout, IntroCourse } from 'components';
-import { Router } from 'next/router';
+import Router from 'next/router';
 
 class Course extends PureComponent {
   static async getInitialProps({ query: { courseData, user } }) {
@@ -14,10 +14,13 @@ class Course extends PureComponent {
   async takeCourse(url) {
     await axios
       .get(url)
-      .then(({ data }) =>
-        Router.push(`/course/${data.course_id}/take/stage/${current_class}`)
-      )
-      .catch(error => console.log('cannot redirect'));
+      .then(response => {
+        const { data } = response;
+        return Router.push(
+          `/course/${parseInt(data.course_id)}/take/stage/${data.current_class}`
+        );
+      })
+      .catch(error => console.log('cannot redirect', error));
   }
 
   render() {

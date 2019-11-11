@@ -81,13 +81,13 @@ class IntroCourse extends PureComponent {
             height={responsiveSize === 'small' ? '350px' : 'auto'}
           >
             <Image src="/static/images/courseThumbnail.png" fit="contain" />
-            <Text
+            {/* <Text
               color="gray3"
               size="xlarge"
               margin={{ vertical: 'medium', horizontal: 'auto' }}
             >
               Con este curso sumas {checkLevel(level)}.
-            </Text>
+            </Text> */}
           </Box>
 
           <Box

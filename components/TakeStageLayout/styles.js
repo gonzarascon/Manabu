@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, Button, Form } from 'grommet';
+import { Box, Button, Form, FormField } from 'grommet';
 
 export const Wrapper = styled(Box)`
   min-height: 80vh;
@@ -14,19 +14,12 @@ export const EditorWrapper = styled(Box)`
   }
 `;
 
-export const EditorToolbar = styled(Box)`
-  background-color: #f2f2f2;
-  border: 2px solid #d9d9d9;
-  width: 100%;
-  height: 50px;
-  border-bottom: 0;
-`;
+export const AnswerField = styled(FormField)`
+  border-bottom: none;
 
-export const ToolbarButton = styled(Button)`
-  width: 50px;
-  color: black;
-
-  ${props => props.isActive && `background-color: #bfbfbf;`}
+  & > div {
+    border: none;
+  }
 `;
 
 export const FormWrapper = styled(Box)``;

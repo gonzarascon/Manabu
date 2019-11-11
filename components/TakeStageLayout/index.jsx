@@ -1,19 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import _ from 'lodash';
 import Link from 'next/link';
-import {
-  Heading,
-  Box,
-  Grid,
-  FormField,
-  RadioButton,
-  Anchor,
-  RadioButtonGroup
-} from 'grommet';
+import { Heading, Box, Grid, Anchor, RadioButtonGroup } from 'grommet';
 import { LinkPrevious, FormNextLink } from 'grommet-icons';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
-import { isKeyHotkey } from 'is-hotkey';
 
 import {
   Wrapper,
@@ -24,7 +15,8 @@ import {
   Underline,
   FormWrapper,
   QuestionForm,
-  SaveButton
+  SaveButton,
+  AnswerField
 } from './styles';
 
 const initialValue = Value.fromJSON({
@@ -124,7 +116,7 @@ function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
         />
       </Link>
       <Heading level={3} color="gray1" margin="medium">
-        Editar clase: 1
+        Clase: 1
       </Heading>
       <Box as="section" height="75vh" margin="medium">
         <Grid gap="small" columns={['2/3', '1/3']} fill>
@@ -140,13 +132,13 @@ function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
           </EditorWrapper>
           <FormWrapper>
             <QuestionForm
-              onSubmit={({ value }) => checkUserInput(value)}
+              onSubmit={() => checkUserInput(userInput)}
               value={formValue}
             >
-              <FormField
+              <AnswerField
                 name="user_input"
                 label={<Heading level={3}>{_formValue.question}</Heading>}
-                component={
+                component={() => (
                   <RadioButtonGroup
                     options={[
                       _formValue.correct_answer,
@@ -154,8 +146,9 @@ function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
                       _formValue.false_answer_2
                     ]}
                     onChange={({ target: { value } }) => setUserInput(value)}
+                    value={userInput}
                   />
-                }
+                )}
               />
               <SaveButton
                 icon={<FormNextLink size="medium" color="white" />}

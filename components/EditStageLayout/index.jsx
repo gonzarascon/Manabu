@@ -162,7 +162,6 @@ function EditStageLayout({
       sendUpdateStage(stageData);
     }
   }
-
   return (
     <Wrapper>
       <Link href={`/course/${course_id}/edit/dashboard`}>
@@ -174,7 +173,9 @@ function EditStageLayout({
         />
       </Link>
       <Heading level={3} color="gray1" margin="medium">
-        Editar clase: 1
+        {stageLoadedData
+          ? `Editar clase: ${stageLoadedData.number}`
+          : 'Crear nueva clase'}
       </Heading>
       <Box as="section" height="75vh" margin="medium">
         <Grid gap="small" columns={['2/3', '1/3']} fill>

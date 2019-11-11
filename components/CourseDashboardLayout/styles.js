@@ -42,3 +42,14 @@ export const AdviceBox = styled(Box)`
   text-align: center;
   flex-direction: column;
 `;
+
+export const PublishButton = styled(Button)`
+  height: 50px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  color: white;
+  background-color: var(--brand);
+  border-radius: 25px;
+  z-index: 2;
+`;

@@ -80,7 +80,7 @@ export default class ManabuApp extends App {
       .post(`/users/logout`, { params: { access_token: this.state.token } })
       .then(() => {
         this.setState({ token: null, user: {}, userLogged: false });
-        Router.push('/');
+        Router.replace('/');
       })
       .catch(error => {
         console.error('logout error', error);
