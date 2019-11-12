@@ -62,14 +62,14 @@ const HomeLayout = ({
         <Box margin={{ vertical: '50px' }}>
           {renderSlider('Es momento de aprender algo nuevo', data)}
         </Box>
-        {user_type !== 'teacher' && (
+        {/* {user_type !== 'teacher' && (
           <HighlightLink
             textLabel="¿Quieres enseñar lo que sabes?"
             anchorLabel="Regístrate como docente."
             anchorHref={`/users/${username}/${id}/teacher_registry`}
             responsiveSize={viewportSize}
           />
-        )}
+        )} */}
       </Box>
     </Fragment>
   );

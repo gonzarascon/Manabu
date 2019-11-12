@@ -34,6 +34,11 @@ app.prepare().then(() => {
   server.use('/', express.static('public'));
 
   server.get('/', async (req, res) => {
+    if (req.cookies.token) {
+      const actualUser = await api.user.getActualUser(req.cookies.token);
+      console.log('actualUser', actualUser);
+      return app.render(req, res, '/', actualUser);
+    }
     return app.render(req, res, '/', req.params);
   });
 
