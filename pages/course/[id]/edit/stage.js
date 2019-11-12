@@ -7,7 +7,6 @@ class stage extends PureComponent {
   static async getInitialProps({ query }) {
     const { course_id, stageData } = await query;
 
-    console.log('stage data', stageData);
     return { course_id, stageData };
   }
 

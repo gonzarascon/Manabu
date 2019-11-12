@@ -42,9 +42,8 @@ class UserLayout extends PureComponent {
   render() {
     const {
       responsiveSize,
-      userData: { username, xp, courses, titles }
+      userData: { username, xp, courses, titles, user_type }
     } = this.props;
-    // TODO: receive user data
 
     const xpMeter = [
       {
@@ -94,24 +93,27 @@ class UserLayout extends PureComponent {
               </Text>
             </Box>
           </Box>
-          {courses && (
+          {courses && user_type === 'teacher' && (
             <Box gridArea="slider" as="section" pad="medium">
               <SliderRow
                 responsiveSize={responsiveSize}
-                headingLabel="Tus cursos"
+                headingLabel="Cursos Creados"
                 cards={courses}
+                toDashboard
               />
             </Box>
           )}
         </Grid>
-        <Box margin={{ vertical: 'large' }}>
-          <HighlightLink
-            textLabel="¿Quieres enseñar lo que sabes?"
-            anchorLabel="Regístrate como docente."
-            anchorHref="#"
-            responsiveSize={responsiveSize}
-          />
-        </Box>
+        {user_type !== 'teacher' && (
+          <Box margin={{ vertical: 'large' }}>
+            <HighlightLink
+              textLabel="¿Quieres enseñar lo que sabes?"
+              anchorLabel="Regístrate como docente."
+              anchorHref="#"
+              responsiveSize={responsiveSize}
+            />
+          </Box>
+        )}
       </Box>
     );
   }

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, Grid, Image, Text, Button, Heading, Paragraph } from 'grommet';
 
@@ -16,6 +17,16 @@ const gridAreasSmall = [
   { name: 'courseDescription', start: [0, 2], end: [1, 2] }
 ];
 
+function checkLevel(level) {
+  switch (level) {
+    case 'champion':
+      return '250XP';
+    case 'mega':
+      return '500XP';
+    default:
+      return '100XP';
+  }
+}
 class IntroCourse extends PureComponent {
   constructor(props) {
     super(props);
@@ -24,7 +35,7 @@ class IntroCourse extends PureComponent {
         name,
         level,
         description,
-        // eslint-disable-next-line camelcase
+        id,
         course_photo,
         person: { username },
         languages
@@ -35,25 +46,18 @@ class IntroCourse extends PureComponent {
       description,
       course_photo,
       owner: username,
-      level
+      level,
+      id
     };
   }
 
-  checkLevel(level) {
-    switch (level) {
-      case 'champion':
-        return '250XP';
-      case 'mega':
-        return '500XP';
-      default:
-        return '100XP';
-    }
-  }
-
   render() {
-    const { responsiveSize } = this.props;
-    // TODO: Implementation for course_photo, owner & level
-    const { title, description, course_photo, owner, level } = this.state;
+    const {
+      responsiveSize,
+      loggedUserData: { id: user_id },
+      takeCourse
+    } = this.props;
+    const { title, description, course_photo, owner, level, id } = this.state;
     return (
       <Box
         maxWidth="1226px"
@@ -68,7 +72,7 @@ class IntroCourse extends PureComponent {
           fill
         >
           <Heading as="h3" gridArea="courseTitle" color="gray1">
-            {title}
+            {title} <Text weight={200}> - de {owner}</Text>
           </Heading>
 
           <Box
@@ -77,13 +81,13 @@ class IntroCourse extends PureComponent {
             height={responsiveSize === 'small' ? '350px' : 'auto'}
           >
             <Image src="/static/images/courseThumbnail.png" fit="contain" />
-            <Text
+            {/* <Text
               color="gray3"
               size="xlarge"
               margin={{ vertical: 'medium', horizontal: 'auto' }}
             >
-              Con este curso sumas {this.checkLevel(level)}.
-            </Text>
+              Con este curso sumas {checkLevel(level)}.
+            </Text> */}
           </Box>
 
           <Box
@@ -103,7 +107,11 @@ class IntroCourse extends PureComponent {
             >
               {description}
             </Paragraph>
-            <Button label="Comenzar" primary />
+            <Button
+              label="Comenzar"
+              primary
+              onClick={() => takeCourse(`/course/${id}/take/${user_id}`)}
+            />
           </Box>
         </Grid>
       </Box>

@@ -34,6 +34,11 @@ app.prepare().then(() => {
   server.use('/', express.static('public'));
 
   server.get('/', async (req, res) => {
+    if (req.cookies.token) {
+      const actualUser = await api.user.getActualUser(req.cookies.token);
+      console.log('actualUser', actualUser);
+      return app.render(req, res, '/', actualUser);
+    }
     return app.render(req, res, '/', req.params);
   });
 
@@ -207,6 +212,46 @@ app.prepare().then(() => {
         .catch(error => console.log('cannot create stage', error.error));
     }
   );
+
+  server.get('/course/:course_id/take/:user_id', async (req, res) => {
+    const { course_id, user_id } = req.params;
+    await api.user
+      .takeCourse(user_id, course_id)
+      .then(data => {
+        return res.send({ current_class: data, course_id, user_id });
+      })
+      .catch(error => res.send(new Error('Cannot take course')));
+  });
+
+  server.get(
+    '/course/:course_id/take/stage/:current_class',
+    async (req, res) => {
+      const { course_id, current_class } = req.params;
+
+      const courseData = await api.course.getById(course_id);
+
+      await api.stages
+        .getCurrentStageByCourseId(current_class, course_id)
+        .then(response => {
+          return app.render(req, res, `/course/${course_id}/take/stage`, {
+            stageData: response,
+            course_id,
+            courseData
+          });
+        })
+        .catch(error => app.render(req, res, `/`, {}));
+    }
+  );
+
+  server.put('/courses/:course_id/changeState/:state', async (req, res) => {
+    const { course_id, state } = req.params;
+    const { access_token } = req.query;
+    console.log('change state', state);
+    await api.course
+      .changeState(course_id, state, access_token)
+      .then(response => res.send(response.data))
+      .catch(() => res.send(Error('cannot update state')));
+  });
 
   // Catalog
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));

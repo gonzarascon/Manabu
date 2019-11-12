@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import Router from 'next/router';
 import { Heading, Box, Grid, Text, Anchor, Layer, Button } from 'grommet';
-import { AddCircle, Trash } from 'grommet-icons';
+import { AddCircle, Trash, CheckboxSelected, Alert } from 'grommet-icons';
+import Link from 'next/link';
 
 import {
   Wrapper,
   AddButton,
   StageBox,
   AdviceBox,
-  DeleteButton
+  DeleteButton,
+  PublishButton
 } from './styles';
-import Link from 'next/link';
 
 function renderStages(stages, course_id, handleDelete) {
   return stages.map((stage, index) => (
-    <StageBox>
+    <StageBox key={stage.id}>
       <DeleteButton
         icon={<Trash color="status-critical" />}
         hoverIndicator
@@ -27,7 +28,7 @@ function renderStages(stages, course_id, handleDelete) {
   ));
 }
 
-function CourseDashboardLayout({ course_data, deleteStage }) {
+function CourseDashboardLayout({ course_data, deleteStage, toggleState }) {
   const [deleteMode, setDeleteMode] = useState(false);
   const [stageToDelete, setStageToDelete] = useState({});
 
@@ -68,15 +69,30 @@ function CourseDashboardLayout({ course_data, deleteStage }) {
     );
   }
 
-  const { name, stages, id } = course_data;
+  const { name, stages, id, state } = course_data;
+
+  function renderCourseState() {
+    return (
+      <Text color={state === 'inactive' ? 'status-critical' : 'neutral-1'}>
+        {state === 'inactive' ? 'No publicado' : 'Publicado'}
+      </Text>
+    );
+  }
+
   return (
     <Wrapper>
-      <Heading level={3} color="gray1" margin="medium">
-        Editar Curso:{' '}
-        <Text truncate weight={200} size="large">
-          {name}{' '}
-        </Text>
-      </Heading>
+      <Box justify="between" direction="row" align="center" margin="medium">
+        <Heading level={3} color="gray1">
+          Editar Curso:{' '}
+          <Text truncate weight={200} size="large">
+            {name}{' '}
+          </Text>
+        </Heading>
+
+        <Heading level={5} color="gray1">
+          Estado del curso: {renderCourseState()}
+        </Heading>
+      </Box>
       <Box as="section" height="75vh" margin="medium">
         {stages.length < 1 && (
           <AdviceBox
@@ -100,6 +116,20 @@ function CourseDashboardLayout({ course_data, deleteStage }) {
           {renderStages(stages, id, handleDelete)}
         </Grid>
       </Box>
+      <PublishButton
+        margin="medium"
+        icon={
+          state === 'inactive' ? (
+            <CheckboxSelected size="medium" color="white" />
+          ) : (
+            <Alert size="medium" color="white" />
+          )
+        }
+        label={state === 'inactive' ? 'Publicar Curso' : 'Desactivar Curso'}
+        onClick={() => {
+          toggleState(state === 'inactive' ? 'active' : 'inactive');
+        }}
+      />
       {deleteMode && deleteAlert()}
     </Wrapper>
   );

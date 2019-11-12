@@ -52,7 +52,7 @@ const checkSlidesToShow = size => {
 
   return 3;
 };
-const SliderRow = ({ headingLabel, cards, responsiveSize }) => (
+const SliderRow = ({ headingLabel, cards, responsiveSize, toDashboard }) => (
   <Box fill="horizontal">
     <Box fill="horizontal">
       <Heading color="gray1" level={2}>
@@ -73,12 +73,16 @@ const SliderRow = ({ headingLabel, cards, responsiveSize }) => (
         <Slider slidesToShow={checkSlidesToShow(responsiveSize)} {...settings}>
           {cards.map(card => (
             <Card
-              imageSrc={card.imageSrc}
-              cardTitle={card.cardTitle}
-              cardSubtitle={card.cardSubtitle}
+              imageSrc="/static/images/card_default.png"
+              // card.course_photo
+              cardTitle={card.name}
+              cardSubtitle={card.description}
               key={card.id}
-              linkHref={`course/${card.id}`}
-              linkAs={`course/${card.id}`}
+              linkHref={
+                toDashboard
+                  ? `/course/${card.id}/edit/dashboard`
+                  : `course/${card.id}`
+              }
             />
           ))}
         </Slider>

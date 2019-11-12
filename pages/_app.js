@@ -34,6 +34,7 @@ export default class ManabuApp extends App {
   };
 
   async componentDidMount() {
+    const { pageProps } = this.props;
     WebFont.load({
       custom: {
         families: ['Work Sans', 'Kadwa'],
@@ -80,7 +81,7 @@ export default class ManabuApp extends App {
       .post(`/users/logout`, { params: { access_token: this.state.token } })
       .then(() => {
         this.setState({ token: null, user: {}, userLogged: false });
-        Router.push('/');
+        Router.replace('/');
       })
       .catch(error => {
         console.error('logout error', error);
@@ -113,8 +114,10 @@ export default class ManabuApp extends App {
                 >
                   <Component
                     {...pageProps}
+                    {...user}
                     viewportSize={responsiveSize}
                     access_token={token}
+                    loggedUserData={user}
                   />
                 </UserContext.Provider>
               </>
