@@ -22,9 +22,13 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
-          <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
-          <link rel="stylesheet" href="static/main.css" />
-          <link rel="stylesheet" href="static/reset.css" />
+          <link
+            rel="shortcut icon"
+            type="image/x-icon"
+            href="public/favicon.png"
+          />
+          <link rel="stylesheet" href="public/static/main.css" />
+          <link rel="stylesheet" href="public/static/reset.css" />
 
           {styleTags}
         </Head>

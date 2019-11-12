@@ -76,5 +76,34 @@ module.exports = {
     } catch (error) {
       return {};
     }
+  },
+  getUserCurrentCourses: async user_id => {
+    try {
+      const response = await api.get(`persons/${user_id}/coursesThrough`);
+      const { data } = response;
+      return data;
+    } catch (error) {
+      return [];
+    }
+  },
+  takeCourse: async (user_id, course_id) => {
+    try {
+      const checkIfCourseTaken = await api.get(
+        `user_course?filter={"where":{"personId":${user_id}, "courseId":${course_id}}}`
+      );
+      console.log('check user course', checkIfCourseTaken);
+      if (checkIfCourseTaken.data.length !== 0) {
+        return checkIfCourseTaken.data.current_class;
+      }
+      const takeCourse = await api.post(`user_course`, {
+        personId: user_id,
+        courseId: course_id,
+        current_class: 1
+      });
+
+      return takeCourse.data.current_class;
+    } catch (error) {
+      return [];
+    }
   }
 };

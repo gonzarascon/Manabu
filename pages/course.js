@@ -12,6 +12,7 @@ class Course extends PureComponent {
   }
 
   async takeCourse(url) {
+    console.log('takeCourse', url);
     await axios
       .get(url)
       .then(response => {

@@ -22,7 +22,6 @@ Home.getInitialProps = async ({ query: { user }, query }) => {
   const userCourses = resUser
     ? await api.user.getUserCurrentCourses(resUser.id)
     : [];
-  console.log('userCourses', userCourses);
   return { data: basicData, actualUser: resUser, userCourses };
 };
 
