@@ -93,14 +93,14 @@ module.exports = {
       );
       if (checkIfCourseTaken.data.length !== 0) {
         console.log('checkIfCourseTaken', checkIfCourseTaken.data);
-        return checkIfCourseTaken[0].data.current_class;
+        return checkIfCourseTaken.data[0].current_class;
       }
+      console.log('paso if');
       const takeCourse = await api.post(`users_courses`, {
         personId: user_id,
         courseId: course_id,
         current_class: 1
       });
-      console.log('takeCourse');
       return takeCourse.data.current_class;
     } catch (error) {
       return [];

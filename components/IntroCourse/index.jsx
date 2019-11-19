@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import _ from 'lodash';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, Grid, Image, Text, Button, Heading, Paragraph } from 'grommet';
@@ -30,8 +31,21 @@ function checkLevel(level) {
 class IntroCourse extends PureComponent {
   constructor(props) {
     super(props);
-    const {
-      courseData: {
+
+    this.state = {
+      title: '',
+      description: '',
+      course_photo: '',
+      owner: '',
+      level: '',
+      id: 0
+    };
+  }
+
+  componentDidMount() {
+    const { courseData } = this.props;
+    if (!_.isEqual(courseData, {})) {
+      const {
         name,
         level,
         description,
@@ -39,16 +53,16 @@ class IntroCourse extends PureComponent {
         course_photo,
         person: { username },
         languages
-      }
-    } = this.props;
-    this.state = {
-      title: name,
-      description,
-      course_photo,
-      owner: username,
-      level,
-      id
-    };
+      } = courseData;
+      this.setState({
+        title: name,
+        description,
+        course_photo,
+        owner: username,
+        level,
+        id
+      });
+    }
   }
 
   render() {
