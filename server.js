@@ -218,6 +218,7 @@ app.prepare().then(() => {
     await api.user
       .takeCourse(user_id, course_id)
       .then(data => {
+        console.log('data', data);
         return res.send({ current_class: data, course_id, user_id });
       })
       .catch(error => res.send(new Error('Cannot take course')));

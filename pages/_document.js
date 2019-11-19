@@ -25,10 +25,10 @@ export default class MyDocument extends Document {
           <link
             rel="shortcut icon"
             type="image/x-icon"
-            href="public/favicon.png"
+            href="/static/images/favicon.png"
           />
-          <link rel="stylesheet" href="public/static/main.css" />
-          <link rel="stylesheet" href="public/static/reset.css" />
+          <link rel="stylesheet" href="/static/main.css" />
+          <link rel="stylesheet" href="/static/reset.css" />
 
           {styleTags}
         </Head>

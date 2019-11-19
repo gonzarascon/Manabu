@@ -4,7 +4,6 @@ module.exports = {
   getBasicData: async courseId => {
     try {
       const response = await api.get(`courses/${courseId}`);
-      console.log('getBasicData', response);
       const { data } = response;
       return data;
     } catch (error) {

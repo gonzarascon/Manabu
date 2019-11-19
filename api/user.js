@@ -89,18 +89,18 @@ module.exports = {
   takeCourse: async (user_id, course_id) => {
     try {
       const checkIfCourseTaken = await api.get(
-        `user_course?filter={"where":{"personId":${user_id}, "courseId":${course_id}}}`
+        `users_courses?filter={"where":{"personId":${user_id}, "courseId":${course_id}}}`
       );
-      console.log('check user course', checkIfCourseTaken);
       if (checkIfCourseTaken.data.length !== 0) {
-        return checkIfCourseTaken.data.current_class;
+        console.log('checkIfCourseTaken', checkIfCourseTaken.data);
+        return checkIfCourseTaken[0].data.current_class;
       }
-      const takeCourse = await api.post(`user_course`, {
+      const takeCourse = await api.post(`users_courses`, {
         personId: user_id,
         courseId: course_id,
         current_class: 1
       });
-
+      console.log('takeCourse');
       return takeCourse.data.current_class;
     } catch (error) {
       return [];
