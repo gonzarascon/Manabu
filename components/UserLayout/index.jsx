@@ -23,15 +23,6 @@ const mobileAreas = [
   { name: 'slider', start: [0, 1], end: [0, 1] }
 ];
 
-const values = [
-  {
-    value: 65,
-    color: 'brand',
-    label: 'Experiencia acumulada',
-    highlight: true
-  }
-];
-
 function defineTitles(titles) {
   const selectedTitle = _.find(titles, o => o.selected === true);
 

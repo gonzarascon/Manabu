@@ -40,7 +40,9 @@ class stage extends PureComponent {
     } = this.props;
 
     await axios
-      .put(`/courses/${id}/changeState/${state}`, { params: { access_token } })
+      .patch(`/courses/${id}/changeState/${state}`, {
+        params: { access_token }
+      })
       .then(response => Router.push(`/course/${id}/edit/dashboard`))
       .catch(error => console.log(new Error('Cannot update state')));
   }

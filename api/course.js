@@ -89,15 +89,15 @@ module.exports = {
         content: stageData
       };
       return await api
-        .put(`courses/${course_id}/stages/${stage_id}`, stageDataStructure, {
+        .patch(`courses/${course_id}/stages/${stage_id}`, stageDataStructure, {
           params: { access_token }
         })
         .then(response => response)
         .catch(error =>
-          console.log('error creating stage', error.response.status)
+          console.log('error updating stage', error.response.status)
         );
     } catch (error) {
-      return new Error('Cannot create stage');
+      return new Error('Cannot update stage');
     }
   },
   deleteStage: async (course_id, stage_id, access_token) => {
@@ -121,6 +121,17 @@ module.exports = {
       );
       const { data } = stageById;
       return data;
+    } catch (error) {
+      return new Error('No Stage');
+    }
+  },
+  changeState: async (course_id, state, access_token) => {
+    try {
+      return await api.patch(
+        `/courses/${course_id}`,
+        { state },
+        { params: { access_token } }
+      );
     } catch (error) {
       return new Error('No Stage');
     }

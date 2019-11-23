@@ -243,7 +243,7 @@ app.prepare().then(() => {
     }
   );
 
-  server.put('/courses/:course_id/changeState/:state', async (req, res) => {
+  server.patch('/courses/:course_id/changeState/:state', async (req, res) => {
     const { course_id, state } = req.params;
     const { access_token } = req.query;
     console.log('change state', state);
