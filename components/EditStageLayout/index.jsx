@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import _ from 'lodash';
+import validator from 'validator';
 import Link from 'next/link';
 import { Heading, Box, Grid, FormField, Anchor } from 'grommet';
 import {
@@ -109,6 +110,12 @@ function EditStageLayout({
     false_answer_1: '',
     false_answer_2: ''
   });
+  const [formError, setFormError] = useState({
+    question: false,
+    correct_answer: false,
+    false_answer_1: false,
+    false_answer_2: false
+  });
 
   useEffect(() => {
     if (!_.isEqual(stageLoadedData, undefined)) {
@@ -151,6 +158,15 @@ function EditStageLayout({
   function onClickMark(event, type) {
     event.preventDefault();
     editor.current.toggleMark(type);
+  }
+
+  function checkForm(_formValue) {
+    if (validator.isEmpty(_formValue.question))
+      setFormError({ ...formError, question: true });
+    if (validator.isEmpty(_formValue.correct_answer))
+      setFormError({ ...formError, correct_answer: true });
+    if (validator.isEmpty(_formValue.false_answer_1))
+      setFormError({ ...formError, false_answer_1: true });
   }
 
   function saveStage(_formValue) {
@@ -226,35 +242,39 @@ function EditStageLayout({
           </EditorWrapper>
           <FormWrapper>
             <QuestionForm
-              onSubmit={({ value }) => saveStage(value)}
+              onSubmit={({ value }) => checkForm(value)}
               value={formValue}
+              errors={formError}
             >
               <FormField
                 label="Ingresa la pregunta a responder en esta clase"
                 help="*Evita preguntas confusas o capsiosas."
                 placeholder="Por ejemplo: ¿Que resultado obtuviste?"
                 name="question"
-                onChange={({ target }) =>
-                  setFormValue({ ...formValue, question: target.value })
-                }
+                onChange={({ target }) => {
+                  setFormValue({ ...formValue, question: target.value });
+                  setFormError({ ...formError, question: false });
+                }}
               />
               <FormField
                 name="correct_answer"
                 label="Escribe la respuesta correcta."
                 help="Los alumnos deberán escoger esta respuesta para progresar en el curso."
                 placeholder="Escribe la respuesta correcta"
-                onChange={({ target }) =>
-                  setFormValue({ ...formValue, correct_answer: target.value })
-                }
+                onChange={({ target }) => {
+                  setFormValue({ ...formValue, correct_answer: target.value });
+                  setFormError({ ...formError, correct_answer: false });
+                }}
               />
               <FormField
                 name="false_answer_1"
                 label="Escribe una respuesta incorrecta"
                 help="Evita respuestas obvias o con enunciados confusos"
                 placeholder="Escribe una respuesta incorrecta"
-                onChange={({ target }) =>
-                  setFormValue({ ...formValue, false_answer_1: target.value })
-                }
+                onChange={({ target }) => {
+                  setFormValue({ ...formValue, false_answer_1: target.value });
+                  setFormError({ ...formError, false_answer_1: false });
+                }}
               />
               <FormField
                 name="false_answer_2"
