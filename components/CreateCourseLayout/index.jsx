@@ -1,5 +1,4 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import {
   Box,
@@ -8,7 +7,6 @@ import {
   Button,
   FormField,
   TextArea,
-  Text,
   Select
 } from 'grommet';
 import { Book } from 'grommet-icons';

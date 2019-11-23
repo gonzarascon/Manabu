@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import _ from 'lodash';
 import Link from 'next/link';
-import { Heading, Box, Grid, FormField, RadioButton, Anchor } from 'grommet';
+import { Heading, Box, Grid, FormField, Anchor } from 'grommet';
 import {
   Bold as BoldIcon,
   Italic as ItalicIcon,
@@ -103,7 +103,12 @@ function EditStageLayout({
 }) {
   const editor = useRef();
   const [editorValue, setEditorValue] = useState(initialValue);
-  const [formValue, setFormValue] = useState({});
+  const [formValue, setFormValue] = useState({
+    question: '',
+    correct_answer: '',
+    false_answer_1: '',
+    false_answer_2: ''
+  });
 
   useEffect(() => {
     if (!_.isEqual(stageLoadedData, undefined)) {
@@ -149,18 +154,20 @@ function EditStageLayout({
   }
 
   function saveStage(_formValue) {
-    const parsedEditorValue = JSON.stringify(editorValue.toJSON());
+    // const parsedEditorValue = JSON.stringify(editorValue.toJSON());
 
-    const stageData = {
-      editorValue: parsedEditorValue,
-      formValue: _formValue
-    };
+    // const stageData = {
+    //   editorValue: parsedEditorValue,
+    //   formValue: _formValue
+    // };
 
-    if (_.isEqual(stageLoadedData, undefined)) {
-      sendSaveStage(stageData);
-    } else {
-      sendUpdateStage(stageData);
-    }
+    console.log(_formValue);
+
+    // if (_.isEqual(stageLoadedData, undefined)) {
+    //   sendSaveStage(stageData);
+    // } else {
+    //   sendUpdateStage(stageData);
+    // }
   }
   return (
     <Wrapper>
@@ -227,24 +234,36 @@ function EditStageLayout({
                 help="*Evita preguntas confusas o capsiosas."
                 placeholder="Por ejemplo: ¿Que resultado obtuviste?"
                 name="question"
+                onChange={({ target }) =>
+                  setFormValue({ ...formValue, question: target.value })
+                }
               />
               <FormField
                 name="correct_answer"
                 label="Escribe la respuesta correcta."
                 help="Los alumnos deberán escoger esta respuesta para progresar en el curso."
                 placeholder="Escribe la respuesta correcta"
+                onChange={({ target }) =>
+                  setFormValue({ ...formValue, correct_answer: target.value })
+                }
               />
               <FormField
                 name="false_answer_1"
                 label="Escribe una respuesta incorrecta"
                 help="Evita respuestas obvias o con enunciados confusos"
                 placeholder="Escribe una respuesta incorrecta"
+                onChange={({ target }) =>
+                  setFormValue({ ...formValue, false_answer_1: target.value })
+                }
               />
               <FormField
                 name="false_answer_2"
                 label="Opcionalmente, escribe otra respuesta incorrecta"
                 help="Esto ayudará a darle mas complejidad a la clase."
                 placeholder="Escribe una respuesta incorrecta"
+                onChange={({ target }) =>
+                  setFormValue({ ...formValue, false_answer_2: target.value })
+                }
               />
               <SaveButton
                 icon={<Save size="medium" color="white" />}

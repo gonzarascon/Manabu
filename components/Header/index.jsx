@@ -38,7 +38,7 @@ class Header extends PureComponent {
   loginFormHandler(value) {
     const { login } = this.props;
     login(value);
-    this.toggleLogin();
+    // this.toggleLogin();
   }
 
   toggleLogin() {
@@ -100,7 +100,8 @@ class Header extends PureComponent {
       props: {
         viewportSize,
         userData: { username },
-        userLogged
+        userLogged,
+        loginError
       }
     } = this;
 
@@ -216,6 +217,7 @@ class Header extends PureComponent {
             <LoginLayer
               closeHandler={this.toggleLogin}
               submitFormHandler={this.loginFormHandler}
+              loginError={loginError}
             />
           )}
         </Box>

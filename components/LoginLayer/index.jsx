@@ -14,7 +14,7 @@ import {
 import { calculateRem } from 'constants';
 import Emoji from '../../helpers/emoji';
 
-const LoginLayer = ({ closeHandler, submitFormHandler }) => (
+const LoginLayer = ({ closeHandler, submitFormHandler, loginError }) => (
   <Layer modal onClickOutside={closeHandler} onEsc={closeHandler}>
     <Box
       direction="column"
@@ -33,6 +33,11 @@ const LoginLayer = ({ closeHandler, submitFormHandler }) => (
       </Box>
 
       <Form onSubmit={({ value }) => submitFormHandler(value)}>
+        {loginError && (
+          <Text color="red" textAlign="center" as="p">
+            Revisa que los campos <br /> ingresados sean correctos.
+          </Text>
+        )}
         <Box maxWidth="300px" margin="auto">
           <FormField
             label={

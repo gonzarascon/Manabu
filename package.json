@@ -48,6 +48,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^4.4.0",
     "unfetch": "^4.1.0",
+    "validator": "^12.1.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
