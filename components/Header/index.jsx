@@ -1,20 +1,34 @@
 import React, { PureComponent } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
-import { Search, User, Logout, Code, Add } from 'grommet-icons';
+import {
+  Box,
+  DropButton,
+  TextInput,
+  Image,
+  Anchor,
+  Button,
+  Keyboard
+} from 'grommet';
+import { Search, User, Logout, Add } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
 
 import LoginLayer from '../LoginLayer';
 
+async function doSearch(query) {
+  Router.replace(`/search?s=${query}`);
+}
+
 class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      loginOpen: false
+      loginOpen: false,
+      searchQuery: ''
     };
 
     this.toggleLogin = this.toggleLogin.bind(this);
@@ -82,7 +96,7 @@ class Header extends PureComponent {
 
   render() {
     const {
-      state: { loginOpen },
+      state: { loginOpen, searchQuery },
       props: {
         viewportSize,
         userData: { username },
@@ -140,13 +154,19 @@ class Header extends PureComponent {
           flexOrder={viewportSize === 'small' ? 3 : 1}
           elevation={viewportSize === 'small' ? 'xsmall' : 'none'}
         >
-          <TextInput
-            placeholder="Busca cursos por lenguaje"
-            size="medium"
-            plain
-            focusIndicator={false}
-            type="search"
-          />
+          <Keyboard onEnter={() => doSearch(searchQuery)}>
+            <TextInput
+              placeholder="Busca cursos por lenguaje"
+              size="medium"
+              plain
+              value={searchQuery}
+              onChange={({ target }) =>
+                this.setState({ searchQuery: target.value })
+              }
+              focusIndicator={false}
+              type="search"
+            />
+          </Keyboard>
           <Search color="brand" />
         </Box>
 

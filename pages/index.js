@@ -4,7 +4,6 @@ import { Layout, HomeLayout } from 'components';
 
 const Home = ({ viewportSize, data, token, actualUser, userCourses }) => (
   <Layout responsiveSize={viewportSize} userData={actualUser}>
-    {console.log(userCourses)}
     <HomeLayout
       viewportSize={viewportSize}
       data={data}
@@ -21,7 +20,7 @@ Home.getInitialProps = async ({ query: { user }, query }) => {
   const userCourses = resUser
     ? await api.user.getUserCurrentCourses(resUser.id)
     : [];
-  console.log('userCourses', userCourses);
+
   return { data: basicData, actualUser: resUser, userCourses };
 };
 

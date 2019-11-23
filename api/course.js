@@ -158,5 +158,21 @@ module.exports = {
     } catch (error) {
       return new Error('No Stage');
     }
+  },
+  getCoursesByLanguageName: async name => {
+    try {
+      const languageId = await api
+        .get(`languages?filter={"where":{"name":${name}}}`)
+        .then(({ data }) => data[0].id)
+        .catch(() => 1);
+
+      const courses = await api
+        .get(`languages/${languageId}/courses?filter[limit]=15`)
+        .then(response => response.data);
+
+      return courses;
+    } catch (error) {
+      return new Error('No Stage');
+    }
   }
 };

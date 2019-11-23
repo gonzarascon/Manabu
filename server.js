@@ -36,7 +36,6 @@ app.prepare().then(() => {
   server.get('/', async (req, res) => {
     if (req.cookies.token) {
       const actualUser = await api.user.getActualUser(req.cookies.token);
-      console.log('actualUser', actualUser);
       return app.render(req, res, '/', actualUser);
     }
     return app.render(req, res, '/', req.params);
@@ -258,7 +257,15 @@ app.prepare().then(() => {
     return app.render(req, res, `/course/${course_id}/finished`, req.params);
   });
   // Catalog
-  server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
+  server.get('/search', async (req, res) => {
+    const { s } = req.query;
+
+    const searchResults = await api.course
+      .getCoursesByLanguageName(s)
+      .then(response => response);
+
+    return app.render(req, res, '/catalog', { searchResults });
+  });
 
   // Posts
   server.get('/posts/:id', (req, res) =>
