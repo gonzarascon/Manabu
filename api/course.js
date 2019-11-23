@@ -102,8 +102,30 @@ module.exports = {
   },
   deleteStage: async (course_id, stage_id, access_token) => {
     try {
+      const stageToDelete = await api
+        .get(`courses/${course_id}/stages/${stage_id}`)
+        .then(({ data }) => data);
+
+      const stagesToUpdate = await api
+        .get(
+          `courses/${course_id}/stages?filter[where][number][gt]=${stageToDelete.number}`
+        )
+        .then(({ data }) => data);
+
+      stagesToUpdate.map(async stageToUpdate => {
+        await api.patch(
+          `courses/${course_id}/stages/${stageToUpdate.id}`,
+          {
+            number: stageToUpdate.number - 1
+          },
+          {
+            access_token
+          }
+        );
+      });
+
       return await api
-        .delete(`courses/${course_id}/stages`, {
+        .delete(`courses/${course_id}/stages/${stage_id}`, {
           params: { access_token }
         })
         .then(response => response)
