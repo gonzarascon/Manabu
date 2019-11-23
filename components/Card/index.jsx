@@ -13,6 +13,7 @@ const Card = ({ imageSrc, cardTitle, cardSubtitle, linkHref }) => (
     wrap={false}
     elevation="medium"
     justify="center"
+    width="260px"
     maxWidth="260px"
     height="290px"
     as="article"

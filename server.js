@@ -61,7 +61,6 @@ app.prepare().then(() => {
         const { id } = data;
         res.cookie('token', id, {
           maxAge: new Date(Date.now() + 900000),
-          // httpOnly: true,
           overwrite: true
         });
         console.log('cookie created successfully', id);
@@ -103,7 +102,8 @@ app.prepare().then(() => {
     const { access_token } = req.body.params;
 
     await api.user.logout(access_token);
-    res.send('LOGOUT');
+    // res.send('LOGOUT');
+    return app.render(req, res, '/', req.params);
   });
 
   server.get('/users/me', async (req, res) => {
