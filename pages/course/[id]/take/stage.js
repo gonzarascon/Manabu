@@ -2,6 +2,7 @@ import React, { PureComponent, useContext } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { Layout, TakeStageLayout } from 'components';
+import { user } from '../../../../api/';
 
 class stage extends PureComponent {
   static async getInitialProps({ query }) {
@@ -18,7 +19,7 @@ class stage extends PureComponent {
     );
   }
 
-  checkStageDataWithUserInput(userInput) {
+  async checkStageDataWithUserInput(userInput) {
     const {
       stageData: {
         content: {
@@ -26,15 +27,27 @@ class stage extends PureComponent {
         },
         number
       },
-      courseData
+      courseData,
+      course_id,
+      loggedUserData: { id: userId }
     } = this.props;
+
     if (userInput === correct_answer) {
-      if (number + 1 < courseData.stages.length) {
+      const totalStages = courseData.stages.length;
+      if (number < totalStages && number + 1 <= totalStages) {
         // TODO: Router should push to next stage
-        console.log('next stage');
+        user
+          .updateCourseProgress(userId, course_id, number + 1)
+          .then(response =>
+            Router.replace(`/course/${course_id}/take/stage/${number + 1}`)
+          )
+          .catch(error => console.error('no se pudo continuar el curso'));
         // TODO: Router should push to end
       } else {
-        console.log('course end');
+        Router.replace(`/course/${course_id}/end`);
+
+        // console.log('courseData stages', courseData.stages);
+        // console.log('course end');
       }
     }
   }

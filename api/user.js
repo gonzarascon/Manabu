@@ -105,5 +105,20 @@ module.exports = {
     } catch (error) {
       return [];
     }
+  },
+  updateCourseProgress: async (user_id, course_id, current_class) => {
+    try {
+      const users_coursesId = await api
+        .get(
+          `users_courses?filter={"where":{"personId":${user_id}, "courseId":${course_id}}}`
+        )
+        .then(({ data }) => data[0].id);
+
+      return await api.patch(`users_courses/${users_coursesId}`, {
+        current_class
+      });
+    } catch (error) {
+      return [];
+    }
   }
 };

@@ -104,24 +104,24 @@ class Header extends PureComponent {
       >
         {/* Logo */}
 
-        <Box
-          a11yTitle="Manabu, a gamified e-learning platform"
-          direction="row"
-          gap="small"
-          align="center"
-          as="h1"
-          responsive
-          basis="small"
-          height="100%"
-          justify="start"
-          alignSelf="start"
-          flexOrder={0}
-          maxWidth="90px"
-        >
-          <Link href="/">
+        <Anchor maxWidth="" href="/">
+          <Box
+            a11yTitle="Manabu, a gamified e-learning platform"
+            direction="row"
+            gap="small"
+            align="center"
+            as="h1"
+            responsive
+            basis="small"
+            height="100%"
+            justify="start"
+            alignSelf="start"
+            flexOrder={0}
+            maxWidth="90px"
+          >
             <Image alignSelf="start" src={icons.manabu_iso} fit="contain" />
-          </Link>
-        </Box>
+          </Box>
+        </Anchor>
 
         {/* Searchbox */}
         <Box
@@ -141,7 +141,7 @@ class Header extends PureComponent {
           elevation={viewportSize === 'small' ? 'xsmall' : 'none'}
         >
           <TextInput
-            placeholder="Busca lo que quieras"
+            placeholder="Busca cursos por lenguaje"
             size="medium"
             plain
             focusIndicator={false}

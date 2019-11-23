@@ -253,6 +253,10 @@ app.prepare().then(() => {
       .catch(() => res.send(Error('cannot update state')));
   });
 
+  server.get(`/course/:course_id/end`, async (req, res) => {
+    const { course_id } = req.params;
+    return app.render(req, res, `/course/${course_id}/finished`, req.params);
+  });
   // Catalog
   server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
 

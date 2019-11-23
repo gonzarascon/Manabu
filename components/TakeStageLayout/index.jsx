@@ -107,16 +107,8 @@ function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
 
   return (
     <Wrapper>
-      <Link href={`/course/${course_id}/edit/dashboard`}>
-        <Anchor
-          size="small"
-          icon={<LinkPrevious />}
-          label="Volver al dashboard del curso"
-          margin="medium"
-        />
-      </Link>
       <Heading level={3} color="gray1" margin="medium">
-        Clase: 1
+        Clase: {stageLoadedData ? stageLoadedData.number : ''}
       </Heading>
       <Box as="section" height="75vh" margin="medium">
         <Grid gap="small" columns={['2/3', '1/3']} fill>

@@ -67,11 +67,13 @@ export default class ManabuApp extends App {
           data: { token, actualUser }
         } = response;
 
-        return this.setState({
+        this.setState({
           token,
           user: actualUser.user,
           userLogged: true
         });
+
+        Router.reload();
       })
       .catch(error => `Can't login`);
   };
