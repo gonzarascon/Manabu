@@ -53,13 +53,21 @@ class stage extends PureComponent {
   }
 
   render() {
-    const { viewportSize, actualUser, course_id, stageData } = this.props;
+    const {
+      viewportSize,
+      actualUser,
+      course_id,
+      stageData,
+      courseData
+    } = this.props;
+    const courseLength = courseData.stages.length;
     return (
       <Layout responsiveSize={viewportSize} userData={actualUser}>
         <TakeStageLayout
           course_id={course_id}
           stageLoadedData={stageData}
           checkUserInput={this.checkStageDataWithUserInput}
+          totalStages={courseLength}
         />
       </Layout>
     );

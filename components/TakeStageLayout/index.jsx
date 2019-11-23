@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import _ from 'lodash';
 import Link from 'next/link';
-import { Heading, Box, Grid, Anchor, RadioButtonGroup } from 'grommet';
+import { Heading, Box, Grid, Anchor, RadioButtonGroup, Meter } from 'grommet';
 import { LinkPrevious, FormNextLink } from 'grommet-icons';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
@@ -81,7 +81,12 @@ function renderMark(props, _editor, next) {
   }
 }
 
-function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
+function TakeStageLayout({
+  course_id,
+  checkUserInput,
+  stageLoadedData,
+  totalStages
+}) {
   const editor = useRef();
   const [editorValue, setEditorValue] = useState(initialValue);
   const [formValue, setFormValue] = useState({});
@@ -101,15 +106,43 @@ function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
     }
   }, []);
 
-  function hasMark(type) {
-    return editorValue.activeMarks.some(mark => mark.type === type);
+  function getProgressQuantity(value) {
+    return (value * 100) / totalStages;
+  }
+
+  function createStageOptions() {
+    if (_formValue.false_answer_2 === '')
+      return [_formValue.correct_answer, _formValue.false_answer_1];
+
+    return [
+      _formValue.correct_answer,
+      _formValue.false_answer_1,
+      _formValue.false_answer_2
+    ];
   }
 
   return (
     <Wrapper>
-      <Heading level={3} color="gray1" margin="medium">
-        Clase: {stageLoadedData ? stageLoadedData.number : ''}
-      </Heading>
+      <Box direction="row" alignContent="center">
+        <Heading level={3} color="gray1" margin="medium">
+          Clase: {stageLoadedData ? stageLoadedData.number : ''}
+        </Heading>
+
+        <Box margin="medium" direction="row">
+          <Heading level={4} margin={{ right: 'small' }} color="gray1">
+            Progreso:
+          </Heading>
+          <Meter
+            values={[
+              {
+                value: getProgressQuantity(stageLoadedData.number),
+                color: 'brand'
+              }
+            ]}
+            background="gray4"
+          />
+        </Box>
+      </Box>
       <Box as="section" height="75vh" margin="medium">
         <Grid gap="small" columns={['2/3', '1/3']} fill>
           <EditorWrapper>
@@ -132,11 +165,7 @@ function TakeStageLayout({ course_id, checkUserInput, stageLoadedData }) {
                 label={<Heading level={3}>{_formValue.question}</Heading>}
                 component={() => (
                   <RadioButtonGroup
-                    options={[
-                      _formValue.correct_answer,
-                      _formValue.false_answer_1,
-                      _formValue.false_answer_2
-                    ]}
+                    options={createStageOptions()}
                     onChange={({ target: { value } }) => setUserInput(value)}
                     value={userInput}
                   />
