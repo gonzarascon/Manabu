@@ -38,10 +38,7 @@ export default class ManabuApp extends App {
     WebFont.load({
       custom: {
         families: ['Work Sans', 'Kadwa'],
-        urls: [
-          '/public/static/fonts/workSans.css',
-          '/public/static/fonts/kadwa.css'
-        ]
+        urls: ['/static/fonts/workSans.css', '/static/fonts/kadwa.css']
       }
     });
 

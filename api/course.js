@@ -89,7 +89,7 @@ module.exports = {
         content: stageData
       };
       return await api
-        .patch(`courses/${course_id}/stages/${stage_id}`, stageDataStructure, {
+        .put(`courses/${course_id}/stages/${stage_id}`, stageDataStructure, {
           params: { access_token }
         })
         .then(response => response)
@@ -113,7 +113,8 @@ module.exports = {
         .then(({ data }) => data);
 
       stagesToUpdate.map(async stageToUpdate => {
-        await api.patch(
+        console.log('stageToUpdate', stageToUpdate);
+        await api.put(
           `courses/${course_id}/stages/${stageToUpdate.id}`,
           {
             number: stageToUpdate.number - 1
