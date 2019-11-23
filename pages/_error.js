@@ -1,12 +1,11 @@
 import React from 'react';
+import { Layout, ErrorLayout } from 'components';
 
-function Error({ statusCode }) {
+function Error({ statusCode, viewportSize, actualUser }) {
   return (
-    <p>
-      {statusCode
-        ? `An error ${statusCode} occurred on server`
-        : 'An error occurred on client'}
-    </p>
+    <Layout responsiveSize={viewportSize} userData={actualUser}>
+      <ErrorLayout />
+    </Layout>
   );
 }
 

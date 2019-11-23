@@ -20,6 +20,7 @@ export { default as CourseDashboardLayout } from './CourseDashboardLayout';
 export { default as EditStageLayout } from './EditStageLayout';
 export { default as TakeStageLayout } from './TakeStageLayout';
 export { default as FinishedLayout } from './FinishedLayout';
+export { default as ErrorLayout } from './ErrorLayout';
 
 // Contexts
 export { default as UserContext } from './UserContext';
