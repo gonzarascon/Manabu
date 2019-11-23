@@ -264,7 +264,7 @@ app.prepare().then(() => {
       .getCoursesByLanguageName(s)
       .then(response => response);
 
-    return app.render(req, res, '/catalog', { searchResults });
+    return app.render(req, res, '/catalog', { searchResults, searchQuery: s });
   });
 
   // Posts
