@@ -33,7 +33,8 @@ class UserLayout extends PureComponent {
   render() {
     const {
       responsiveSize,
-      userData: { username, xp, courses, titles, user_type }
+      userData: { username, xp, courses, titles, user_type },
+      userTakenCourses
     } = this.props;
 
     const xpMeter = [
@@ -91,6 +92,15 @@ class UserLayout extends PureComponent {
                 headingLabel="Cursos Creados"
                 cards={courses}
                 toDashboard
+              />
+            </Box>
+          )}
+          {userTakenCourses && (
+            <Box gridArea="slider" as="section" pad="medium">
+              <SliderRow
+                responsiveSize={responsiveSize}
+                headingLabel="Cursos Tomados"
+                cards={userTakenCourses}
               />
             </Box>
           )}

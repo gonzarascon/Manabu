@@ -84,7 +84,7 @@ const SliderRow = ({ headingLabel, cards, responsiveSize, toDashboard }) => {
                 linkHref={
                   toDashboard
                     ? `/course/${card.id}/edit/dashboard`
-                    : `course/${card.id}`
+                    : `/course/${card.id}`
                 }
               />
             ))}

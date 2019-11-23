@@ -115,11 +115,12 @@ app.prepare().then(() => {
   server.get('/users/profile/:user_id', async (req, res) => {
     const { at } = req.query;
     const userData = await api.user.getUserProfile(req.params.user_id, at);
-
-    console.log('userData', userData[0]);
-
+    const userTakenCourses = await api.user.getUserCurrentCourses(
+      req.params.user_id
+    );
     return app.render(req, res, '/users', {
-      userData: userData[0]
+      userData: userData[0],
+      userTakenCourses
     });
   });
 

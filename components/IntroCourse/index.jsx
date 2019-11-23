@@ -9,7 +9,7 @@ const gridRows = ['xsmall', '1fr', '.7fr'];
 const gridAreasMedium = [
   { name: 'courseTitle', start: [0, 0], end: [1, 0] },
   { name: 'courseImage', start: [0, 1], end: [0, 2] },
-  { name: 'courseDescription', start: [1, 1], end: [1, 1] }
+  { name: 'courseDescription', start: [1, 1], end: [1, 2] }
 ];
 
 const gridAreasSmall = [
@@ -21,11 +21,11 @@ const gridAreasSmall = [
 function checkLevel(level) {
   switch (level) {
     case 'champion':
-      return '250XP';
+      return 'avanzada';
     case 'mega':
-      return '500XP';
+      return 'moderada';
     default:
-      return '100XP';
+      return 'basica';
   }
 }
 class IntroCourse extends PureComponent {
@@ -38,7 +38,8 @@ class IntroCourse extends PureComponent {
       course_photo: '',
       owner: '',
       level: '',
-      id: 0
+      id: 0,
+      totalStages: 0
     };
   }
 
@@ -52,7 +53,8 @@ class IntroCourse extends PureComponent {
         id,
         course_photo,
         person: { username },
-        languages
+        languages,
+        stages
       } = courseData;
       this.setState({
         title: name,
@@ -60,7 +62,8 @@ class IntroCourse extends PureComponent {
         course_photo,
         owner: username,
         level,
-        id
+        id,
+        totalStages: stages.length
       });
     }
   }
@@ -71,7 +74,15 @@ class IntroCourse extends PureComponent {
       loggedUserData: { id: user_id },
       takeCourse
     } = this.props;
-    const { title, description, course_photo, owner, level, id } = this.state;
+    const {
+      title,
+      description,
+      course_photo,
+      owner,
+      level,
+      id,
+      totalStages
+    } = this.state;
     return (
       <Box
         maxWidth="1226px"
@@ -110,6 +121,9 @@ class IntroCourse extends PureComponent {
             justify="center"
             gridArea="courseDescription"
           >
+            <Heading level={3} color="gray1">
+              Sobre este curso
+            </Heading>
             <Paragraph
               color="gray1"
               size="large"
@@ -121,6 +135,12 @@ class IntroCourse extends PureComponent {
             >
               {description}
             </Paragraph>
+            <Text color="gray1" margin={{ vertical: 'small' }}>
+              La dificultad de este curso es {checkLevel(level)}
+            </Text>
+            <Text color="gray1" margin={{ vertical: 'small' }}>
+              Este curso contiene un total de {totalStages} clases.
+            </Text>
             <Button
               label="Comenzar"
               primary
