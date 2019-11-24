@@ -12,7 +12,7 @@ import {
   Button,
   Keyboard
 } from 'grommet';
-import { Search, User, Logout, Add } from 'grommet-icons';
+import { Search, User, Logout, Add, Configure } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
@@ -83,6 +83,17 @@ class Header extends PureComponent {
             />
           </Link>
         )}
+        <Link
+          href={`/users/${id}/account`}
+          as={`/users/${id}/account?at=${token}`}
+        >
+          <Anchor
+            icon={<Configure color="gray2" />}
+            label="Ajustes de cuenta"
+            margin={{ vertical: '5px' }}
+            size="small"
+          />
+        </Link>
         <Anchor
           icon={<Logout color="danger" />}
           label="Cerrar Sesion"

@@ -1,40 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import validator from 'validator';
 import _ from 'lodash';
-import axios from 'axios';
 import { Box, Heading, Form, FormField, Text, Select, Button } from 'grommet';
 
-function handleSignUpForm(formValue) {
-  if (!_.some(formValue, _.isEmpty))
-    axios
-      .post('/user/create', { formValue })
-      .then(() => Router.replace('/'))
-      .catch(error => console.error(error));
-}
-
-const SignUpLayout = () => {
+const AccountSettingsLayout = ({ accountData: { user }, updateAccount }) => {
   const [formValue, setFormValue] = useState({
     username: '',
-    password: '',
     email: '',
     user_type: ''
   });
 
   const [formError, setFormError] = useState({
     username: false,
-    password: false,
     email: false,
     user_type: false
   });
+
+  useEffect(() => {
+    setFormValue({
+      username: user.username,
+      email: user.email,
+      user_type: user.user_type
+    });
+  }, []);
 
   const [userTypeView, setUserTypeView] = useState('');
 
   function checkFormFields() {
     if (validator.isEmpty(formValue.username))
       setFormError({ ...formError, username: true });
-    if (!validator.isLength(formValue.password, { min: 6, max: undefined }))
-      setFormError({ ...formError, password: true });
     if (!validator.isEmail(formValue.email))
       setFormError({ ...formError, email: true });
     if (validator.isEmpty(formValue.user_type))
@@ -42,11 +37,29 @@ const SignUpLayout = () => {
 
     if (
       !validator.isEmpty(formValue.username) &&
-      validator.isLength(formValue.password, { min: 6, max: undefined }) &&
       validator.isEmail(formValue.email) &&
       !validator.isEmpty(formValue.user_type)
     )
-      handleSignUpForm(formValue);
+      updateAccount(formValue);
+  }
+
+  function localizeUserType(user_type, lang) {
+    if (lang === 'es') {
+      switch (user_type) {
+        case 'student':
+          return 'Estudiante';
+        default:
+          return 'Profesor';
+      }
+    }
+    if (lang === 'en') {
+      switch (user_type) {
+        case 'Estudiante':
+          return 'student';
+        default:
+          return 'teacher';
+      }
+    }
   }
   return (
     <Box fill margin={{ vertical: '0', horizontal: 'auto' }} maxWidth="80%">
@@ -57,7 +70,7 @@ const SignUpLayout = () => {
         color="gray1"
         size="large"
       >
-        Crea tu cuenta
+        Ajustes de tu cuenta
       </Heading>
       <Box
         maxWidth="30%"
@@ -69,6 +82,7 @@ const SignUpLayout = () => {
             checkFormFields();
           }}
           errors={formError}
+          value={formValue}
         >
           <FormField
             label={
@@ -100,7 +114,7 @@ const SignUpLayout = () => {
               setFormError({ ...formError, email: false });
             }}
           />
-          <FormField
+          {/* <FormField
             label={
               <Text textAlign="left" as="label">
                 Contraseña
@@ -115,7 +129,7 @@ const SignUpLayout = () => {
               setFormValue({ ...formValue, password: event.target.value });
               setFormError({ ...formError, password: false });
             }}
-          />
+          /> */}
           <FormField
             label={
               <Text textAlign="left" as="label">
@@ -132,7 +146,7 @@ const SignUpLayout = () => {
                 labelKey={o => {
                   return o.label;
                 }}
-                value={userTypeView}
+                value={localizeUserType(formValue.user_type, 'es')}
                 placeholder="Selecciona el tipo de usuario"
                 onChange={({ option }) => {
                   setUserTypeView(option.label);
@@ -147,7 +161,7 @@ const SignUpLayout = () => {
 
           <Button
             type="submit"
-            label="Registrarme"
+            label="Guardar configuración"
             margin={{ vertical: '30px', horizontal: 'auto' }}
             dsp="block"
           />
@@ -157,4 +171,4 @@ const SignUpLayout = () => {
   );
 };
 
-export default SignUpLayout;
+export default AccountSettingsLayout;

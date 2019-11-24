@@ -22,6 +22,23 @@ module.exports = {
       return 'CREATE_USER_ERROR';
     }
   },
+  updateUserAccount: async (user_id, accountData, access_token) => {
+    try {
+      const { username, email, user_type } = accountData;
+      return await api
+        .patch(
+          `persons/${user_id}`,
+          { username, email, user_type },
+          { params: { access_token } }
+        )
+        .then(response => {
+          console.log(response.data);
+          return response.data;
+        });
+    } catch (error) {
+      return Error('No se pudo actualizar usuario');
+    }
+  },
   login: async (username, password) => {
     try {
       const response = await api.post(`persons/login`, {
@@ -57,15 +74,6 @@ module.exports = {
       return 'NO_USER';
     }
   },
-  // getUserProfile: async user_id => {
-  //   try {
-  //     const response = await api.get(`persons/${user_id}/public_data`);
-  //     const { data } = response;
-  //     return data;
-  //   } catch (error) {
-  //     return {};
-  //   }
-  // },
   getUserProfile: async (user_id, access_token) => {
     try {
       const response = await api.get(`persons/${user_id}/profileData`, {

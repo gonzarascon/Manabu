@@ -21,6 +21,7 @@ export { default as EditStageLayout } from './EditStageLayout';
 export { default as TakeStageLayout } from './TakeStageLayout';
 export { default as FinishedLayout } from './FinishedLayout';
 export { default as ErrorLayout } from './ErrorLayout';
+export { default as AccountSettingsLayout } from './AccountSettingsLayout';
 
 // Contexts
 export { default as UserContext } from './UserContext';

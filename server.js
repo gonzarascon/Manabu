@@ -124,6 +124,17 @@ app.prepare().then(() => {
     });
   });
 
+  server.get('/users/:user_id/account', async (req, res) => {
+    const { at } = req.query;
+    const { user_id } = req.params;
+    const userData = await api.user.getActualUser(at);
+    return app.render(req, res, '/account', {
+      accountData: userData,
+      access_token: at,
+      user_id
+    });
+  });
+
   // Courses
   server.get('/course/:id', (req, res) => {
     const courseId = req.params.id;
