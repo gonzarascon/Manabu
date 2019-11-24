@@ -39,6 +39,24 @@ module.exports = {
       return Error('No se pudo actualizar usuario');
     }
   },
+  updatePassword: async (passwordData, access_token) => {
+    try {
+      const { oldPassword, newPassword } = passwordData;
+      console.log(passwordData);
+      return await api
+        .post(
+          `persons/change-password`,
+          { oldPassword, newPassword },
+          { params: { access_token } }
+        )
+        .then(response => {
+          console.log(response.data);
+          return response.data;
+        });
+    } catch (error) {
+      return Error('No se pudo actualizar la password');
+    }
+  },
   login: async (username, password) => {
     try {
       const response = await api.post(`persons/login`, {

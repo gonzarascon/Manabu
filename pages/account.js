@@ -16,11 +16,22 @@ const Account = ({ viewportSize, accountData, user_id, access_token }) => {
       .catch(() => setUpdateError(true));
   }
 
+  async function updatePassword(updatedPassword) {
+    await user
+      .updatePassword(updatedPassword, access_token)
+      .then(() => {
+        if (updateError === true) setUpdateError(false);
+        Router.reload();
+      })
+      .catch(() => setUpdateError(true));
+  }
+
   return (
     <Layout responsiveSize={viewportSize}>
       <AccountSettingsLayout
         accountData={accountData}
         updateAccount={updateAccount}
+        updatePassword={updatePassword}
       />
     </Layout>
   );

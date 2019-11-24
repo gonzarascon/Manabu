@@ -4,11 +4,25 @@ import validator from 'validator';
 import _ from 'lodash';
 import { Box, Heading, Form, FormField, Text, Select, Button } from 'grommet';
 
-const AccountSettingsLayout = ({ accountData: { user }, updateAccount }) => {
+const AccountSettingsLayout = ({
+  accountData: { user },
+  updateAccount,
+  updatePassword
+}) => {
   const [formValue, setFormValue] = useState({
     username: '',
     email: '',
     user_type: ''
+  });
+
+  const [passwordValue, setPasswordValue] = useState({
+    oldPassword: '',
+    newPassword: ''
+  });
+
+  const [passwordError, setPasswordError] = useState({
+    oldPassword: false,
+    newPassword: false
   });
 
   const [formError, setFormError] = useState({
@@ -41,6 +55,18 @@ const AccountSettingsLayout = ({ accountData: { user }, updateAccount }) => {
       !validator.isEmpty(formValue.user_type)
     )
       updateAccount(formValue);
+  }
+
+  function checkPasswordFields() {
+    if (
+      !validator.isLength(passwordValue.newPassword, { min: 6, max: undefined })
+    )
+      setPasswordError({ ...passwordError, newPassword: true });
+
+    if (
+      validator.isLength(passwordValue.newPassword, { min: 6, max: undefined })
+    )
+      updatePassword(passwordValue);
   }
 
   function localizeUserType(user_type, lang) {
@@ -114,22 +140,6 @@ const AccountSettingsLayout = ({ accountData: { user }, updateAccount }) => {
               setFormError({ ...formError, email: false });
             }}
           />
-          {/* <FormField
-            label={
-              <Text textAlign="left" as="label">
-                Contraseña
-              </Text>
-            }
-            name="password"
-            type="password"
-            placeholder="Ingresa tu contraseña"
-            focusIndicator
-            help="Debe contener, por lo menos, 6 caracteres."
-            onChange={event => {
-              setFormValue({ ...formValue, password: event.target.value });
-              setFormError({ ...formError, password: false });
-            }}
-          /> */}
           <FormField
             label={
               <Text textAlign="left" as="label">
@@ -162,6 +172,60 @@ const AccountSettingsLayout = ({ accountData: { user }, updateAccount }) => {
           <Button
             type="submit"
             label="Guardar configuración"
+            margin={{ vertical: '30px', horizontal: 'auto' }}
+            dsp="block"
+          />
+        </Form>
+        <Heading level={4} margin="medium">
+          Reestablecer contraseña
+        </Heading>
+        <Form
+          onSubmit={() => {
+            checkPasswordFields();
+          }}
+          errors={passwordError}
+          value={passwordValue}
+        >
+          <FormField
+            label={
+              <Text textAlign="left" as="label">
+                Contraseña actual
+              </Text>
+            }
+            name="oldPassword"
+            type="password"
+            placeholder="Ingresa tu contraseña actual"
+            focusIndicator
+            onChange={event => {
+              setPasswordValue({
+                ...passwordValue,
+                oldPassword: event.target.value
+              });
+              setPasswordError({ ...passwordError, oldPassword: false });
+            }}
+          />
+          <FormField
+            label={
+              <Text textAlign="left" as="label">
+                Nueva Contraseña
+              </Text>
+            }
+            name="newPassword"
+            type="password"
+            placeholder="Ingresa tu nueva contraseña"
+            focusIndicator
+            help="Debe contener, por lo menos, 6 caracteres."
+            onChange={event => {
+              setPasswordValue({
+                ...passwordValue,
+                newPassword: event.target.value
+              });
+              setPasswordError({ ...passwordError, newPassword: false });
+            }}
+          />
+          <Button
+            type="submit"
+            label="Cambiar contraseña"
             margin={{ vertical: '30px', horizontal: 'auto' }}
             dsp="block"
           />
