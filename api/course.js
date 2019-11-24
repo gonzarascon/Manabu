@@ -13,7 +13,13 @@ module.exports = {
   },
   createCourse: async (data, access_token) => {
     try {
-      const { name, description, languages, level, user_id } = data;
+      const {
+        name,
+        description,
+        languages,
+        level: { value },
+        user_id
+      } = data;
       let courseId;
       const response = await api
         .post(
@@ -21,7 +27,7 @@ module.exports = {
           {
             name,
             description,
-            level,
+            level: value,
             personId: user_id,
             course_photo: 'string'
           },
@@ -35,20 +41,21 @@ module.exports = {
           return _response;
         })
         .catch(error => {
+          console.log('error creando curso', error);
           courseId = 0;
         });
 
-      languages.forEach(async language => {
-        await api.post(
-          'languages_courses',
-          { languageId: language.id, courseId },
-          { params: { access_token } }
-        );
-      });
+      // languages.forEach(async language => {
+      await api.post(
+        'languages_courses',
+        { languageId: languages.id, courseId },
+        { params: { access_token } }
+      );
+      // });
 
       return response;
     } catch (error) {
-      console.log('error', error.data);
+      console.log('error', error);
     }
   },
   getById: async id => {

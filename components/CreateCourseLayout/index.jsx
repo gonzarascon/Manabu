@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import _ from 'lodash';
 import styled from 'styled-components';
 import {
   Box,
@@ -37,7 +38,8 @@ function CreateCourseLayout({
   handleInput,
   values,
   languages,
-  creationHandler
+  creationHandler,
+  formError
 }) {
   function localizeLevel(level) {
     switch (level) {
@@ -66,18 +68,23 @@ function CreateCourseLayout({
       </Box>
       <Box margin={{ top: 'medium' }} alignContent="center">
         <FormWrapper>
-          <CustomForm onSubmit={({ value }) => creationHandler(value)}>
+          <CustomForm
+            onSubmit={({ value }) => creationHandler(value)}
+            errors={formError}
+          >
             <FormField
               name="name"
               label="Nombre del curso"
               value={values.courseName}
-              onChange={e => handleInput('courseName', e.target.value)}
+              onChange={e => handleInput('courseName', e.target.value, 'name')}
             />
             <FormField
               name="description"
               label="Descripción"
               value={values.courseDescription}
-              onChange={e => handleInput('courseDescription', e.target.value)}
+              onChange={e =>
+                handleInput('courseDescription', e.target.value, 'description')
+              }
               component={TextArea}
             />
 
@@ -85,7 +92,9 @@ function CreateCourseLayout({
               label="¿Cual es la dificultad de este curso?"
               name="level"
               value={values.courseLevel}
-              onChange={({ option }) => handleInput('courseLevel', option)}
+              onChange={({ option }) =>
+                handleInput('courseLevel', option.value, 'level')
+              }
               component={props => (
                 <Select
                   labelKey="label"
@@ -111,8 +120,14 @@ function CreateCourseLayout({
             <FormField
               label="¿Que aprenderán tus estudiantes?"
               name="languages"
-              onChange={({ option }) => console.log('option', option)}
-              value={values.courseLanguages}
+              onChange={({ option }) =>
+                handleInput('courseLanguages', option, 'languages')
+              }
+              value={
+                _.isEqual(values.courseLanguages, {})
+                  ? ''
+                  : values.courseLanguages
+              }
               component={props => (
                 <Select
                   options={languages}
