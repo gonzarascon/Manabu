@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   Box,
@@ -10,6 +10,7 @@ import {
   Select
 } from 'grommet';
 import { Book } from 'grommet-icons';
+import { parse } from 'path';
 
 const FormWrapper = styled(Box)`
   max-width: 100%;
@@ -38,11 +39,28 @@ function CreateCourseLayout({
   languages,
   creationHandler
 }) {
+  function localizeLevel(level) {
+    switch (level) {
+      case 'rookie':
+        return 'Fácil';
+      case 'champion':
+        return 'Media';
+      default:
+        return 'Difícil';
+    }
+  }
+
+  function capitalize(string) {
+    const parsedString = String(string);
+    const uppercasedInitial = parsedString[0].toUpperCase();
+    return uppercasedInitial + parsedString.slice(1);
+  }
+
   return (
     <Box pad="large" as="section" animation="fadeIn" height=" 70vh">
       <Box direction="row" alignContent="center" justify="center">
         <Book />
-        <Heading level={3} margin={{ left: 'small' }}>
+        <Heading level={3} margin={{ left: 'small' }} color="gray1">
           Crea un nuevo curso.
         </Heading>
       </Box>
@@ -69,7 +87,25 @@ function CreateCourseLayout({
               value={values.courseLevel}
               onChange={({ option }) => handleInput('courseLevel', option)}
               component={props => (
-                <Select options={['rookie', 'champion', 'mega']} {...props} />
+                <Select
+                  labelKey="label"
+                  value="value"
+                  options={[
+                    {
+                      value: 'rookie',
+                      label: localizeLevel('rookie')
+                    },
+                    {
+                      value: 'champion',
+                      label: localizeLevel('champion')
+                    },
+                    {
+                      value: 'mega',
+                      label: localizeLevel('mega')
+                    }
+                  ]}
+                  {...props}
+                />
               )}
             />
             <FormField
@@ -80,9 +116,7 @@ function CreateCourseLayout({
               component={props => (
                 <Select
                   options={languages}
-                  // eslint-disable-next-line react/no-children-prop
-                  children={option => option.name}
-                  multiple
+                  labelKey={option => capitalize(option.name)}
                   onSearch={e => console.log('search', e)}
                   {...props}
                 />
