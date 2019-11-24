@@ -48,8 +48,6 @@ class Header extends PureComponent {
     this.setState({ loginOpen: !loginOpen });
   }
 
-  // TODO: Handle input on searchbox
-
   renderMenuItems() {
     const {
       viewportSize,
@@ -116,6 +114,7 @@ class Header extends PureComponent {
       }
     } = this;
 
+    console.log(viewportSize);
     return (
       <Box
         a11yTitle="Main Navigation"
@@ -126,7 +125,8 @@ class Header extends PureComponent {
         pad={{ top: 'small', horizontal: 'xsmall', bottom: 'small' }}
         fill="horizontal"
         align="center"
-        wrap
+        justify="between"
+        wrap={viewportSize === 'small' ? true : false}
       >
         {/* Logo */}
 
@@ -159,8 +159,8 @@ class Header extends PureComponent {
           background="gray4"
           pad={{ vertical: 'xsmall', horizontal: 'medium' }}
           round="small"
-          basis="large"
           margin={viewportSize === 'small' ? { top: 'medium' } : 'auto'}
+          basis={viewportSize === 'small' ? 'full' : '2/3'}
           height="xxsmall"
           searchContainer
           flexOrder={viewportSize === 'small' ? 3 : 1}
@@ -194,15 +194,6 @@ class Header extends PureComponent {
           margin={{ right: 'xsmall' }}
           flexOrder={viewportSize === 'small' ? 1 : 3}
         >
-          {/* <Box as="nav" alignSelf="center" align="center" justify="start">
-            <Box as="ul" alignSelf="center" align="center">
-              <Anchor
-                icon={<Code color="gray2" />}
-                href="/catalog"
-                label="Catalogo"
-              />
-            </Box>
-          </Box> */}
           {!userLogged && (
             <Button
               label="Iniciar sesion"
