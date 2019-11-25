@@ -32,6 +32,7 @@ const Account = ({ viewportSize, accountData, user_id, access_token }) => {
         accountData={accountData}
         updateAccount={updateAccount}
         updatePassword={updatePassword}
+        responsiveSize={viewportSize}
       />
     </Layout>
   );

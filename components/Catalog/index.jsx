@@ -13,23 +13,32 @@ export default class Catalog extends PureComponent {
 
   render() {
     const { value } = this.state;
-    const { searchedItem, coursesList } = this.props;
+    const { searchedItem, coursesList, responsiveSize } = this.props;
     return (
       <Box fill="horizontal" pad={{ horizontal: 'xsmall' }}>
         <Heading
           level={2}
           color="gray1"
-          margin={{ vertical: '0', horizontal: 'auto' }}
+          margin={
+            responsiveSize === 'small'
+              ? { top: '50px', horizontal: 'auto' }
+              : { vertical: '0', horizontal: 'auto' }
+          }
         >
           Resultados para: &quot;{searchedItem}&quot;
         </Heading>
         <Grid
-          columns={['.25fr', '1fr', '.25fr']}
+          columns={
+            responsiveSize === 'small' ? ['1fr'] : ['.25fr', '1fr', '.25fr']
+          }
           gap="large"
           fill="horizontal"
           justifyContent="center"
         >
-          <Box gridColumn="2 / 3" margin={{ vertical: 'large' }}>
+          <Box
+            gridColumn={responsiveSize === 'small' ? '1/1' : '2 / 3'}
+            margin={{ vertical: 'large' }}
+          >
             {coursesList.map(course => (
               <CourseRow
                 name={course.name}

@@ -7,7 +7,8 @@ import { Box, Heading, Form, FormField, Text, Select, Button } from 'grommet';
 const AccountSettingsLayout = ({
   accountData: { user },
   updateAccount,
-  updatePassword
+  updatePassword,
+  responsiveSize
 }) => {
   const [formValue, setFormValue] = useState({
     username: '',
@@ -88,7 +89,15 @@ const AccountSettingsLayout = ({
     }
   }
   return (
-    <Box fill margin={{ vertical: '0', horizontal: 'auto' }} maxWidth="80%">
+    <Box
+      fill
+      margin={
+        responsiveSize === 'small'
+          ? { top: '50px', horizontal: 'auto' }
+          : { vertical: '0', horizontal: 'auto' }
+      }
+      maxWidth={responsiveSize === 'small' ? '100%' : '80%'}
+    >
       <Heading
         level={2}
         textAlign="center"
@@ -99,7 +108,7 @@ const AccountSettingsLayout = ({
         Ajustes de tu cuenta
       </Heading>
       <Box
-        maxWidth="30%"
+        maxWidth={responsiveSize === 'small' ? '100%' : '30%'}
         fill
         margin={{ top: '25px', bottom: '0', horizontal: 'auto' }}
       >
