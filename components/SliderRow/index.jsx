@@ -49,13 +49,27 @@ const SliderRow = ({ headingLabel, cards, responsiveSize, toDashboard }) => {
     arrows: false,
     slidesToShow: cards.length === 1 ? 1 : 3,
     variableWidth: true,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: true
+        }
+      }
+    ]
   };
 
   return (
     <Box fill="horizontal">
       <Box fill="horizontal">
-        <Heading color="gray1" level={2}>
+        <Heading
+          color="gray1"
+          level={2}
+          textAlign={responsiveSize === 'small' ? 'center' : 'start'}
+        >
           {headingLabel}
         </Heading>
       </Box>

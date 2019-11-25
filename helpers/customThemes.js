@@ -44,6 +44,8 @@ export const customTheme = {
         `
           object-fit: ${props.objectFit};
         `}
+      
+      ${props => props.maxWidth && `max-width: ${props.maxWidth}`}
     `
   },
 

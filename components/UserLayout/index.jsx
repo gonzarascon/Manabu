@@ -9,18 +9,20 @@ import SliderRow from '../SliderRow';
 import HighlightLink from '../HighlightLink';
 
 const desktopColumns = ['.8fr', '1fr'];
-const desktopRows = ['small', '1fr'];
+const desktopRows = ['small', '1fr', '1fr'];
 const desktopAreas = [
   { name: 'userData', start: [0, 0], end: [0, 0] },
   // { name: 'badges', start: [0, 1], end: [0, 1] },
-  { name: 'slider', start: [0, 1], end: [1, 1] }
+  { name: 'slider1', start: [0, 1], end: [1, 1] },
+  { name: 'slider2', start: [0, 2], end: [1, 2] }
 ];
 
 const mobileColumns = ['1fr'];
-const mobileRows = ['small', '1fr'];
+const mobileRows = ['small', '1fr', '1fr'];
 const mobileAreas = [
-  { name: 'courses', start: [0, 0], end: [0, 1] },
-  { name: 'slider', start: [0, 1], end: [0, 1] }
+  { name: 'userData', start: [0, 0], end: [0, 1] },
+  { name: 'slider1', start: [0, 1], end: [0, 1] },
+  { name: 'slider2', start: [0, 2], end: [0, 2] }
 ];
 
 function defineTitles(titles) {
@@ -37,6 +39,7 @@ class UserLayout extends PureComponent {
       userTakenCourses
     } = this.props;
 
+    console.log(responsiveSize);
     const xpMeter = [
       {
         value: xp,
@@ -86,7 +89,7 @@ class UserLayout extends PureComponent {
             </Box>
           </Box>
           {courses && user_type === 'teacher' && (
-            <Box gridArea="slider" as="section" pad="medium">
+            <Box gridArea="slider1" as="section" pad="medium">
               <SliderRow
                 responsiveSize={responsiveSize}
                 headingLabel="Cursos Creados"
@@ -96,7 +99,7 @@ class UserLayout extends PureComponent {
             </Box>
           )}
           {userTakenCourses && (
-            <Box gridArea="slider" as="section" pad="medium">
+            <Box gridArea="slider2" as="section" pad="medium">
               <SliderRow
                 responsiveSize={responsiveSize}
                 headingLabel="Cursos Tomados"

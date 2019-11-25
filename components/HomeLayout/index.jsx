@@ -54,8 +54,15 @@ const HomeLayout = ({
           responsiveSize={viewportSize}
         />
       )}
-      <Box fill="horizontal">
-        <Image src="/static/images/courses_banner.png" fit="contain" />
+      <Box fill="horizontal" height={viewportSize === 'small' ? '376px' : null}>
+        <Image
+          src={
+            viewportSize === 'small'
+              ? '/static/images/courses_banner-mobile.png'
+              : '/static/images/courses_banner.png'
+          }
+          fit="contain"
+        />
       </Box>
 
       <Box fill maxWidth="95%" margin={{ vertical: '0', horizontal: 'auto' }}>

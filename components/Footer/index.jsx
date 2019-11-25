@@ -10,15 +10,15 @@ const Footer = ({ viewportSize }) => (
     a11yTitle="Page Footer"
     animation="fadeIn"
     responsive
-    direction="row"
+    direction={viewportSize === 'small' ? 'column' : 'row'}
     as="footer"
     pad={{ horizontal: 'xsmall', bottom: 'small' }}
     fill="horizontal"
     flex
     align="center"
     justify={viewportSize === 'small' ? 'center' : 'between'}
-    wrap
-    height="70px"
+    wrap={viewportSize === 'small' ? false : true}
+    height={viewportSize === 'small' ? 'auto' : '70px'}
     margin={{ top: 'medium' }}
   >
     <Box
@@ -29,8 +29,8 @@ const Footer = ({ viewportSize }) => (
       as="h2"
       width={viewportSize === 'small' ? '150px' : '250px'}
       responsive
-      justify="start"
-      alignSelf="start"
+      justify={viewportSize === 'small' ? 'center' : 'start'}
+      alignSelf={viewportSize === 'small' ? 'center' : 'start'}
       flexOrder={0}
     >
       <Image src={icons.manabu_logo} fit="contain" />
@@ -66,7 +66,7 @@ const Footer = ({ viewportSize }) => (
 );
 
 Footer.propTypes = {
-  viewportSize: PropTypes.string.isRequired,
+  viewportSize: PropTypes.string.isRequired
 };
 
 export default Footer;
