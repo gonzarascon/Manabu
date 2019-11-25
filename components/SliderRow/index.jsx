@@ -78,7 +78,7 @@ const SliderRow = ({ headingLabel, cards, responsiveSize, toDashboard }) => {
           <SupportText>
             <Book size="large" />
             Aún no tomaste ningun curso. ¿Qué estas esperando?
-            <Link href="/catalog">
+            <Link href="/search?s=javascript">
               <Anchor label="Encuentra el curso perfecto para ti ahora." />
             </Link>
           </SupportText>
