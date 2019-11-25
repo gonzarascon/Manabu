@@ -11,7 +11,6 @@ export { default as WelcomeWrapper } from './WelcomeWrapper';
 export { default as LoginLayer } from './LoginLayer';
 
 // Pages Layouts
-
 export { default as HomeLayout } from './HomeLayout';
 export { default as UserLayout } from './UserLayout';
 export { default as IntroCourse } from './IntroCourse';
@@ -20,6 +19,9 @@ export { default as CreateCourseLayout } from './CreateCourseLayout';
 export { default as CourseDashboardLayout } from './CourseDashboardLayout';
 export { default as EditStageLayout } from './EditStageLayout';
 export { default as TakeStageLayout } from './TakeStageLayout';
+export { default as FinishedLayout } from './FinishedLayout';
+export { default as ErrorLayout } from './ErrorLayout';
+export { default as AccountSettingsLayout } from './AccountSettingsLayout';
 
 // Contexts
 export { default as UserContext } from './UserContext';

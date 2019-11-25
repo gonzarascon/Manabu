@@ -1,20 +1,34 @@
 import React, { PureComponent } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Box, DropButton, TextInput, Image, Anchor, Button } from 'grommet';
-import { Search, User, Logout, Code, Add } from 'grommet-icons';
+import {
+  Box,
+  DropButton,
+  TextInput,
+  Image,
+  Anchor,
+  Button,
+  Keyboard
+} from 'grommet';
+import { Search, User, Logout, Add, Configure } from 'grommet-icons';
 import Avatar from 'react-avatar';
 
 import { icons } from '../../constants';
 
 import LoginLayer from '../LoginLayer';
 
+async function doSearch(query) {
+  Router.replace(`/search?s=${query}`);
+}
+
 class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      loginOpen: false
+      loginOpen: false,
+      searchQuery: ''
     };
 
     this.toggleLogin = this.toggleLogin.bind(this);
@@ -24,7 +38,7 @@ class Header extends PureComponent {
   loginFormHandler(value) {
     const { login } = this.props;
     login(value);
-    this.toggleLogin();
+    // this.toggleLogin();
   }
 
   toggleLogin() {
@@ -33,8 +47,6 @@ class Header extends PureComponent {
     } = this;
     this.setState({ loginOpen: !loginOpen });
   }
-
-  // TODO: Handle input on searchbox
 
   renderMenuItems() {
     const {
@@ -69,6 +81,17 @@ class Header extends PureComponent {
             />
           </Link>
         )}
+        <Link
+          href={`/users/${id}/account`}
+          as={`/users/${id}/account?at=${token}`}
+        >
+          <Anchor
+            icon={<Configure color="gray2" />}
+            label="Ajustes de cuenta"
+            margin={{ vertical: '5px' }}
+            size="small"
+          />
+        </Link>
         <Anchor
           icon={<Logout color="danger" />}
           label="Cerrar Sesion"
@@ -82,14 +105,16 @@ class Header extends PureComponent {
 
   render() {
     const {
-      state: { loginOpen },
+      state: { loginOpen, searchQuery },
       props: {
         viewportSize,
         userData: { username },
-        userLogged
+        userLogged,
+        loginError
       }
     } = this;
 
+    console.log(viewportSize);
     return (
       <Box
         a11yTitle="Main Navigation"
@@ -100,28 +125,29 @@ class Header extends PureComponent {
         pad={{ top: 'small', horizontal: 'xsmall', bottom: 'small' }}
         fill="horizontal"
         align="center"
-        wrap
+        justify="between"
+        wrap={viewportSize === 'small' ? true : false}
       >
         {/* Logo */}
 
-        <Box
-          a11yTitle="Manabu, a gamified e-learning platform"
-          direction="row"
-          gap="small"
-          align="center"
-          as="h1"
-          responsive
-          basis="small"
-          height="100%"
-          justify="start"
-          alignSelf="start"
-          flexOrder={0}
-          maxWidth="90px"
-        >
-          <Link href="/">
+        <Anchor maxWidth="" href="/">
+          <Box
+            a11yTitle="Manabu, a gamified e-learning platform"
+            direction="row"
+            gap="small"
+            align="center"
+            as="h1"
+            responsive
+            basis="small"
+            height="100%"
+            justify="start"
+            alignSelf="start"
+            flexOrder={0}
+            maxWidth="90px"
+          >
             <Image alignSelf="start" src={icons.manabu_iso} fit="contain" />
-          </Link>
-        </Box>
+          </Box>
+        </Anchor>
 
         {/* Searchbox */}
         <Box
@@ -133,20 +159,26 @@ class Header extends PureComponent {
           background="gray4"
           pad={{ vertical: 'xsmall', horizontal: 'medium' }}
           round="small"
-          basis="large"
           margin={viewportSize === 'small' ? { top: 'medium' } : 'auto'}
+          basis={viewportSize === 'small' ? 'full' : '2/3'}
           height="xxsmall"
           searchContainer
           flexOrder={viewportSize === 'small' ? 3 : 1}
           elevation={viewportSize === 'small' ? 'xsmall' : 'none'}
         >
-          <TextInput
-            placeholder="Busca lo que quieras"
-            size="medium"
-            plain
-            focusIndicator={false}
-            type="search"
-          />
+          <Keyboard onEnter={() => doSearch(searchQuery)}>
+            <TextInput
+              placeholder="Busca cursos por lenguaje"
+              size="medium"
+              plain
+              value={searchQuery}
+              onChange={({ target }) =>
+                this.setState({ searchQuery: target.value })
+              }
+              focusIndicator={false}
+              type="search"
+            />
+          </Keyboard>
           <Search color="brand" />
         </Box>
 
@@ -162,15 +194,6 @@ class Header extends PureComponent {
           margin={{ right: 'xsmall' }}
           flexOrder={viewportSize === 'small' ? 1 : 3}
         >
-          {/* <Box as="nav" alignSelf="center" align="center" justify="start">
-            <Box as="ul" alignSelf="center" align="center">
-              <Anchor
-                icon={<Code color="gray2" />}
-                href="/catalog"
-                label="Catalogo"
-              />
-            </Box>
-          </Box> */}
           {!userLogged && (
             <Button
               label="Iniciar sesion"
@@ -196,6 +219,7 @@ class Header extends PureComponent {
             <LoginLayer
               closeHandler={this.toggleLogin}
               submitFormHandler={this.loginFormHandler}
+              loginError={loginError}
             />
           )}
         </Box>

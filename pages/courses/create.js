@@ -1,7 +1,8 @@
 import React, { PureComponent, useContext } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
-import { userRouter } from 'next/router';
+import _ from 'lodash';
+import validator from 'validator';
 import { Layout, CreateCourseLayout, UserContext } from 'components';
 
 class create extends PureComponent {
@@ -18,15 +19,34 @@ class create extends PureComponent {
       courseName: '',
       courseDescription: '',
       courseLevel: '',
-      courseLanguages: [],
-      coursePhoto: ''
+      courseLanguages: {},
+      coursePhoto: '',
+      formError: {
+        name: false,
+        description: false,
+        level: false,
+        languages: false
+      }
     };
     this.changeInput = this.changeInput.bind(this);
     this.handleCreation = this.handleCreation.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
-  changeInput(state, value) {
-    this.setState({ [state]: value });
+  changeInput(state, value, errorCode) {
+    const { formError } = this.state;
+
+    if (state === 'courseLanguages') {
+      const { courseLanguages } = this.state;
+      this.setState({
+        courseLanguages: value,
+        formError: { ...formError, [errorCode]: false }
+      });
+    }
+    this.setState({
+      [state]: value,
+      formError: { ...formError, [errorCode]: false }
+    });
   }
 
   async handleCreation(value) {
@@ -52,6 +72,38 @@ class create extends PureComponent {
       .catch(error => console.error('error creating course', error));
   }
 
+  validate(value) {
+    const {
+      courseName,
+      courseDescription,
+      courseLevel,
+      courseLanguages,
+      coursePhoto,
+      formError
+    } = this.state;
+
+    if (validator.isEmpty(courseName))
+      this.setState({ formError: { ...formError, name: true } });
+
+    if (validator.isEmpty(courseDescription))
+      this.setState({ formError: { ...formError, description: true } });
+
+    if (validator.isEmpty(courseLevel))
+      this.setState({ formError: { ...formError, level: true } });
+
+    if (_.isEmpty(courseLanguages))
+      this.setState({ formError: { ...formError, languages: true } });
+
+    if (
+      !validator.isEmpty(courseName) &&
+      !validator.isEmpty(courseDescription) &&
+      !validator.isEmpty(courseLevel) &&
+      !_.isEmpty(courseLanguages)
+    ) {
+      this.handleCreation(value);
+    }
+  }
+
   render() {
     const {
       state,
@@ -63,7 +115,8 @@ class create extends PureComponent {
           handleInput={this.changeInput}
           values={state}
           languages={languages}
-          creationHandler={this.handleCreation}
+          creationHandler={this.validate}
+          formError={this.state.formError}
         />
       </Layout>
     );

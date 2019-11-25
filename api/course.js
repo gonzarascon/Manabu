@@ -13,7 +13,13 @@ module.exports = {
   },
   createCourse: async (data, access_token) => {
     try {
-      const { name, description, languages, level, user_id } = data;
+      const {
+        name,
+        description,
+        languages,
+        level: { value },
+        user_id
+      } = data;
       let courseId;
       const response = await api
         .post(
@@ -21,7 +27,7 @@ module.exports = {
           {
             name,
             description,
-            level,
+            level: value,
             personId: user_id,
             course_photo: 'string'
           },
@@ -35,20 +41,21 @@ module.exports = {
           return _response;
         })
         .catch(error => {
+          console.log('error creando curso', error);
           courseId = 0;
         });
 
-      languages.forEach(async language => {
-        await api.post(
-          'languages_courses',
-          { languageId: language.id, courseId },
-          { params: { access_token } }
-        );
-      });
+      // languages.forEach(async language => {
+      await api.post(
+        'languages_courses',
+        { languageId: languages.id, courseId },
+        { params: { access_token } }
+      );
+      // });
 
       return response;
     } catch (error) {
-      console.log('error', error.data);
+      console.log('error', error);
     }
   },
   getById: async id => {
@@ -94,16 +101,39 @@ module.exports = {
         })
         .then(response => response)
         .catch(error =>
-          console.log('error creating stage', error.response.status)
+          console.log('error updating stage', error.response.status)
         );
     } catch (error) {
-      return new Error('Cannot create stage');
+      return new Error('Cannot update stage');
     }
   },
   deleteStage: async (course_id, stage_id, access_token) => {
     try {
+      const stageToDelete = await api
+        .get(`courses/${course_id}/stages/${stage_id}`)
+        .then(({ data }) => data);
+
+      const stagesToUpdate = await api
+        .get(
+          `courses/${course_id}/stages?filter[where][number][gt]=${stageToDelete.number}`
+        )
+        .then(({ data }) => data);
+
+      stagesToUpdate.map(async stageToUpdate => {
+        console.log('stageToUpdate', stageToUpdate);
+        await api.put(
+          `courses/${course_id}/stages/${stageToUpdate.id}`,
+          {
+            number: stageToUpdate.number - 1
+          },
+          {
+            access_token
+          }
+        );
+      });
+
       return await api
-        .delete(`courses/${course_id}/stages`, {
+        .delete(`courses/${course_id}/stages/${stage_id}`, {
           params: { access_token }
         })
         .then(response => response)
@@ -121,6 +151,33 @@ module.exports = {
       );
       const { data } = stageById;
       return data;
+    } catch (error) {
+      return new Error('No Stage');
+    }
+  },
+  changeState: async (course_id, state, access_token) => {
+    try {
+      return await api.patch(
+        `/courses/${course_id}`,
+        { state },
+        { params: { access_token } }
+      );
+    } catch (error) {
+      return new Error('No Stage');
+    }
+  },
+  getCoursesByLanguageName: async name => {
+    try {
+      const languageId = await api
+        .get(`languages?filter={"where":{"name":${name}}}`)
+        .then(({ data }) => data[0].id)
+        .catch(() => 1);
+
+      const courses = await api
+        .get(`languages/${languageId}/courses?filter[limit]=15`)
+        .then(response => response.data);
+
+      return courses;
     } catch (error) {
       return new Error('No Stage');
     }

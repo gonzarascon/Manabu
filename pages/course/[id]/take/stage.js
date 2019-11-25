@@ -2,6 +2,7 @@ import React, { PureComponent, useContext } from 'react';
 import Router from 'next/router';
 import axios from 'axios';
 import { Layout, TakeStageLayout } from 'components';
+import { user } from '../../../../api/';
 
 class stage extends PureComponent {
   static async getInitialProps({ query }) {
@@ -13,12 +14,16 @@ class stage extends PureComponent {
   constructor() {
     super();
 
+    this.state = {
+      wrongAnswer: false
+    };
+
     this.checkStageDataWithUserInput = this.checkStageDataWithUserInput.bind(
       this
     );
   }
 
-  checkStageDataWithUserInput(userInput) {
+  async checkStageDataWithUserInput(userInput) {
     const {
       stageData: {
         content: {
@@ -26,27 +31,52 @@ class stage extends PureComponent {
         },
         number
       },
-      courseData
+      courseData,
+      course_id,
+      loggedUserData: { id: userId }
     } = this.props;
+
     if (userInput === correct_answer) {
-      if (number + 1 < courseData.stages.length) {
+      const totalStages = courseData.stages.length;
+      if (number < totalStages && number + 1 <= totalStages) {
         // TODO: Router should push to next stage
-        console.log('next stage');
+        user
+          .updateCourseProgress(userId, course_id, number + 1)
+          .then(response =>
+            Router.replace(`/course/${course_id}/take/stage/${number + 1}`)
+          )
+          .catch(error => console.error('no se pudo continuar el curso'));
         // TODO: Router should push to end
       } else {
-        console.log('course end');
+        Router.replace(`/course/${course_id}/end`);
+
+        // console.log('courseData stages', courseData.stages);
+        // console.log('course end');
       }
+    } else {
+      this.setState({ wrongAnswer: true });
     }
   }
 
   render() {
-    const { viewportSize, actualUser, course_id, stageData } = this.props;
+    const {
+      viewportSize,
+      actualUser,
+      course_id,
+      stageData,
+      courseData
+    } = this.props;
+    const { wrongAnswer } = this.state;
+    const courseLength = courseData.stages.length;
     return (
       <Layout responsiveSize={viewportSize} userData={actualUser}>
         <TakeStageLayout
           course_id={course_id}
           stageLoadedData={stageData}
           checkUserInput={this.checkStageDataWithUserInput}
+          totalStages={courseLength}
+          responsiveSize={viewportSize}
+          wrongAnswer={wrongAnswer}
         />
       </Layout>
     );

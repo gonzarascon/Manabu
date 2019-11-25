@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Box, Button, Form } from 'grommet';
 
 export const Wrapper = styled(Box)`
-  min-height: 80vh;
+  min-height: ${props => (props.minHeight ? props.minHeight : '80vh')};
 `;
 
 export const EditorWrapper = styled(Box)`

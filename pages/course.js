@@ -12,10 +12,12 @@ class Course extends PureComponent {
   }
 
   async takeCourse(url) {
+    console.log('takeCourse url', url);
     await axios
       .get(url)
       .then(response => {
         const { data } = response;
+        console.log('data', data);
         return Router.push(
           `/course/${parseInt(data.course_id)}/take/stage/${data.current_class}`
         );

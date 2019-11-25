@@ -28,7 +28,12 @@ function renderStages(stages, course_id, handleDelete) {
   ));
 }
 
-function CourseDashboardLayout({ course_data, deleteStage, toggleState }) {
+function CourseDashboardLayout({
+  course_data,
+  deleteStage,
+  toggleState,
+  responsiveSize
+}) {
   const [deleteMode, setDeleteMode] = useState(false);
   const [stageToDelete, setStageToDelete] = useState({});
 
@@ -81,7 +86,12 @@ function CourseDashboardLayout({ course_data, deleteStage, toggleState }) {
 
   return (
     <Wrapper>
-      <Box justify="between" direction="row" align="center" margin="medium">
+      <Box
+        justify="between"
+        direction={responsiveSize === 'small' ? 'column' : 'row'}
+        align="center"
+        margin="medium"
+      >
         <Heading level={3} color="gray1">
           Editar Curso:{' '}
           <Text truncate weight={200} size="large">
@@ -93,7 +103,11 @@ function CourseDashboardLayout({ course_data, deleteStage, toggleState }) {
           Estado del curso: {renderCourseState()}
         </Heading>
       </Box>
-      <Box as="section" height="75vh" margin="medium">
+      <Box
+        as="section"
+        height={responsiveSize === 'small' ? 'auto' : '75vh'}
+        margin="medium"
+      >
         {stages.length < 1 && (
           <AdviceBox
             justifyContent="center"

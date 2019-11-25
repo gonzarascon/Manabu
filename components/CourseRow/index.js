@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Image, Text, Anchor, Heading } from 'grommet';
 import { UserManager } from 'grommet-icons';
 
-const CourseRow = () => {
+const CourseRow = ({ name, user, href }) => {
   return (
     <Box
       as="div"
@@ -16,14 +16,10 @@ const CourseRow = () => {
         <Image src="/static/images/courseThumbnail.png" fit="cover" />
       </Box>
       <Box as="div" pad="small" direction="column" justify="center">
-        <Anchor
-          label={
-            <Heading level={3}>JavaScript desde cero - Curso Inicial</Heading>
-          }
-        />
+        <Anchor href={href} label={<Heading level={3}>{name}</Heading>} />
         <Box direction="row" margin={{ vertical: 'xsmall' }}>
           <UserManager size="20px" />
-          <Text margin={{ horizontal: 'small' }}>Darth Vader</Text>
+          <Text margin={{ horizontal: 'small' }}>{user}</Text>
         </Box>
       </Box>
     </Box>

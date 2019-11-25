@@ -22,6 +22,41 @@ module.exports = {
       return 'CREATE_USER_ERROR';
     }
   },
+  updateUserAccount: async (user_id, accountData, access_token) => {
+    try {
+      const { username, email, user_type } = accountData;
+      return await api
+        .patch(
+          `persons/${user_id}`,
+          { username, email, user_type },
+          { params: { access_token } }
+        )
+        .then(response => {
+          console.log(response.data);
+          return response.data;
+        });
+    } catch (error) {
+      return Error('No se pudo actualizar usuario');
+    }
+  },
+  updatePassword: async (passwordData, access_token) => {
+    try {
+      const { oldPassword, newPassword } = passwordData;
+      console.log(passwordData);
+      return await api
+        .post(
+          `persons/change-password`,
+          { oldPassword, newPassword },
+          { params: { access_token } }
+        )
+        .then(response => {
+          console.log(response.data);
+          return response.data;
+        });
+    } catch (error) {
+      return Error('No se pudo actualizar la password');
+    }
+  },
   login: async (username, password) => {
     try {
       const response = await api.post(`persons/login`, {
@@ -57,15 +92,6 @@ module.exports = {
       return 'NO_USER';
     }
   },
-  // getUserProfile: async user_id => {
-  //   try {
-  //     const response = await api.get(`persons/${user_id}/public_data`);
-  //     const { data } = response;
-  //     return data;
-  //   } catch (error) {
-  //     return {};
-  //   }
-  // },
   getUserProfile: async (user_id, access_token) => {
     try {
       const response = await api.get(`persons/${user_id}/profileData`, {
@@ -75,6 +101,50 @@ module.exports = {
       return data;
     } catch (error) {
       return {};
+    }
+  },
+  getUserCurrentCourses: async user_id => {
+    try {
+      const response = await api.get(`persons/${user_id}/coursesThrough`);
+      const { data } = response;
+      return data;
+    } catch (error) {
+      return [];
+    }
+  },
+  takeCourse: async (user_id, course_id) => {
+    try {
+      const checkIfCourseTaken = await api.get(
+        `users_courses?filter={"where":{"personId":${user_id}, "courseId":${course_id}}}`
+      );
+      if (checkIfCourseTaken.data.length !== 0) {
+        console.log('checkIfCourseTaken', checkIfCourseTaken.data);
+        return checkIfCourseTaken.data[0].current_class;
+      }
+      console.log('paso if');
+      const takeCourse = await api.post(`users_courses`, {
+        personId: user_id,
+        courseId: course_id,
+        current_class: 1
+      });
+      return takeCourse.data.current_class;
+    } catch (error) {
+      return [];
+    }
+  },
+  updateCourseProgress: async (user_id, course_id, current_class) => {
+    try {
+      const users_coursesId = await api
+        .get(
+          `users_courses?filter={"where":{"personId":${user_id}, "courseId":${course_id}}}`
+        )
+        .then(({ data }) => data[0].id);
+
+      return await api.patch(`users_courses/${users_coursesId}`, {
+        current_class
+      });
+    } catch (error) {
+      return [];
     }
   }
 };

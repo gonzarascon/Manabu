@@ -2,8 +2,16 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, Image, Heading, Text, Anchor } from 'grommet';
+import styled from 'styled-components';
 
 import { calculateRem } from '../../constants';
+
+const Description = styled(Text)`
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
 
 const Card = ({ imageSrc, cardTitle, cardSubtitle, linkHref }) => (
   <Box
@@ -13,6 +21,7 @@ const Card = ({ imageSrc, cardTitle, cardSubtitle, linkHref }) => (
     wrap={false}
     elevation="medium"
     justify="center"
+    width="260px"
     maxWidth="260px"
     height="290px"
     as="article"
@@ -35,7 +44,7 @@ const Card = ({ imageSrc, cardTitle, cardSubtitle, linkHref }) => (
           >
             {cardTitle}
           </Heading>
-          <Text size={calculateRem(18)}>{cardSubtitle}</Text>
+          <Description size={calculateRem(18)}>{cardSubtitle}</Description>
         </Anchor>
       </Link>
     </Box>

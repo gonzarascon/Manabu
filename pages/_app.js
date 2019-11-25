@@ -30,7 +30,8 @@ export default class ManabuApp extends App {
   state = {
     user: {},
     token: null,
-    userLogged: false
+    userLogged: false,
+    loginError: false
   };
 
   async componentDidMount() {
@@ -67,13 +68,15 @@ export default class ManabuApp extends App {
           data: { token, actualUser }
         } = response;
 
-        return this.setState({
+        this.setState({
           token,
           user: actualUser.user,
           userLogged: true
         });
+
+        Router.reload();
       })
-      .catch(error => `Can't login`);
+      .catch(error => this.setState({ loginError: true }));
   };
 
   logoutUser = async () => {
@@ -92,7 +95,7 @@ export default class ManabuApp extends App {
   render() {
     const {
       props: { Component, pageProps },
-      state: { token, user, userLogged }
+      state: { token, user, userLogged, loginError }
     } = this;
     return (
       <Fragment>
@@ -109,7 +112,8 @@ export default class ManabuApp extends App {
                     user,
                     userLogged,
                     login: this.loginUser,
-                    logout: this.logoutUser
+                    logout: this.logoutUser,
+                    loginError
                   }}
                 >
                   <Component

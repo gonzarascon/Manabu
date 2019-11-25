@@ -36,7 +36,6 @@ app.prepare().then(() => {
   server.get('/', async (req, res) => {
     if (req.cookies.token) {
       const actualUser = await api.user.getActualUser(req.cookies.token);
-      console.log('actualUser', actualUser);
       return app.render(req, res, '/', actualUser);
     }
     return app.render(req, res, '/', req.params);
@@ -61,7 +60,6 @@ app.prepare().then(() => {
         const { id } = data;
         res.cookie('token', id, {
           maxAge: new Date(Date.now() + 900000),
-          // httpOnly: true,
           overwrite: true
         });
         console.log('cookie created successfully', id);
@@ -103,7 +101,8 @@ app.prepare().then(() => {
     const { access_token } = req.body.params;
 
     await api.user.logout(access_token);
-    res.send('LOGOUT');
+    // res.send('LOGOUT');
+    return app.render(req, res, '/', req.params);
   });
 
   server.get('/users/me', async (req, res) => {
@@ -116,11 +115,23 @@ app.prepare().then(() => {
   server.get('/users/profile/:user_id', async (req, res) => {
     const { at } = req.query;
     const userData = await api.user.getUserProfile(req.params.user_id, at);
-
-    console.log('userData', userData[0]);
-
+    const userTakenCourses = await api.user.getUserCurrentCourses(
+      req.params.user_id
+    );
     return app.render(req, res, '/users', {
-      userData: userData[0]
+      userData: userData[0],
+      userTakenCourses
+    });
+  });
+
+  server.get('/users/:user_id/account', async (req, res) => {
+    const { at } = req.query;
+    const { user_id } = req.params;
+    const userData = await api.user.getActualUser(at);
+    return app.render(req, res, '/account', {
+      accountData: userData,
+      access_token: at,
+      user_id
     });
   });
 
@@ -243,7 +254,7 @@ app.prepare().then(() => {
     }
   );
 
-  server.put('/courses/:course_id/changeState/:state', async (req, res) => {
+  server.patch('/courses/:course_id/changeState/:state', async (req, res) => {
     const { course_id, state } = req.params;
     const { access_token } = req.query;
     console.log('change state', state);
@@ -253,8 +264,20 @@ app.prepare().then(() => {
       .catch(() => res.send(Error('cannot update state')));
   });
 
+  server.get(`/course/:course_id/end`, async (req, res) => {
+    const { course_id } = req.params;
+    return app.render(req, res, `/course/${course_id}/finished`, req.params);
+  });
   // Catalog
-  server.get('/catalog', (req, res) => app.render(req, res, '/catalog'));
+  server.get('/search', async (req, res) => {
+    const { s } = req.query;
+
+    const searchResults = await api.course
+      .getCoursesByLanguageName(s)
+      .then(response => response);
+
+    return app.render(req, res, '/catalog', { searchResults, searchQuery: s });
+  });
 
   // Posts
   server.get('/posts/:id', (req, res) =>
