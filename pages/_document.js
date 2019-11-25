@@ -22,6 +22,23 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
+          <meta
+            name="description"
+            content="Manabu es la mejor plataforma gratuita para aprender a programar. Comienza ahora."
+          />
+          <meta
+            property="og:title"
+            content="Manabu - Aprende a programar gratis"
+          />
+          <meta
+            property="og:description"
+            content="
+Manabu es la mejor plataforma gratuita para aprender a programar. Comienza ahora."
+          />
+          <meta property="og:image" content="/static/images/shareimage.png" />
+          <meta property="og:url" content="https://learnmanabu.com/" />
+          <meta name="twitter:card" content="summary_large_image" />
+
           <link
             rel="shortcut icon"
             type="image/x-icon"
