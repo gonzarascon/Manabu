@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import _ from 'lodash';
-import Link from 'next/link';
-import { Heading, Box, Grid, Anchor, RadioButtonGroup, Meter } from 'grommet';
-import { LinkPrevious, FormNextLink } from 'grommet-icons';
+import { Heading, Box, Grid, Text, RadioButtonGroup, Meter } from 'grommet';
+import { FormNextLink } from 'grommet-icons';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 
@@ -87,12 +86,14 @@ function TakeStageLayout({
   checkUserInput,
   stageLoadedData,
   totalStages,
-  responsiveSize
+  responsiveSize,
+  wrongAnswer
 }) {
   const editor = useRef();
   const [editorValue, setEditorValue] = useState(initialValue);
   const [formValue, setFormValue] = useState({});
   const [userInput, setUserInput] = useState('');
+  const [radioOptions, setRadioOptions] = useState([]);
   const {
     content: { formValue: _formValue }
   } = stageLoadedData;
@@ -108,19 +109,34 @@ function TakeStageLayout({
     }
   }, []);
 
+  useEffect(() => {
+    if (!_.isEqual(formValue, {})) {
+      const options =
+        formValue.false_answer_2 === ''
+          ? _.shuffle([_formValue.correct_answer, _formValue.false_answer_1])
+          : _.shuffle([
+              _formValue.correct_answer,
+              _formValue.false_answer_1,
+              _formValue.false_answer_2
+            ]);
+
+      setRadioOptions(options);
+    }
+  }, [formValue]);
+
   function getProgressQuantity(value) {
     return (value * 100) / totalStages;
   }
 
   function createStageOptions() {
     if (_formValue.false_answer_2 === '')
-      return [_formValue.correct_answer, _formValue.false_answer_1];
+      return _.shuffle([_formValue.correct_answer, _formValue.false_answer_1]);
 
-    return [
+    return _.shuffle([
       _formValue.correct_answer,
       _formValue.false_answer_1,
       _formValue.false_answer_2
-    ];
+    ]);
   }
 
   return (
@@ -173,12 +189,20 @@ function TakeStageLayout({
                 onSubmit={() => checkUserInput(userInput)}
                 value={formValue}
               >
+                {wrongAnswer && (
+                  <Box justify="center" direction="row">
+                    <Heading color="red" textAlign="center" level={4}>
+                      <Emoji symbol="🤔" /> ¿Estás seguro que es la respuesta
+                      correcta?
+                    </Heading>
+                  </Box>
+                )}
                 <AnswerField
                   name="user_input"
                   label={<Heading level={3}>{_formValue.question}</Heading>}
                   component={() => (
                     <RadioButtonGroup
-                      options={createStageOptions()}
+                      options={radioOptions}
                       onChange={({ target: { value } }) => setUserInput(value)}
                       value={userInput}
                     />

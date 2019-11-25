@@ -14,6 +14,10 @@ class stage extends PureComponent {
   constructor() {
     super();
 
+    this.state = {
+      wrongAnswer: false
+    };
+
     this.checkStageDataWithUserInput = this.checkStageDataWithUserInput.bind(
       this
     );
@@ -49,6 +53,8 @@ class stage extends PureComponent {
         // console.log('courseData stages', courseData.stages);
         // console.log('course end');
       }
+    } else {
+      this.setState({ wrongAnswer: true });
     }
   }
 
@@ -60,6 +66,7 @@ class stage extends PureComponent {
       stageData,
       courseData
     } = this.props;
+    const { wrongAnswer } = this.state;
     const courseLength = courseData.stages.length;
     return (
       <Layout responsiveSize={viewportSize} userData={actualUser}>
@@ -69,6 +76,7 @@ class stage extends PureComponent {
           checkUserInput={this.checkStageDataWithUserInput}
           totalStages={courseLength}
           responsiveSize={viewportSize}
+          wrongAnswer={wrongAnswer}
         />
       </Layout>
     );
