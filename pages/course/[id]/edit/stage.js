@@ -50,6 +50,7 @@ class stage extends PureComponent {
           sendSaveStage={this.sendSaveStage}
           stageLoadedData={stageData}
           sendUpdateStage={this.sendUpdateStage}
+          responsiveSize={viewportSize}
         />
       </Layout>
     );

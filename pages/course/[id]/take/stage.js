@@ -68,6 +68,7 @@ class stage extends PureComponent {
           stageLoadedData={stageData}
           checkUserInput={this.checkStageDataWithUserInput}
           totalStages={courseLength}
+          responsiveSize={viewportSize}
         />
       </Layout>
     );

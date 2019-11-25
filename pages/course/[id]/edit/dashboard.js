@@ -55,6 +55,7 @@ class stage extends PureComponent {
           course_data={course_data}
           deleteStage={this.deleteStage}
           toggleState={this.toggleStateOfCourse}
+          responsiveSize={viewportSize}
         />
       </Layout>
     );

@@ -6,6 +6,7 @@ import { LinkPrevious, FormNextLink } from 'grommet-icons';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 
+import Emoji from '../../helpers/emoji';
 import {
   Wrapper,
   EditorWrapper,
@@ -85,7 +86,8 @@ function TakeStageLayout({
   course_id,
   checkUserInput,
   stageLoadedData,
-  totalStages
+  totalStages,
+  responsiveSize
 }) {
   const editor = useRef();
   const [editorValue, setEditorValue] = useState(initialValue);
@@ -143,44 +145,56 @@ function TakeStageLayout({
           />
         </Box>
       </Box>
-      <Box as="section" height="75vh" margin="medium">
-        <Grid gap="small" columns={['2/3', '1/3']} fill>
-          <EditorWrapper>
-            <Editor
-              className="classEditor"
-              value={editorValue}
-              ref={editor}
-              renderBlock={RenderBlock}
-              renderMark={renderMark}
-              readOnly
-            />
-          </EditorWrapper>
-          <FormWrapper>
-            <QuestionForm
-              onSubmit={() => checkUserInput(userInput)}
-              value={formValue}
-            >
-              <AnswerField
-                name="user_input"
-                label={<Heading level={3}>{_formValue.question}</Heading>}
-                component={() => (
-                  <RadioButtonGroup
-                    options={createStageOptions()}
-                    onChange={({ target: { value } }) => setUserInput(value)}
-                    value={userInput}
-                  />
-                )}
+      {responsiveSize === 'small' && (
+        <Box fill align="center">
+          <Heading level={2} textAlign="center" margin="medium">
+            <Emoji symbol="💻" label="Computadora" />
+          </Heading>
+          <Heading level={4} textAlign="center" color="gray1" margin="medium">
+            Para tomar este curso, debes acceder desde tu computadora.
+          </Heading>
+        </Box>
+      )}
+      {responsiveSize !== 'small' && (
+        <Box as="section" height="75vh" margin="medium">
+          <Grid gap="small" columns={['2/3', '1/3']} fill>
+            <EditorWrapper>
+              <Editor
+                className="classEditor"
+                value={editorValue}
+                ref={editor}
+                renderBlock={RenderBlock}
+                renderMark={renderMark}
+                readOnly
               />
-              <SaveButton
-                icon={<FormNextLink size="medium" color="white" />}
-                label="Continuar"
-                reverse
-                type="submit"
-              />
-            </QuestionForm>
-          </FormWrapper>
-        </Grid>
-      </Box>
+            </EditorWrapper>
+            <FormWrapper>
+              <QuestionForm
+                onSubmit={() => checkUserInput(userInput)}
+                value={formValue}
+              >
+                <AnswerField
+                  name="user_input"
+                  label={<Heading level={3}>{_formValue.question}</Heading>}
+                  component={() => (
+                    <RadioButtonGroup
+                      options={createStageOptions()}
+                      onChange={({ target: { value } }) => setUserInput(value)}
+                      value={userInput}
+                    />
+                  )}
+                />
+                <SaveButton
+                  icon={<FormNextLink size="medium" color="white" />}
+                  label="Continuar"
+                  reverse
+                  type="submit"
+                />
+              </QuestionForm>
+            </FormWrapper>
+          </Grid>
+        </Box>
+      )}
     </Wrapper>
   );
 }
