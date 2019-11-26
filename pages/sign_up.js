@@ -3,7 +3,7 @@ import { Layout, SignUpLayout } from 'components';
 
 const SignUp = ({ viewportSize }) => (
   <Layout responsiveSize={viewportSize}>
-    <SignUpLayout />
+    <SignUpLayout responsiveSize={viewportSize} />
   </Layout>
 );
 
