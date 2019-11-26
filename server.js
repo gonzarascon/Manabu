@@ -271,7 +271,6 @@ app.prepare().then(() => {
   // Catalog
   server.get('/search', async (req, res) => {
     const { s } = req.query;
-
     const searchResults = await api.course
       .getCoursesByLanguageName(s)
       .then(response => response);
