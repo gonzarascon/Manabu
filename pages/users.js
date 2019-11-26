@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Layout, UserLayout } from 'components';
+import { Layout, UserLayout, UserContext } from 'components';
 
 class Users extends PureComponent {
   static async getInitialProps({ query: { userData, userTakenCourses } }) {
@@ -8,7 +8,10 @@ class Users extends PureComponent {
     return { userData: data, userTakenCourses: userCourses };
   }
 
+  static contextType = UserContext;
+
   render() {
+    const { token } = this.context;
     const { viewportSize, userData, userTakenCourses } = this.props;
     return (
       <Layout responsiveSize={viewportSize} userData={userData}>
@@ -16,6 +19,7 @@ class Users extends PureComponent {
           responsiveSize={viewportSize}
           userData={userData}
           userTakenCourses={userTakenCourses}
+          token={token}
         ></UserLayout>
       </Layout>
     );

@@ -35,11 +35,11 @@ class UserLayout extends PureComponent {
   render() {
     const {
       responsiveSize,
-      userData: { username, xp, courses, titles, user_type },
-      userTakenCourses
+      userData: { username, xp, courses, titles, user_type, id },
+      userTakenCourses,
+      token
     } = this.props;
 
-    console.log(responsiveSize);
     const xpMeter = [
       {
         value: xp,
@@ -99,7 +99,11 @@ class UserLayout extends PureComponent {
             </Box>
           )}
           {userTakenCourses && (
-            <Box gridArea="slider2" as="section" pad="medium">
+            <Box
+              gridArea={user_type === 'teacher' ? 'slider2' : 'slider1'}
+              as="section"
+              pad="medium"
+            >
               <SliderRow
                 responsiveSize={responsiveSize}
                 headingLabel="Cursos Tomados"
@@ -113,7 +117,7 @@ class UserLayout extends PureComponent {
             <HighlightLink
               textLabel="¿Quieres enseñar lo que sabes?"
               anchorLabel="Regístrate como docente."
-              anchorHref="#"
+              anchorHref={`/users/${id}/account?at=${token}`}
               responsiveSize={responsiveSize}
             />
           </Box>
