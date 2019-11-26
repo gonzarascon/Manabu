@@ -118,6 +118,17 @@ class UserLayout extends PureComponent {
             />
           </Box>
         )}
+        {courses && user_type === 'teacher' && (
+          <Box margin={{ vertical: 'large' }}>
+            <HighlightLink
+              textLabel="Revisa tus cursos en tu celular"
+              anchorLabel="Descarga la App."
+              anchorHref="/static/files/ManabuApp-57eefc76b47645228946e6be9fa0db25-signed.apk"
+              download
+              responsiveSize={responsiveSize}
+            />
+          </Box>
+        )}
       </Box>
     );
   }

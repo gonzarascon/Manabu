@@ -7,6 +7,7 @@ const HighlightLink = ({
   anchorLabel,
   anchorHref,
   responsiveSize,
+  download = false
 }) => (
   <Box
     as="section"
@@ -27,6 +28,7 @@ const HighlightLink = ({
       label={anchorLabel}
       fontWeight="600"
       size="medium"
+      download={download}
     />
   </Box>
 );
@@ -35,7 +37,7 @@ HighlightLink.propTypes = {
   textLabel: PropTypes.string.isRequired,
   anchorLabel: PropTypes.string.isRequired,
   anchorHref: PropTypes.string.isRequired,
-  responsiveSize: PropTypes.string.isRequired,
+  responsiveSize: PropTypes.string.isRequired
 };
 
 export default HighlightLink;
