@@ -169,10 +169,11 @@ module.exports = {
   getCoursesByLanguageName: async name => {
     try {
       const languageId = await api
-        .get(`languages?filter={"where":{"name":${name}}}`)
+        .get(`languages?filter={"where":{"name":"${name}"}}`)
         .then(({ data }) => data[0].id)
         .catch(() => 1);
 
+      console.log(name);
       const courses = await api
         .get(`languages/${languageId}/courses?filter[limit]=15`)
         .then(response => response.data);
