@@ -40,7 +40,7 @@
     "react": "^16.10.2",
     "react-avatar": "^3.7.0",
     "react-dom": "^16.10.2",
-    "react-loading-skeleton": "^1.1.2",
+    "react-loading-skeleton": "^2.2.0",
     "react-slick": "^0.25.2",
     "sitemap": "^5.1.0",
     "slate": "^0.47.8",
